@@ -26,6 +26,10 @@ public class TdSetting {
 	public static TdSetting getInstance() {
 		return INSTANCE;
 	}
+	
+	public static void setInstance(TdSetting setting){
+		INSTANCE = setting;
+	}
 	/*-----------------------------------------------*/
 
 	@Id

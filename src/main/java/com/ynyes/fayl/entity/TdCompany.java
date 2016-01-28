@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 /**
  * 公司实体类
@@ -25,6 +27,10 @@ public class TdCompany {
 
 	public static TdCompany getInstance() {
 		return INSTANCE;
+	}
+	
+	public static void setInstance(TdCompany company){
+		INSTANCE = company;
 	}
 	/*-----------------------------------------------*/
 
@@ -46,7 +52,8 @@ public class TdCompany {
 	private String delvelopmentNumber;
 
 	// 设计团队
-	@Column
+	@OneToMany
+	@JoinColumn(name = "companyId")
 	private List<TdDesigner> designers;
 
 	// SEO标题

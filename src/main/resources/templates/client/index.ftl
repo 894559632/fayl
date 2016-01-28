@@ -1,278 +1,1 @@
-<!DOCTYPE html>
-<html>
-    <head>
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <meta name="copyright" content="" />
-    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-    <meta charset="utf-8">
-    <title>乐易装首页</title>
-    <link rel="stylesheet" type="text/css" href="/client/css/my_base.css"/>
-    <link rel="stylesheet" type="text/css" href="/client/css/main.css"/>
-    <link rel="stylesheet" type="text/css" href="/client/css/other.css"/>
-    <link rel="stylesheet" type="text/css" href="/client/css/swiper.min.css"/>
-    
-    <script src="/client/js/jquery-1.11.0.js" type="text/javascript"></script>
-    <script src="/client/js/index.js" type="text/javascript"></script>
-    <script src="/client/js/swiper.min.js" type="text/javascript"></script>
-    <script type="text/javascript">
-    window.onload = function(){
-            you_draf($('.index_scroll_goods'),$('.index_scroll_goods a'),$(window));
-            my_hei();
-            scroll_news();//滚动新闻                //index  00         
-            footer();//底部居中
-        };
-    </script>
-    </head>
-    <body>
-        <div>
-            <#-- 引入公共购物方式选择滑动窗口 -->
-            <#include "/client/common_shopping_type.ftl">
-            <#-- 
-                              引入有奖问答图标
-            <#include "/client/common_award.ftl"> 
-            -->
-            
-            <header class="index_head">
-                <span><#if user??>${user.cityName!''}</#if></span>
-                <form action="/goods/search" method="post">
-                    <section class="search_box">                    
-                        <input placeholder="快速搜索商品" type="text" name="keywords"/>
-                        <input type="submit" name="" id="" value="" />
-                    </section>
-                </form>
-                <div class="index_mes_contanier" onclick="window.location.href='/message'">
-                    <div class="index_mes_box">
-                        <img class="index_message" src="/client/images/index_mesicon01.png">
-                        <p></p>
-                    </div>
-                </div>
-            </header>
-            
-            <#if circle_ad_list??>
-                <div class="index_banner">
-                    <div class="swiper-container" style="width: 100%;height: 100%;">
-                        <div class="swiper-wrapper">
-                            <#list circle_ad_list as item>
-                                <div class="swiper-slide orange-slide">
-                                    <img src="${item.fileUri!''}"/>
-                                </div>
-                            </#list>
-                        </div>
-                    <div class="swiper-pagination"></div>
-                </div>
-                <script type="text/javascript">
-                    var mySwiper = new Swiper('.swiper-container',{
-                        loop: true,
-                        autoplay: 3000,
-                        pagination : '.swiper-pagination'
-                    });   
-                </script>
-                </div>
-            </#if>
-            <#if navi_bar_list??>
-                <ul class="index_nav">
-                    <li>
-                        <#list navi_bar_list as item>
-                            <#if item_index lt 4>
-                                <a href="${item.linkUri!'#'}">
-                                    <img src="${item.iconUri!''}" />
-                                    <span>${item.title!''}</span>
-                                </a>
-                            </#if>
-                        </#list>
-                    </li>
-                    <li>
-                        <#list navi_bar_list as item>
-                            <#if item_index gt 3&&item_index lt 8>
-                                <a href="${item.linkUri!'#'}">
-                                    <img src="${item.iconUri!''}" />
-                                    <span>${item.title!''}</span>
-                                </a>
-                            </#if>
-                        </#list>
-                    </li>
-                </ul>
-            </#if>
-            
-            <section class="index_content">
-                <#if headline_list??>
-                    <dl class="index_news">
-                        <dt><img src="/client/images/scroll_news.png" /></dt>
-                        <dd>
-                            <div class="scroll_newsbox">
-                                <#list headline_list as item>
-                                    <a href="/article/${item.id?c}">${item.title!''}</a>
-                                </#list>
-                            </div>
-                        </dd>               
-                    </dl>
-                </#if>
-                <div class="index_test_box"></div>
-                <#if promotion_list??&&promotion_list?size gt 0>
-                    <div class="index_goods01">
-                        <dl>
-                            <dt>
-                                <p>活动促销<span>·优惠多多</span></p>                          
-                                <a href="/promotion/list"><img src="/client/images/index_guide_right.png" /></a>
-                            </dt>
-                            <#-- 滑动促销商品 -->
-                            <dd>
-                                <div class="index_scroll_goods">
-                                    <#-- 遍历所有促销集合 -->
-                                    <#list promotion_list as item>
-                                        <#-- 此位置只显示序号0——6的促销商品 -->
-                                        <#if item_index lt 7>
-                                            <#if item??>
-                                                <#-- item的格式为【TdGoods:price】 -->
-                                                <#list item?keys as key>
-                                                    <#if key??>
-                                                        <a href="/goods/detail/${key.id?c}">
-                                                            <div>
-                                                                <img src="${key.coverImageUri!''}"  />
-                                                                <span>促销</span>
-                                                                
-                                                            </div>
-                                                            <#-- 判断指定的key值是否存在 -->
-                                                            <#if item.get(key)??>
-                                                                <p>￥${item.get(key)?string("0.00")}</p>                                 
-                                                            <#else>
-                                                                <p>￥0.00</p>         
-                                                            </#if>
-                                                        </a>
-                                                    </#if>
-                                                </#list>
-                                            </#if>
-                                        </#if>
-                                    </#list>
-                                </div>
-                            </dd>
-                        </dl>
-                    </div>
-                
-                    <div class="index_goods02">
-                        <#-- 特殊的三个推荐（序号7——9的三个推荐的促销商品） -->    
-                        <dl>
-                            <#-- 遍历所有促销集合 -->
-                            <#list promotion_list as item>
-                                <#if item_index==7>
-                                    <#list item?keys as key>
-                                        <#if key??>
-                                            <dt>
-                                                <a class="my_indexgood" href="/goods/detail/${key.id?c}">
-                                                    <h3>${key.title!''}</h3><div class="guide"></div>
-                                                    <p>${key.subTitle!''}</p>
-                                                    <#if item.get(key)??>
-                                                        <span>￥${item.get(key)?string("0.00")}</span>
-                                                    <#else>
-                                                        <span>￥0.00</span>
-                                                    </#if>
-                                                    <div><img src="${key.coverImageUri!''}" /></div>
-                                                </a>
-                                            </dt>
-                                        </#if>
-                                    </#list>
-                                </#if>
-                                <#if item_index==8>
-                                    <#list item?keys as key>
-                                        <#if key??>
-                                            <dd>
-                                                <a class="my_indexgood02" href="/goods/detail/${key.id?c}">
-                                                    <div class="rich_box">
-                                                        <h3>${key.title!''}</h3><div class="guide"></div>
-                                                        <p>${key.subTitle!''}</p>
-                                                        <#if item.get(key)??>
-                                                            <span>￥${item.get(key)?string("0.00")}</span>
-                                                        <#else>
-                                                            <span>￥0.00</span>
-                                                        </#if>
-                                                    </div>
-                                                    <div><img src="${key.coverImageUri!''}" /></div>                              
-                                                </a>
-                                            </dd>
-                                        </#if>
-                                    </#list>
-                                </#if>
-                                <#if item_index==9>
-                                    <#list item?keys as key>
-                                        <#if key??>
-                                            <dd>
-                                                <a class="my_indexgood02" href="/goods/detail/${key.id?c}">
-                                                    <div class="rich_box">
-                                                        <h3>${key.title!''}</h3><div class="guide"></div>
-                                                        <p>${key.subTitle!''}</p>
-                                                        <#if item.get(key)??>
-                                                            <span>￥${item.get(key)?string("0.00")}</span>
-                                                        <#else>
-                                                            <span>￥0.00</span>
-                                                        </#if>
-                                                    </div>
-                                                    <div><img src="${key.coverImageUri!''}" /></div>                              
-                                                </a>
-                                            </dd>
-                                        </#if>
-                                    </#list>
-                                </#if>
-                            </#list>
-                        </dl>
-                        <#-- 最少的三个推荐 -->
-                        <ul>
-                            <#list promotion_list as item>
-                                <#if item_index gt 9 && item_index lt 13>
-                                    <li>
-                                        <a class="my_indexgood03" href="/goods/detail/${key.id?c}">
-                                            <h3>${key.title!''}</h3><div class="guide"></div>
-                                            <p>${key.subTitle!''}</p>
-                                            <#if item.get(key)??>
-                                                <span>￥${item.get(key)?string("0.00")}</span>
-                                            <#else>
-                                                <span>￥0.00</span>
-                                            </#if>
-                                            <div><img src="${key.coverImageUri!''}" /></div>
-                                        </a>
-                                    </li>
-                                </#if>
-                            </#list>
-                        </ul>
-                    </div>
-                </#if>
-                <div class="index_test_box"></div>
-                <div class="index_goods03">
-                    <#if index_center??>
-                        <div class="goods03_title">
-                           <img onclick="window.location.href='${index_center.linkUri!'#'}'" src="${index_center.fileUri!''}"/>
-                        </div>
-                    </#if>
-                    <#if commend_page??>
-                        <ul>
-                            <li>
-                                <#list commend_page.content as item>
-                                    <a class="good03_box" href="/goods/detail/${item.goodsId?c}">
-                                        <div>
-                                            <#if ("goods"+item_index)?eval??>
-                                                <img src="${("goods"+item_index)?eval.getCoverImageUri()}" />
-                                            <#else>
-                                                <img src="" />
-                                            </#if>
-                                            <#if item.isPromotion??&&item.isPromotion==true>
-                                                <span>促销</span>
-                                            </#if>
-                                        </div>
-                                        <p>${item.goodsTitle!''}</p>
-                                        <#if ("goods"+item_index)?eval??>
-                                            <label>${("goods"+item_index)?eval.code}</label>
-                                        </#if>
-                                        <span class="box03_pri">￥<#if item.salePrice??>${item.salePrice?string("0.00")}<#else>0.00</#if></span>
-                                    </a>
-                                </#list>
-                            </li>
-                        </ul>
-                    </#if>
-                </div>
-            </section>
-            <div class="index_test_box02"></div>
-            <#include "/client/common_footer.ftl">
-            </div>      
-        </div>
-    </body>
-</html>
+<!DOCTYPE html><html lang="en"><head>    <meta charset="UTF-8">    <meta name="description" content="泛奥园林"/>    <meta name="keywords" content="泛奥园林"/>    <meta name="author" content="泛奥园林"/>    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>    <!--[if lt IE 9]>    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>    <![endif]-->    <title>泛奥园林首页</title>    <link rel="stylesheet" href="css/global.css"/>    <link rel="stylesheet" href="css/responsiveslides.css">    <link rel="stylesheet" href="css/idangerous.swiper.css">    <link rel="stylesheet" href="css/themes.css">    <link rel="stylesheet" href="css/index.css"/>    <script type="text/javascript" src="js/jquery-1.11.0.js"></script>    <script src="js/responsiveslides.min.js"></script>    <script src="js/idangerous.swiper.min.js"></script>    <script src="js/ftt.js"></script>    <script>        $(function () {            $("#topnav li").topnav(".childnav");        });    </script></head><body><!--  header Start  --><div class="headerclear"></div><div class="header">    <div class="wrapper">        <a href="#"  title=""  class="a_logo"><img alt="" src="images/logo.png">            <h1 class="h1key">泛奥园林</h1></a>        <ul class="top_nav" id="topnav">            <li><a title=""  href="index.html"><p>首页</p>                <p>HOME</p></a>            </li>            <li><a title=""  href="关于我们.html"><p>关于泛奥</p>                <p>ABOUT</p></a>                <div class="childnav">                    <a title=""  href="#">滨水景观</a>                    <a title=""  href="#">旅游区</a>                    <a title=""  href="#">公园景观</a>                    <a title=""  href="#">居住区景观</a>                </div>            </li>            <li><a title=""  href="泛奥研究.html"><p>泛奥研究</p>                <p>RESEARCH</p></a></li>            <li><p>经典案例</p>                <p>CASE</p></li>            <li><a title=""  href="企业招聘.html"><p>企业招聘</p>                <p>RECRUIT</p></a></li>            <li><a title=""  href="联系我们.html"><p>联系我们</p>                <p>CONTACT</p></a></li>        </ul>    </div></div><!--  header End    --><!--  indexbanner Start  --><div class="indexbanner">    <div class="rslides_container">        <ul class="rslides" id="slider">            <li><img src="images/banner01.png" alt=""></li>            <li><img src="images/banner01.png" alt=""></li>            <li><img src="images/banner01.png" alt=""></li>        </ul>        <script>            $(function () {                $("#slider").responsiveSlides({                    auto: true,                    pager: true,                    nav: true,                    speed: 500,                    namespace: "transparent-btns"                });            });        </script>    </div></div><!--  indexbanner End  --><!--  center Start  --><!--  Who we are  --><div class="wwr wrapper">    <div class="content">        <h1>WHO WE ARE</h1>        <h2>关于泛奥</h2>        <div class="text-wrap">            <p>                重庆泛奥园林景观设计有限公司，简称泛奥景观。公司秉承“泛者，大众也。奥者，专业也”的设计思想，                泛奥景观致力于新形式下“美丽中国”的大格局，以“空间”规划作为设计思考，以生态设计作为主要设计手法，提供从用地分析、城市规划、景观规划、旅游度假区规划、建筑与室内设计、公共艺术和生态技术咨询等全程化、一体化的设计服务，公司自                2010 年成立以来，完成了一批具有影响力和声誉的作品，特别是在旅游规划、河道综合整治、城市公共景观等方面 积累了大量经验，其中一些项目取得园林行业的优秀设计奖项，并得到了业主和社会的广泛关注。            </p>            <p>012                年泛奥设计团队与中国市政工程东北设计研究总院重庆分院强强联合，形成紧密合作关系，组建更加完善的设计团队，同时与建筑、市政等专业形成互补关系，区别于单一景观设计公司专业配备不齐的缺陷。达到规划与设计的融合，美学与技术的的结合，思想与功能的统一，形成从规划                --- 景观 --- 建筑三位一体的综合设计机构。</p>        </div>    </div></div><!--  What can we do  --><div class="wcwd wrapper">    <div class="content">        <h1>WHAT CAN WE DO</h1>        <h2>热点产品</h2>        <ul class="function-wrap">            <script>                $(function () {                    $('.wcwd .function-wrap li').hover(function () {                        $(this).find('img').stop(true, false).animate({'opacity': '1'}, 300);                    }, function () {                        $(this).find('img').stop(true, false).animate({'opacity': '0'}, 300);                    });                });            </script>            <li class="func01"><a href="#" title="">滨水景观<img alt="" src="images/product1-2.png"></a></li>            <li class="func02"><a href="#" title="">道路景观<img alt="" src="images/product2-2.png"></a></li>            <li class="func03"><a href="#" title="">旅游区<img alt="" src="images/product3-2.png"></a></li>            <li class="func04"><a href="#" title="">公共商业<img alt="" src="images/product4-2.png"></a></li>            <li class="func05"><a href="#" title="">公园景观<img alt="" src="images/product5-2.png"></a></li>            <li class="func06"><a href="#" title="">农业景观<img alt="" src="images/product6-2.png"></a></li>            <li class="func07"><a href="#" title="">居住区景观<img alt="" src="images/product7-2.png"></a></li>        </ul>    </div></div><!--  what we have done  --><div class="wwhd">    <div class=" wrapper">        <div class="content">            <h1>WHAT WE HAVE DONE</h1>            <h2>案例赏析</h2>            <div class="function-wrap" id="caseitem">                <div class="case_nav1">                    <label>旅游规划</label>                    <div class="innav">                        <span id="casenav2" class="frml">旅游区</span>                        <span id="casenav1" class="frml current">滨水景观</span>                    </div>                </div>                <div class="case_nav2">                    <label>风景园林</label>                    <div class="innav">                        <span  id="casenav3" class="flml">公园景观</span>                        <span  id="casenav4" class="flml">居住区景观</span>                        <span  id="casenav5" class="flml">道路景观</span>                    </div>                </div>                <div class="case_nav3">                    <label>景观建筑</label>                    <div class="innav">                        <span id="casenav6" class="flmr">公共商业</span>                        <span id="casenav7" class="flmr">农业景观</span>                    </div>                </div>                <div class="case_item" id="case_item0">                    <div class="initem">                        <div class="swiper-container" id="swipercontainer0">                            <div class="swiper-wrapper">                                <div class="swiper-slide">                                    <img alt="" src="images/img01.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img02.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img03.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img04.png">                                </div>                            </div>                        </div>                        <a class="arrow-right" id="right0" title="" href="javascript:;"></a>                        <a class="arrow-left" id="left0" title="" href="javascript:;"></a>                    </div>                </div>                <div class="case_item" id="case_item1" style="display: none;">                    <div class="initem">                        <div class="swiper-container" id="swipercontainer1">                            <div class="swiper-wrapper">                                <div class="swiper-slide">                                    <img alt="" src="images/img01.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img02.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img03.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img04.png">                                </div>                            </div>                        </div>                        <a class="arrow-right" id="right1" title="" href="javascript:;"></a>                        <a class="arrow-left" id="left1" title="" href="javascript:;"></a>                    </div>                </div>                <div class="case_item" id="case_item2" style="display: none;">                    <div class="initem">                        <div class="swiper-container" id="swipercontainer2">                            <div class="swiper-wrapper">                                <div class="swiper-slide">                                    <img alt="" src="images/img01.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img02.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img03.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img04.png">                                </div>                            </div>                        </div>                        <a class="arrow-right" id="right2" title="" href="javascript:;"></a>                        <a class="arrow-left" id="left2" title="" href="javascript:;"></a>                    </div>                </div>                <div class="case_item" id="case_item3" style="display: none;">                    <div class="initem">                        <div class="swiper-container" id="swipercontainer3">                            <div class="swiper-wrapper">                                <div class="swiper-slide">                                    <img alt="" src="images/img01.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img02.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img03.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img04.png">                                </div>                            </div>                        </div>                        <a class="arrow-right" id="right3" title="" href="javascript:;"></a>                        <a class="arrow-left" id="left3" title="" href="javascript:;"></a>                    </div>                </div>                <div class="case_item" id="case_item4" style="display: none;">                    <div class="initem">                        <div class="swiper-container" id="swipercontainer4">                            <div class="swiper-wrapper">                                <div class="swiper-slide">                                    <img alt="" src="images/img01.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img02.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img03.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img04.png">                                </div>                            </div>                        </div>                        <a class="arrow-right" id="right4" title="" href="javascript:;"></a>                        <a class="arrow-left" id="left4" title="" href="javascript:;"></a>                    </div>                </div>                <div class="case_item" id="case_item5" style="display: none;">                    <div class="initem">                        <div class="swiper-container" id="swipercontainer5">                            <div class="swiper-wrapper">                                <div class="swiper-slide">                                    <img alt="" src="images/img01.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img02.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img03.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img04.png">                                </div>                            </div>                        </div>                        <a class="arrow-right" id="right5" title="" href="javascript:;"></a>                        <a class="arrow-left" id="left5" title="" href="javascript:;"></a>                    </div>                </div>                <div class="case_item" id="case_item6" style="display: none;">                    <div class="initem">                        <div class="swiper-container" id="swipercontainer6">                            <div class="swiper-wrapper">                                <div class="swiper-slide">                                    <img alt="" src="images/img01.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img02.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img03.png">                                </div>                                <div class="swiper-slide">                                    <img alt="" src="images/img04.png">                                </div>                            </div>                        </div>                        <a class="arrow-right" id="right6" title="6" href="javascript:;"></a>                        <a class="arrow-left" id="left6" title="6" href="javascript:;"></a>                    </div>                    <script>                        $(function () {                            var mySwiper1 = new Swiper(".swiper-container", {                                pagination: false,                                paginationClickable: false,                                slidesPerView: 4,                                slidesPerGroup: 4,                                loop: true                            });                            $(".arrow-left").on('click', function (e) {                                e.preventDefault();                                mySwiper1.swipePrev();                            });                            $(".arrow-right").on('click', function (e) {                                e.preventDefault();                                mySwiper1.swipeNext();                            });                            casehover("#caseitem .innav span",'case_item','current');                        });                        function casehover(casenav,idname,currentclass){                            $(casenav).hover(function(){                                $(casenav).removeClass(currentclass);                                $(this).addClass(currentclass);                                var id=$(this).attr('id').substring(7)-1;                                $("."+idname).css('display','none');                                $("#"+idname+id).css('display','block');                                var mySwiper1 = new Swiper("#"+idname+id+" .swiper-container", {                                    pagination: false,                                    paginationClickable: false,                                    slidesPerView: 4,                                    slidesPerGroup: 4,                                    loop: true                                });                                $("#"+idname+id+" .arrow-left").on('click', function (e) {                                    e.preventDefault();                                    mySwiper1.swipePrev();                                });                                $("#"+idname+id+" .arrow-right").on('click', function (e) {                                    e.preventDefault();                                    mySwiper1.swipeNext();                                });                            });                        }                    </script>                </div>            </div>        </div>    </div></div><!--  what's news  --><div class="whatnews wrapper">    <div class="content">        <h1>WHAT'S NEWS</h1>        <h2>最新动态</h2>        <div class="function-wrap">            <dl class="newslist">                <dt>                    <a href="#" title="">习近平视察第13集团军(图)</a>                    <label>2016-01-07</label>                <p>                    中共中央总书记、国家主席、中央军委主席习近平5日到第13集团军视察。这是习近平听取第13集中共中央总书记、国家主席、中央军委主席习近平5日到第13集团军视察。这是习近平听取第13集...</p></dt>                <dd>                    <a href="#" title="">习近平：要修复长江生态 不搞大开发 这三年</a>                    <label>2016-01-07</label>                </dd>                <dd>                    <a href="#" title="">实拍：李克强深入矿井考察 交代矿工安全第一</a>                    <label>2016-01-07</label>                </dd>                <dd>                    <a href="#" title="">人民币贬值持续 12月外汇储备创史上最大降幅</a>                    <label>2016-01-07</label>                </dd>                <dd>                    <a href="#" title="">A股熔断：155分钟6万亿消失 股民人均亏10万</a>                    <label>2016-01-07</label>                </dd>            </dl>            <div class="newsimg">                <a href="#" title="">                    <img src="images/img05.png" alt="">                    <span>A股熔断：155分钟6万亿消失 股民人均亏10万</span>                </a>            </div>            <div class="a_morenews">                <a href="#" title="">更多动态 >></a>            </div>        </div>    </div></div><!--  center End    --><!--  footer Start  --><div class="footer">    <div class="wrapper">        <dl>            <dt class="contractus">                <span>联系我们</span>            <p>地址：重庆市渝北区东湖南路333号中渝爱都会1栋13-18</p>            <p>电话：023-67674007</p>            <p>邮箱：344956308@qq.com</p>            <p>Q Q：44956308</p>            </dt>            <dd class="messagetous">                <span>在线留言</span>                <div class="message-item">                    <div class="fl">                        <div class="inputitem"><label>称呼</label><input type="text"></div>                        <div class="inputitem"><label>电话</label><input type="text"></div>                        <div class="inputitem"><label>邮箱</label><input type="text"></div>                    </div>                    <div class="fl">                        <div class="textareaitem">                            <label>留言内容</label>                            <textarea></textarea>                        </div>                        <input type="button" class="btnsubmit" value="留言"/>                    </div>                </div>            </dd>        </dl>    </div></div><!--  footer End    --></body></html>
