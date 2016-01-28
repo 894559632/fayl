@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.ynyes.fayl.entity.TdArticle;
@@ -91,5 +93,15 @@ public class TdArticleService {
 		}
 		PageRequest pageRequest = new PageRequest(page, size);
 		return repository.findByNumberOrderByCreateDateDesc(number, pageRequest);
+	}
+
+	/**
+	 * 查找所有文章，按照生成时间反序排序（分页）
+	 * 
+	 * @author dengxiao
+	 */
+	public Page<TdArticle> findAll(int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "createDate"));
+		return repository.findAll(pageRequest);
 	}
 }

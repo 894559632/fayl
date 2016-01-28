@@ -24,15 +24,18 @@ public class TdSample {
 		super();
 	}
 
-	public TdSample(String number, String categoryNumber, String title, String designer, String imgUriList,
-			String introduction, String seoTitle, String seoKeywords, String seoDescription) {
+	public TdSample(String number, String categoryNumber, String title, String designer, String coverImgUri,
+			String imgUriList, String introduction, Boolean isIndexRecommend, String seoTitle, String seoKeywords,
+			String seoDescription) {
 		super();
 		this.number = number;
 		this.categoryNumber = categoryNumber;
 		this.title = title;
 		this.designer = designer;
+		this.coverImgUri = coverImgUri;
 		this.imgUriList = imgUriList;
 		this.introduction = introduction;
+		this.isIndexRecommend = isIndexRecommend;
 		this.seoTitle = seoTitle;
 		this.seoKeywords = seoKeywords;
 		this.seoDescription = seoDescription;
@@ -61,6 +64,10 @@ public class TdSample {
 	@Column
 	private String designer;
 
+	// 封面图
+	@Column
+	private String coverImgUri;
+
 	// 案例图片（多张以，隔开）
 	@Column(length = 255)
 	private String imgUriList;
@@ -68,6 +75,10 @@ public class TdSample {
 	// 案例简介
 	@Column
 	private String introduction;
+
+	// 是否首页推荐
+	@Column
+	private Boolean isIndexRecommend;
 
 	// 设计时间
 	@Column
@@ -130,6 +141,14 @@ public class TdSample {
 		this.designer = designer;
 	}
 
+	public String getCoverImgUri() {
+		return coverImgUri;
+	}
+
+	public void setCoverImgUri(String coverImgUri) {
+		this.coverImgUri = coverImgUri;
+	}
+
 	public String getImgUriList() {
 		return imgUriList;
 	}
@@ -144,6 +163,14 @@ public class TdSample {
 
 	public void setIntroduction(String introduction) {
 		this.introduction = introduction;
+	}
+
+	public Boolean getIsIndexRecommend() {
+		return isIndexRecommend;
+	}
+
+	public void setIsIndexRecommend(Boolean isIndexRecommend) {
+		this.isIndexRecommend = isIndexRecommend;
 	}
 
 	public Date getDesignDate() {
@@ -189,8 +216,9 @@ public class TdSample {
 	@Override
 	public String toString() {
 		return "TdSample [id=" + id + ", number=" + number + ", categoryNumber=" + categoryNumber + ", title=" + title
-				+ ", designer=" + designer + ", imgUriList=" + imgUriList + ", introduction=" + introduction
-				+ ", designDate=" + designDate + ", seoTitle=" + seoTitle + ", seoKeywords=" + seoKeywords
-				+ ", seoDescription=" + seoDescription + ", sortId=" + sortId + "]";
+				+ ", designer=" + designer + ", coverImgUri=" + coverImgUri + ", imgUriList=" + imgUriList
+				+ ", introduction=" + introduction + ", isIndexRecommend=" + isIndexRecommend + ", designDate="
+				+ designDate + ", seoTitle=" + seoTitle + ", seoKeywords=" + seoKeywords + ", seoDescription="
+				+ seoDescription + ", sortId=" + sortId + "]";
 	}
 }
