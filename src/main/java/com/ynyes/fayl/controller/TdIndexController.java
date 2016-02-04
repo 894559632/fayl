@@ -16,13 +16,14 @@ import com.ynyes.fayl.entity.TdArticle;
 import com.ynyes.fayl.entity.TdCompany;
 import com.ynyes.fayl.entity.TdCompanyInfo;
 import com.ynyes.fayl.entity.TdSample;
+import com.ynyes.fayl.entity.TdSampleCategory;
 import com.ynyes.fayl.entity.TdSetting;
 import com.ynyes.fayl.service.TdAdService;
 import com.ynyes.fayl.service.TdAdTypeService;
-import com.ynyes.fayl.service.TdArticleCategoryService;
 import com.ynyes.fayl.service.TdArticleService;
 import com.ynyes.fayl.service.TdCommonService;
 import com.ynyes.fayl.service.TdCompanyInfoService;
+import com.ynyes.fayl.service.TdSampleCategoryService;
 import com.ynyes.fayl.service.TdSampleService;
 
 /**
@@ -53,6 +54,9 @@ public class TdIndexController {
 
 	@Autowired
 	private TdSampleService tdSampleService;
+	
+	@Autowired
+	private TdSampleCategoryService tdSampleCategoryService;
 
 	@RequestMapping
 	public String index(HttpServletRequest req, ModelMap map) {
@@ -69,6 +73,10 @@ public class TdIndexController {
 		// 初始化网站设置对象
 		tdCommonService.initSetting();
 		map.addAttribute("setting", TdSetting.getInstance());
+		
+		//查找所有的案例分类
+		List<TdSampleCategory> sample_category_list = tdSampleCategoryService.findAll();
+		map.addAttribute("sample_category_list", sample_category_list);
 
 		// 查找首页顶部广告图
 		TdAdType adType = tdAdTypeService.findByTitle("首页顶部广告图");

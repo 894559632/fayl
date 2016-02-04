@@ -19,15 +19,6 @@
 	            	<p>关于泛奥</p>
 	                <p>ABOUT</p>
                 </a>
-                <div class="childnav">
-                    <a title="滨水景观"  href="#">滨水景观</a>
-                    <a title="旅游区"  href="#">旅游区</a>
-                    <a title="公园景观"  href="#">公园景观</a>
-                    <a title="居住区景观"  href="#">居住区景观</a>
-                    <a title="道路景观"  href="#">道路景观</a>
-                    <a title="公共商业景观"  href="#">公共商业景观</a>
-                    <a title="农业景观"  href="#">农业景观</a>
-                </div>
             </li>
             <li>
             	<a title="泛奥研究" href="泛奥研究.html">
@@ -36,9 +27,18 @@
                 </a>
             </li>
             <li>
-            	<a title="经典案例" href="泛奥研究.html">
+            	<a title="经典案例">
 	            	<p>经典案例</p>
 	                <p>CASE</p>
+                	<div class="childnav">
+                		<#if sample_category_list??>
+                			<#list sample_category_list as item>
+                				<#if item??>
+	                    			<a title="${item.seoTitle!''}"  href="/sample/category/${item.number!'0'}">${item.title!''}</a>
+	                    		</#if>
+                    		</#list>
+	                    </#if>
+	                </div>
                 </a>
             </li>
             <li>

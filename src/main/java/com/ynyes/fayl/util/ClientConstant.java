@@ -6,5 +6,5 @@ package com.ynyes.fayl.util;
  */
 public class ClientConstant {
 
-    public static final int pageSize = 20;
+    public static final int pageSize = 8;
 }

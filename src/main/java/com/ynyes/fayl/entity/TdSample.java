@@ -24,12 +24,13 @@ public class TdSample {
 		super();
 	}
 
-	public TdSample(String number, String categoryNumber, String title, String designer, String coverImgUri,
+	public TdSample(String number, String categoryNumber, String categoryTitle,String title, String designer, String coverImgUri,
 			String imgUriList, String introduction, Boolean isIndexRecommend, String seoTitle, String seoKeywords,
 			String seoDescription) {
 		super();
 		this.number = number;
 		this.categoryNumber = categoryNumber;
+		this.categoryTitle = categoryTitle;
 		this.title = title;
 		this.designer = designer;
 		this.coverImgUri = coverImgUri;
@@ -55,6 +56,10 @@ public class TdSample {
 	// 案例分类编号哦
 	@Column
 	private String categoryNumber;
+	
+	//案例分类名称
+	@Column
+	private String categoryTitle;
 
 	// 案例标题
 	@Column

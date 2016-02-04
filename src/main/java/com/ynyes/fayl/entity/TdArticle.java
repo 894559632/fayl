@@ -24,12 +24,13 @@ public class TdArticle {
 		super();
 	}
 
-	public TdArticle(Long id, String number, String categoryNumber, String title, String author, String imgUri,
-			String content, String seoTitle, String seoKeywords, String seoDescription) {
+	public TdArticle(Long id, String number, String categoryNumber, String categoryTitle, String title, String author,
+			String imgUri, String content, String seoTitle, String seoKeywords, String seoDescription) {
 		super();
 		this.id = id;
 		this.number = number;
 		this.categoryNumber = categoryNumber;
+		this.categoryTitle = categoryTitle;
 		this.title = title;
 		this.author = author;
 		this.imgUri = imgUri;
@@ -53,6 +54,10 @@ public class TdArticle {
 	// 文章分类编号（文章分类的编号）
 	@Column
 	private String categoryNumber;
+
+	// 分类名称
+	@Column
+	private String categoryTitle;
 
 	// 文章的标题
 	@Column
@@ -113,6 +118,14 @@ public class TdArticle {
 
 	public void setCategoryNumber(String categoryNumber) {
 		this.categoryNumber = categoryNumber;
+	}
+
+	public String getCategoryTitle() {
+		return categoryTitle;
+	}
+
+	public void setCategoryTitle(String categoryTitle) {
+		this.categoryTitle = categoryTitle;
 	}
 
 	public String getTitle() {
@@ -189,9 +202,9 @@ public class TdArticle {
 
 	@Override
 	public String toString() {
-		return "TdArticle [id=" + id + ", number=" + number + ", categoryNumber=" + categoryNumber + ", title=" + title
-				+ ", author=" + author + ", imgUri=" + imgUri + ", content=" + content + ", createDate=" + createDate
-				+ ", seoTitle=" + seoTitle + ", seoKeywords=" + seoKeywords + ", seoDescription=" + seoDescription
-				+ ", sortId=" + sortId + "]";
+		return "TdArticle [id=" + id + ", number=" + number + ", categoryNumber=" + categoryNumber + ", categoryTitle="
+				+ categoryTitle + ", title=" + title + ", author=" + author + ", imgUri=" + imgUri + ", content="
+				+ content + ", createDate=" + createDate + ", seoTitle=" + seoTitle + ", seoKeywords=" + seoKeywords
+				+ ", seoDescription=" + seoDescription + ", sortId=" + sortId + "]";
 	}
 }

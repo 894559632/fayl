@@ -24,13 +24,14 @@ public class TdAd {
 		super();
 	}
 
-	public TdAd(String number, String introduce, String imgUri, String categoryNumber, Boolean isEnable, Date startTime,
-			Date endTime, String linkUri) {
+	public TdAd(String number, String introduce, String imgUri, String categoryNumber, String categoryTitle,
+			Boolean isEnable, Date startTime, Date endTime, String linkUri) {
 		super();
 		this.number = number;
 		this.introduce = introduce;
 		this.imgUri = imgUri;
 		this.categoryNumber = categoryNumber;
+		this.categoryTitle = categoryTitle;
 		this.isEnable = isEnable;
 		this.startTime = startTime;
 		this.endTime = endTime;
@@ -58,6 +59,10 @@ public class TdAd {
 	// 分类编号
 	@Column
 	private String categoryNumber;
+
+	// 分类名称
+	@Column
+	private String categoryTitle;
 
 	// 是否生效
 	@Column
@@ -103,6 +108,14 @@ public class TdAd {
 
 	public String getCategoryNumber() {
 		return categoryNumber;
+	}
+
+	public String getCategoryTitle() {
+		return categoryTitle;
+	}
+
+	public void setCategoryTitle(String categoryTitle) {
+		this.categoryTitle = categoryTitle;
 	}
 
 	public void setCategoryNumber(String categoryNumber) {
@@ -164,7 +177,8 @@ public class TdAd {
 	@Override
 	public String toString() {
 		return "TdAd [id=" + id + ", number=" + number + ", introduce=" + introduce + ", imgUri=" + imgUri
-				+ ", categoryNumber=" + categoryNumber + ", isEnable=" + isEnable + ", startTime=" + startTime
-				+ ", endTime=" + endTime + ", linkUri=" + linkUri + ", sortId=" + sortId + "]";
+				+ ", categoryNumber=" + categoryNumber + ", categoryTitle=" + categoryTitle + ", isEnable=" + isEnable
+				+ ", startTime=" + startTime + ", endTime=" + endTime + ", linkUri=" + linkUri + ", sortId=" + sortId
+				+ "]";
 	}
 }

@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ynyes.fayl.entity.TdSample;
@@ -69,5 +68,29 @@ public class TdSampleService {
 		}
 		PageRequest pageRequest = new PageRequest(page, size);
 		return repository.findByCategoryNumberOrderBySortIdAsc(categoryNumber, pageRequest);
+	}
+	
+	/**
+	 * 根据分类编号查找案例，按照排序号正序排序（不分页）
+	 * 
+	 * @author dengxiao
+	 */
+	public List<TdSample> findByCategoryNumberOrderBySortIdAsc(String categoryNumber){
+		if(null == categoryNumber){
+			return null;
+		}
+		return repository.findByCategoryNumberOrderBySortIdAsc(categoryNumber);
+	}
+
+	/**
+	 * 根据编号查找指定的案例
+	 * 
+	 * @author DengXiao
+	 */
+	public TdSample findByNumber(String number){
+		if(null == number){
+			return null;
+		}
+		return repository.findByNumber(number);
 	}
 }

@@ -21,10 +21,12 @@ public class TdSampleCategory {
 		super();
 	}
 
-	public TdSampleCategory(String number, String title, String seoTitle, String seoKeywords, String seoDescription) {
+	public TdSampleCategory(String number, String title, String description, String seoTitle, String seoKeywords,
+			String seoDescription) {
 		super();
 		this.number = number;
 		this.title = title;
+		this.description = description;
 		this.seoTitle = seoTitle;
 		this.seoKeywords = seoKeywords;
 		this.seoDescription = seoDescription;
@@ -43,6 +45,10 @@ public class TdSampleCategory {
 	// 分类名称
 	@Column
 	private String title;
+
+	// 分类描述
+	@Column(length = 255)
+	private String description;
 
 	// SEO标题
 	@Column
@@ -84,6 +90,14 @@ public class TdSampleCategory {
 		this.title = title;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public String getSeoTitle() {
 		return seoTitle;
 	}
@@ -118,7 +132,8 @@ public class TdSampleCategory {
 
 	@Override
 	public String toString() {
-		return "TdSampleCategory [id=" + id + ", number=" + number + ", title=" + title + ", seoTitle=" + seoTitle
-				+ ", seoKeywords=" + seoKeywords + ", seoDescription=" + seoDescription + ", sortId=" + sortId + "]";
+		return "TdSampleCategory [id=" + id + ", number=" + number + ", title=" + title + ", description=" + description
+				+ ", seoTitle=" + seoTitle + ", seoKeywords=" + seoKeywords + ", seoDescription=" + seoDescription
+				+ ", sortId=" + sortId + "]";
 	}
 }

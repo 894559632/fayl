@@ -1,5 +1,5 @@
-<#if setting??>
-	<div class="footer">
+<div class="footer">
+	<#if setting??>
 	    <div class="wrapper">
 	        <dl>
 	            <dt class="contractus">
@@ -34,6 +34,6 @@
 	            </form>
 	        </dl>
 	    </div>
-	</div>
-</#if>
+	</#if>
+</div>
 <script type="text/javascript" src="/client/js/Mr.D/footer.js"></script>

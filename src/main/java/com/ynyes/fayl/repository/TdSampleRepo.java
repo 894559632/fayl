@@ -1,5 +1,7 @@
 package com.ynyes.fayl.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -22,4 +24,18 @@ public interface TdSampleRepo extends PagingAndSortingRepository<TdSample, Long>
 	 * @author dengxiao
 	 */
 	Page<TdSample> findByCategoryNumberOrderBySortIdAsc(String categoryNumber, Pageable page);
+	
+	/**
+	 * 根据分类编号查找案例，按照排序号正序排序（不分页）
+	 * 
+	 * @author dengxiao
+	 */
+	List<TdSample> findByCategoryNumberOrderBySortIdAsc(String categoryNumber);
+
+	/**
+	 * 根据编号查找案例
+	 * 
+	 * @author DengXiao
+	 */
+	TdSample findByNumber(String number);
 }
