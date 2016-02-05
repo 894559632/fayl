@@ -1,4 +1,4 @@
-package com.ynyes.fayl.controller;
+package com.ynyes.fayl.controller.front;
 
 import java.util.List;
 
@@ -114,6 +114,6 @@ public class TdSampleController {
 			}
 		}
 		map.addAttribute("setting", TdSetting.getInstance());
-		return "/client/sample_detail";
+		return "/front/sample_detail";
 	}
 }

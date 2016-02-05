@@ -1,4 +1,4 @@
-package com.ynyes.fayl.controller;
+package com.ynyes.fayl.controller.front;
 
 import java.util.List;
 
@@ -128,6 +128,6 @@ public class TdIndexController {
 		// 查找所有的文章，按照生成时间反序排序（分页）
 		Page<TdArticle> article_page = tdArticleService.findAll(0, 5);
 		map.addAttribute("article_page", article_page);
-		return "/client/index";
+		return "/front/index";
 	}
 }
