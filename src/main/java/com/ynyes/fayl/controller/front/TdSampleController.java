@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ynyes.fayl.entity.TdSample;
 import com.ynyes.fayl.entity.TdSampleCategory;
-import com.ynyes.fayl.entity.TdSetting;
+import com.ynyes.fayl.service.TdCommonService;
 import com.ynyes.fayl.service.TdSampleCategoryService;
 import com.ynyes.fayl.service.TdSampleService;
 import com.ynyes.fayl.util.ClientConstant;
@@ -34,6 +34,9 @@ public class TdSampleController {
 
 	@Autowired
 	private TdSampleService tdSampleService;
+	
+	@Autowired
+	private TdCommonService tdCommonService;
 
 	/**
 	 * 跳转到经典案例的控制器
@@ -50,7 +53,7 @@ public class TdSampleController {
 		map.addAttribute("sample_category", sampleCategory);
 		map.addAttribute("number", number);
 		// 初始化page参数
-		if (null == page) {
+		if (null == page || page < 0) {
 			page = 0;
 		}
 		// 根据指定的分类编号查找其下所有的案例（分页）
@@ -69,8 +72,8 @@ public class TdSampleController {
 		}
 		map.addAttribute("sample_page", sample_page);
 		map.addAttribute("page", page);
-		map.addAttribute("setting", TdSetting.getInstance());
-		return "/client/sample_category";
+		tdCommonService.setHeader(req, map);
+		return "/client/sample_list";
 	}
 
 	/**
@@ -84,7 +87,7 @@ public class TdSampleController {
 		TdSample sample = tdSampleService.findByNumber(number);
 		map.addAttribute("sample", sample);
 		// 查找当前分类下的所有案例（两种方式：1. 从session中取出；2. 从数据库中取出）
-		if (null != sample) {
+		if (null != sample && null != sample.getCategoryNumber()) {
 			@SuppressWarnings("unchecked")
 			List<TdSample> sample_list = (List<TdSample>) req.getSession()
 					.getAttribute("sample_list" + sample.getCategoryNumber());
@@ -106,14 +109,14 @@ public class TdSampleController {
 						}
 
 						// 开始查找下一个（如果是最后一个，则下一个就是无）
-						if (i != size - 1) {
+						if (size - 1 != i) {
 							map.addAttribute("next_sample", sample_list.get(i + 1));
 						}
 					}
 				}
 			}
 		}
-		map.addAttribute("setting", TdSetting.getInstance());
+		tdCommonService.setHeader(req, map);
 		return "/front/sample_detail";
 	}
 }

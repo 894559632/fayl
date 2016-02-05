@@ -24,14 +24,15 @@ public class TdArticle {
 		super();
 	}
 
-	public TdArticle(Long id, String number, String categoryNumber, String categoryTitle, String title, String author,
-			String imgUri, String content, String seoTitle, String seoKeywords, String seoDescription) {
+	public TdArticle(Long id, String number, String categoryNumber, String categoryTitle, String title, String summary,
+			String author, String imgUri, String content, String seoTitle, String seoKeywords, String seoDescription) {
 		super();
 		this.id = id;
 		this.number = number;
 		this.categoryNumber = categoryNumber;
 		this.categoryTitle = categoryTitle;
 		this.title = title;
+		this.summary = summary;
 		this.author = author;
 		this.imgUri = imgUri;
 		this.content = content;
@@ -62,6 +63,10 @@ public class TdArticle {
 	// 文章的标题
 	@Column
 	private String title;
+
+	// 摘要
+	@Column
+	private String summary;
 
 	// 文章的作者
 	@Column
@@ -136,6 +141,14 @@ public class TdArticle {
 		this.title = title;
 	}
 
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
 	public String getAuthor() {
 		return author;
 	}
@@ -203,8 +216,8 @@ public class TdArticle {
 	@Override
 	public String toString() {
 		return "TdArticle [id=" + id + ", number=" + number + ", categoryNumber=" + categoryNumber + ", categoryTitle="
-				+ categoryTitle + ", title=" + title + ", author=" + author + ", imgUri=" + imgUri + ", content="
-				+ content + ", createDate=" + createDate + ", seoTitle=" + seoTitle + ", seoKeywords=" + seoKeywords
-				+ ", seoDescription=" + seoDescription + ", sortId=" + sortId + "]";
+				+ categoryTitle + ", title=" + title + ", summary=" + summary + ", author=" + author + ", imgUri="
+				+ imgUri + ", content=" + content + ", createDate=" + createDate + ", seoTitle=" + seoTitle
+				+ ", seoKeywords=" + seoKeywords + ", seoDescription=" + seoDescription + ", sortId=" + sortId + "]";
 	}
 }

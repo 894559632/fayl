@@ -17,26 +17,33 @@ public interface TdArticleRepo
 	 * 
 	 * @author dengxiao
 	 */
-	List<TdArticle> findByNumberOrderBySortIdAsc(String number);
+	List<TdArticle> findByCategoryNumberOrderBySortIdAsc(String number);
 
 	/**
 	 * 根据分类编号查找文章，按照排序号正序排序（分页）
 	 * 
 	 * @author dengxiao
 	 */
-	Page<TdArticle> findByNumberOrderBySortIdAsc(String number, Pageable page);
+	Page<TdArticle> findByCategoryNumberOrderBySortIdAsc(String number, Pageable page);
 
 	/**
 	 * 根据分类编号查找文章，按照生成时间反序排序（不分页）
 	 * 
 	 * @author dengxiao
 	 */
-	List<TdArticle> findByNumberOrderByCreateDateDesc(String number);
+	List<TdArticle> findByCategoryNumberOrderByCreateDateDesc(String number);
 
 	/**
 	 * 根据分类编号查找文章，按照生成时间反序排序（分页）
 	 * 
 	 * @author dengxiao
 	 */
-	Page<TdArticle> findByNumberOrderByCreateDateDesc(String number, Pageable page);
+	Page<TdArticle> findByCategoryNumberOrderByCreateDateDesc(String number, Pageable page);
+
+	/**
+	 * 根据编号查找指定的文章
+	 * 
+	 * @author DengXiao
+	 */
+	TdArticle findByNumber(String number);
 }

@@ -1,11 +1,16 @@
 package com.ynyes.fayl.service;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
 import com.ynyes.fayl.entity.TdCompany;
+import com.ynyes.fayl.entity.TdSampleCategory;
 import com.ynyes.fayl.entity.TdSetting;
 
 @Service
@@ -17,6 +22,9 @@ public class TdCommonService {
 
 	@Autowired
 	private TdCompanyService tdCompanyService;
+
+	@Autowired
+	private TdSampleCategoryService tdSampleCategoryService;
 
 	/**
 	 * 初始化公司实体对象的方法
@@ -36,5 +44,17 @@ public class TdCommonService {
 	public void initSetting() {
 		TdSetting setting = tdSettingService.findTop();
 		TdSetting.setInstance(setting);
+	}
+
+	/**
+	 * 公共的获取网站头部数据的方法
+	 * 
+	 * @author DengXiao
+	 */
+	public void setHeader(HttpServletRequest req, ModelMap map) {
+		// 获取所有的案例分类
+		List<TdSampleCategory> sample_category_list = tdSampleCategoryService.findAll();
+		map.addAttribute("sample_category_list", sample_category_list);
+		map.addAttribute("setting", TdSetting.getInstance());
 	}
 }

@@ -10,7 +10,7 @@
 	
 	            <p>邮箱：${setting.adminEmail!''}</p>
 	
-	            <p>Q Q：${setting.qq}</p>
+	            <p>Q Q：${setting.qq!''}</p>
 	            </dt>
 	
 				<form action="/remark/save" method="post" onsubmit="return footer.check();">

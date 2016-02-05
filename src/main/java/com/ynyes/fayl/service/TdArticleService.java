@@ -48,60 +48,72 @@ public class TdArticleService {
 	/**
 	 * 根据分类编号查找文章，按照排序号正序排序（不分页）
 	 * 
-	 * @author dengxiao
+	 * @author DengXiao
 	 */
-	public List<TdArticle> findByNumberOrderBySortIdAsc(String number) {
+	public List<TdArticle> findByCategoryNumberOrderBySortIdAsc(String number) {
 		if (null == number) {
 			return null;
 		}
-		return repository.findByNumberOrderBySortIdAsc(number);
+		return repository.findByCategoryNumberOrderBySortIdAsc(number);
 	}
 
 	/**
 	 * 根据分类编号查找文章，按照排序号正序排序（分页）
 	 * 
-	 * @author dengxiao
+	 * @author DengXiao
 	 */
-	public Page<TdArticle> findByNumberOrderBySortIdAsc(String number, int page, int size) {
+	public Page<TdArticle> findByCategoryNumberOrderBySortIdAsc(String number, int page, int size) {
 		if (null == number) {
 			return null;
 		}
 		PageRequest pageRequest = new PageRequest(page, size);
-		return repository.findByNumberOrderBySortIdAsc(number, pageRequest);
+		return repository.findByCategoryNumberOrderBySortIdAsc(number, pageRequest);
 	}
 
 	/**
 	 * 根据分类编号查找文章，按照生成时间反序排序（不分页）
 	 * 
-	 * @author dengxiao
+	 * @author DengXiao
 	 */
-	public List<TdArticle> findByNumberOrderByCreateDateDesc(String number) {
+	public List<TdArticle> findByCategoryNumberOrderByCreateDateDesc(String number) {
 		if (null == number) {
 			return null;
 		}
-		return repository.findByNumberOrderByCreateDateDesc(number);
+		return repository.findByCategoryNumberOrderByCreateDateDesc(number);
 	}
 
 	/**
 	 * 根据分类编号查找文章，按照生成时间反序排序（分页）
 	 * 
-	 * @author dengxiao
+	 * @author DengXiao
 	 */
-	public Page<TdArticle> findByNumberOrderByCreateDateDesc(String number, int page, int size) {
+	public Page<TdArticle> findByCategoryNumberOrderByCreateDateDesc(String number, int page, int size) {
 		if (null == number) {
 			return null;
 		}
 		PageRequest pageRequest = new PageRequest(page, size);
-		return repository.findByNumberOrderByCreateDateDesc(number, pageRequest);
+		return repository.findByCategoryNumberOrderByCreateDateDesc(number, pageRequest);
 	}
 
 	/**
 	 * 查找所有文章，按照生成时间反序排序（分页）
 	 * 
-	 * @author dengxiao
+	 * @author DengXiao
 	 */
 	public Page<TdArticle> findAll(int page, int size) {
 		PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "createDate"));
 		return repository.findAll(pageRequest);
+	}
+
+	/**
+	 * 根据编号查找指定的文章
+	 * 
+	 * @author DengXiao
+	 */
+	public TdArticle findByNumber(String number){
+		if(null == number){
+			return null;
+		}
+		return repository.findByNumber(number);
 	}
 }
