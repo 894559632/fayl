@@ -36,4 +36,4 @@
 	    </div>
 	</#if>
 </div>
-<script type="text/javascript" src="/client/js/Mr.D/footer.js"></script>
+<script type="text/javascript" src="/front/js/Mr.D/footer.js"></script>

@@ -18,12 +18,11 @@ public class TdCompanyInfo {
 		super();
 	}
 
-	public TdCompanyInfo(String number, String title, String content, Boolean isConcept) {
+	public TdCompanyInfo(String number, String title, String content) {
 		super();
 		this.number = number;
 		this.title = title;
 		this.content = content;
-		this.isConcept = isConcept;
 		this.isEnable = true;
 		this.sortId = 99.9;
 	}
@@ -48,10 +47,6 @@ public class TdCompanyInfo {
 	// 是否启用
 	@Column
 	private Boolean isEnable;
-
-	// 是否属于设计理念
-	@Column
-	private Boolean isConcept;
 
 	// 排序号
 	@Column
@@ -97,14 +92,6 @@ public class TdCompanyInfo {
 		this.isEnable = isEnable;
 	}
 
-	public Boolean getIsConcept() {
-		return isConcept;
-	}
-
-	public void setIsConcept(Boolean isConcept) {
-		this.isConcept = isConcept;
-	}
-
 	public Double getSortId() {
 		return sortId;
 	}
@@ -116,6 +103,6 @@ public class TdCompanyInfo {
 	@Override
 	public String toString() {
 		return "TdCompanyInfo [id=" + id + ", number=" + number + ", title=" + title + ", content=" + content
-				+ ", isEnable=" + isEnable + ", isConcept=" + isConcept + ", sortId=" + sortId + "]";
+				+ ", isEnable=" + isEnable + ", sortId=" + sortId + "]";
 	}
 }

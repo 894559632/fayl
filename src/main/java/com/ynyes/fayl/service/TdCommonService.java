@@ -55,6 +55,7 @@ public class TdCommonService {
 		// 获取所有的案例分类
 		List<TdSampleCategory> sample_category_list = tdSampleCategoryService.findAll();
 		map.addAttribute("sample_category_list", sample_category_list);
+		// 获取网站设置
 		map.addAttribute("setting", TdSetting.getInstance());
 	}
 }

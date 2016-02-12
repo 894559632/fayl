@@ -15,7 +15,7 @@
             	</a>
             </li>
             <li>
-            	<a title="关于泛奥"  href="关于我们.html">
+            	<a title="关于泛奥"  href="/company/info">
 	            	<p>关于泛奥</p>
 	                <p>ABOUT</p>
                 </a>
@@ -42,7 +42,7 @@
                 </a>
             </li>
             <li>
-            	<a title="企业招聘"  href="企业招聘.html">
+            	<a title="企业招聘"  href="/company/job">
 	            	<p>企业招聘</p>
 	                <p>RECRUIT</p>
                 </a>

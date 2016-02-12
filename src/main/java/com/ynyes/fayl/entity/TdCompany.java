@@ -51,6 +51,14 @@ public class TdCompany {
 	@Column
 	private String delvelopmentNumber;
 
+	// 设计理念（引用公司信息编号）
+	@Column
+	private String conceptNumber;
+
+	// 人才战略（引用公司信息编号）
+	@Column
+	private String jobInfoNumber;
+
 	// 设计团队
 	@OneToMany
 	@JoinColumn(name = "companyId")
@@ -100,6 +108,22 @@ public class TdCompany {
 		this.delvelopmentNumber = delvelopmentNumber;
 	}
 
+	public String getConceptNumber() {
+		return conceptNumber;
+	}
+
+	public void setConceptNumber(String conceptNumber) {
+		this.conceptNumber = conceptNumber;
+	}
+
+	public String getJobInfoNumber() {
+		return jobInfoNumber;
+	}
+
+	public void setJobInfoNumber(String jobInfoNumber) {
+		this.jobInfoNumber = jobInfoNumber;
+	}
+
 	public List<TdDesigner> getDesigners() {
 		return designers;
 	}
@@ -135,7 +159,8 @@ public class TdCompany {
 	@Override
 	public String toString() {
 		return "TdCompany [id=" + id + ", title=" + title + ", introductonNumber=" + introductonNumber
-				+ ", delvelopmentNumber=" + delvelopmentNumber + ", designers=" + designers + ", seoTitle=" + seoTitle
-				+ ", seoKeywords=" + seoKeywords + ", seoDescription=" + seoDescription + "]";
+				+ ", delvelopmentNumber=" + delvelopmentNumber + ", conceptNumber=" + conceptNumber + ", jobInfoNumber="
+				+ jobInfoNumber + ", designers=" + designers + ", seoTitle=" + seoTitle + ", seoKeywords=" + seoKeywords
+				+ ", seoDescription=" + seoDescription + "]";
 	}
 }
