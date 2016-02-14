@@ -1,18 +1,18 @@
 //创建一个对象作为命名空间
-var footer = {};
+var remarker = {};
 
 // 创建一个公共方法用户获取指定id下的元素
-footer.getE = function(id) {
+remarker.getE = function(id) {
 	return document.getElementById(id);
 }
 
 // 提交验证的方法
-footer.check = function() {
+remarker.check = function() {
 	// 获取称呼、电话、邮箱、留言
-	var name = footer.getE("visitor_name").value;
-	var phone = footer.getE("visitor_phone").value;
-	var email = footer.getE("visitor_email").value;
-	var remark = footer.getE("visitor_remark").value;
+	var name = remarker.getE("visitor_name").value;
+	var phone = remarker.getE("visitor_phone").value;
+	var email = remarker.getE("visitor_email").value;
+	var content = remarker.getE("visitor_remark").value;
 
 	// 验证称呼不能为空
 	if ("" == name) {
@@ -43,12 +43,30 @@ footer.check = function() {
 		alert("请填写正确的邮箱地址");
 		return false;
 	}
-	
-	//验证留言不能为空
-	if("" == remark){
+
+	// 验证留言不能为空
+	if ("" == content) {
 		alert("请填写您的留言");
 		return false;
 	}
-	
-	return true;
+
+	// 发送异步请求
+	$.ajax({
+		type : "post",
+		url : "/remark/save",
+		data : {
+			name : name,
+			phone : phone,
+			email : email,
+			content : content
+		},
+		error : function() {
+			alert("操作失败，请稍后重试");
+		},
+		success : function(res) {
+			alert(res.message);
+		}
+	});
+
+	return false;
 }

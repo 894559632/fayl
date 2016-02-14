@@ -75,6 +75,7 @@ public class TdCompanyController {
 		Page<TdJob> job_page = tdJobService.findAll(page, 3);
 		map.addAttribute("job_page", job_page);
 		tdCommonService.setHeader(req, map);
+		map.addAttribute("page", page);
 		return "/front/company_job";
 	}
 
@@ -85,5 +86,11 @@ public class TdCompanyController {
 		map.addAttribute("job", job);
 		tdCommonService.setHeader(req, map);
 		return "/front/job_detail";
+	}
+	
+	@RequestMapping(value = "/contact")
+	public String companyContact(HttpServletRequest req,ModelMap map){
+		tdCommonService.setHeader(req, map);
+		return "/front/company_contact";
 	}
 }

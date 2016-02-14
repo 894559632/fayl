@@ -26,8 +26,8 @@ public class TdSetting {
 	public static TdSetting getInstance() {
 		return INSTANCE;
 	}
-	
-	public static void setInstance(TdSetting setting){
+
+	public static void setInstance(TdSetting setting) {
 		INSTANCE = setting;
 	}
 	/*-----------------------------------------------*/
@@ -55,6 +55,10 @@ public class TdSetting {
 	// 通信地址
 	@Column
 	private String address;
+
+	// 地图地址
+	@Column
+	private String mapUri;
 
 	// 联系电话
 	@Column
@@ -148,6 +152,14 @@ public class TdSetting {
 		this.address = address;
 	}
 
+	public String getMapUri() {
+		return mapUri;
+	}
+
+	public void setMapUri(String mapUri) {
+		this.mapUri = mapUri;
+	}
+
 	public String getTelephone() {
 		return telephone;
 	}
@@ -239,9 +251,9 @@ public class TdSetting {
 	@Override
 	public String toString() {
 		return "TdSetting [id=" + id + ", title=" + title + ", domainName=" + domainName + ", logoUri=" + logoUri
-				+ ", company=" + company + ", address=" + address + ", telephone=" + telephone + ", fax=" + fax
-				+ ", qq=" + qq + ", adminEmail=" + adminEmail + ", icpNumber=" + icpNumber + ", seoTitle=" + seoTitle
-				+ ", seoKeywords=" + seoKeywords + ", seoDescription=" + seoDescription + ", copyright=" + copyright
-				+ ", isTouchEnable=" + isTouchEnable + ", touchUri=" + touchUri + "]";
+				+ ", company=" + company + ", address=" + address + ", mapUri=" + mapUri + ", telephone=" + telephone
+				+ ", fax=" + fax + ", qq=" + qq + ", adminEmail=" + adminEmail + ", icpNumber=" + icpNumber
+				+ ", seoTitle=" + seoTitle + ", seoKeywords=" + seoKeywords + ", seoDescription=" + seoDescription
+				+ ", copyright=" + copyright + ", isTouchEnable=" + isTouchEnable + ", touchUri=" + touchUri + "]";
 	}
 }

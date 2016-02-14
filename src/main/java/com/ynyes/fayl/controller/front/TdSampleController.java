@@ -72,6 +72,7 @@ public class TdSampleController {
 		}
 		map.addAttribute("sample_page", sample_page);
 		map.addAttribute("page", page);
+		map.addAttribute("number", number);
 		tdCommonService.setHeader(req, map);
 		return "/client/sample_list";
 	}

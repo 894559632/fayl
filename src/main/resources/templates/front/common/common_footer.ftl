@@ -13,7 +13,7 @@
 	            <p>Q Q：${setting.qq!''}</p>
 	            </dt>
 	
-				<form action="/remark/save" method="post" onsubmit="return footer.check();">
+				<form method="post" onsubmit="return remarker.check();">
 		            <dd class="messagetous">
 		                <span>在线留言</span>
 		                <div class="message-item">
@@ -36,4 +36,4 @@
 	    </div>
 	</#if>
 </div>
-<script type="text/javascript" src="/front/js/Mr.D/footer.js"></script>
+<script type="text/javascript" src="/front/js/Mr.D/remark.js"></script>

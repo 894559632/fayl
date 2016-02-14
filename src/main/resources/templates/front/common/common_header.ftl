@@ -21,7 +21,7 @@
                 </a>
             </li>
             <li>
-            	<a title="泛奥研究" href="泛奥研究.html">
+            	<a title="泛奥研究" href="/research/list">
 	            	<p>泛奥研究</p>
 	                <p>RESEARCH</p>
                 </a>
@@ -48,7 +48,7 @@
                 </a>
             </li>
             <li>
-            	<a title="联系我们" href="联系我们.html">
+            	<a title="联系我们" href="/company/contact">
 	            	<p>联系我们</p>
 	                <p>CONTACT</p>
                 </a>

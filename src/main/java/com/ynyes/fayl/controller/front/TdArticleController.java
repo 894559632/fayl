@@ -36,7 +36,7 @@ public class TdArticleController {
 
 	@Autowired
 	private TdCommonService tdCommonService;
-	
+
 	/**
 	 * 跳转到分类列表页的方法
 	 * 
@@ -47,7 +47,7 @@ public class TdArticleController {
 		TdArticleCategory article_category = null;
 		List<TdArticleCategory> all_article_category = tdArticleCategoryService.findAll();
 		map.addAttribute("all_article_category", all_article_category);
-		if (null == number) {
+		if (null == number || "default".equals(number)) {
 			// 如果没有文章分类的编号，则查找所有的分类，默认第一个
 			for (TdArticleCategory category : all_article_category) {
 				if (null != category) {
@@ -75,6 +75,8 @@ public class TdArticleController {
 			}
 			map.addAttribute("article_page", article_page);
 		}
+		map.addAttribute("number", number);
+		map.addAttribute("page", page);
 		tdCommonService.setHeader(req, map);
 		return "/front/article_list";
 	}
