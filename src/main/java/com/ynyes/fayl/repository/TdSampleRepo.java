@@ -24,7 +24,7 @@ public interface TdSampleRepo extends PagingAndSortingRepository<TdSample, Long>
 	 * @author dengxiao
 	 */
 	Page<TdSample> findByCategoryNumberOrderBySortIdAsc(String categoryNumber, Pageable page);
-	
+
 	/**
 	 * 根据分类编号查找案例，按照排序号正序排序（不分页）
 	 * 
@@ -38,4 +38,11 @@ public interface TdSampleRepo extends PagingAndSortingRepository<TdSample, Long>
 	 * @author DengXiao
 	 */
 	TdSample findByNumber(String number);
+
+	/**
+	 * 查找首页推荐案例，根据排序号正序排序（分页）
+	 * 
+	 * @author DengXiao
+	 */
+	Page<TdSample> findByIsIndexRecommendTrueOrderBySortIdAsc(Pageable page);
 }

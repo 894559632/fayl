@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.mobile.device.Device;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,12 +55,15 @@ public class TdIndexController {
 
 	@Autowired
 	private TdSampleService tdSampleService;
-	
+
 	@Autowired
 	private TdSampleCategoryService tdSampleCategoryService;
 
 	@RequestMapping
-	public String index(HttpServletRequest req, ModelMap map) {
+	public String index(HttpServletRequest req, ModelMap map, Device device) {
+		if (device.isMobile() || device.isTablet()) {
+			return "redirect:/touch";
+		}
 		// 初始化公司对象
 		tdCommonService.initCompany();
 		// 获取公司介绍的信息编号
@@ -73,8 +77,8 @@ public class TdIndexController {
 		// 初始化网站设置对象
 		tdCommonService.initSetting();
 		map.addAttribute("setting", TdSetting.getInstance());
-		
-		//查找所有的案例分类
+
+		// 查找所有的案例分类
 		List<TdSampleCategory> sample_category_list = tdSampleCategoryService.findAll();
 		map.addAttribute("sample_category_list", sample_category_list);
 
