@@ -69,14 +69,14 @@ public class TdSampleService {
 		PageRequest pageRequest = new PageRequest(page, size);
 		return repository.findByCategoryNumberOrderBySortIdAsc(categoryNumber, pageRequest);
 	}
-	
+
 	/**
 	 * 根据分类编号查找案例，按照排序号正序排序（不分页）
 	 * 
 	 * @author dengxiao
 	 */
-	public List<TdSample> findByCategoryNumberOrderBySortIdAsc(String categoryNumber){
-		if(null == categoryNumber){
+	public List<TdSample> findByCategoryNumberOrderBySortIdAsc(String categoryNumber) {
+		if (null == categoryNumber) {
 			return null;
 		}
 		return repository.findByCategoryNumberOrderBySortIdAsc(categoryNumber);
@@ -87,10 +87,20 @@ public class TdSampleService {
 	 * 
 	 * @author DengXiao
 	 */
-	public TdSample findByNumber(String number){
-		if(null == number){
+	public TdSample findByNumber(String number) {
+		if (null == number) {
 			return null;
 		}
 		return repository.findByNumber(number);
+	}
+
+	/**
+	 * 查找首页推荐案例，根据排序号正序排序（分页）
+	 * 
+	 * @author DengXiao
+	 */
+	public Page<TdSample> findByIsIndexRecommendTrueOrderBySortIdAsc(int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+		return repository.findByIsIndexRecommendTrueOrderBySortIdAsc(pageRequest);
 	}
 }

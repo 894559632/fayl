@@ -21,15 +21,18 @@ public class TdRemark {
 
 	public TdRemark() {
 		super();
+		this.remarkDate = new Date();
+		this.sortId = 99.9;
 	}
 
-	public TdRemark(String number, String name, String phone, String email, String content) {
+	public TdRemark(String number, String name, String phone, String email, String content, Long type) {
 		super();
 		this.number = number;
 		this.name = name;
 		this.phone = phone;
 		this.email = email;
 		this.content = content;
+		this.type = type;
 		this.remarkDate = new Date();
 		this.sortId = 99.9;
 	}
@@ -63,6 +66,10 @@ public class TdRemark {
 	@Column
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date remarkDate;
+
+	// 类型：1. PC留言；2. 微网站（触屏）留言
+	@Column
+	private Long type;
 
 	// 排序号
 	@Column
@@ -124,6 +131,14 @@ public class TdRemark {
 		this.remarkDate = remarkDate;
 	}
 
+	public Long getType() {
+		return type;
+	}
+
+	public void setType(Long type) {
+		this.type = type;
+	}
+
 	public Double getSortId() {
 		return sortId;
 	}
@@ -135,7 +150,7 @@ public class TdRemark {
 	@Override
 	public String toString() {
 		return "TdRemark [id=" + id + ", number=" + number + ", name=" + name + ", phone=" + phone + ", email=" + email
-				+ ", content=" + content + ", remarkDate=" + remarkDate + ", sortId=" + sortId + "]";
+				+ ", content=" + content + ", remarkDate=" + remarkDate + ", type=" + type + ", sortId=" + sortId + "]";
 	}
 
 }
