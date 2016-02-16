@@ -8,7 +8,7 @@ $(function () {
         sendurl: null, //发送地址
         filetypes: "*.jpg;*.jpge;*.png;*.gif;*.doc;*.docx;*.xls;*.xlsx;*.ppt;*.pptx;*.pdf;*.rar;*.zip;*.txt;", //文件类型
         filesize: "1024000", //文件大小
-        btntext: "浏览...", //上传按钮的文字
+        btntext: "浏览.", //上传按钮的文字
         btnwidth: 48, //上传按钮的宽度
         btnheight: 28, //上传按钮的高度
         flashurl: null //FLASH上传控件相对地址

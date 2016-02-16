@@ -22,7 +22,7 @@ import com.ynyes.fayl.util.ImageUtil;
  */
 @Controller
 public class TdImageController {
-	/*
+	/* 	
 	 * 返回图片
 	 */
 	@RequestMapping(value = "/images/{name:.+}", method = RequestMethod.GET)

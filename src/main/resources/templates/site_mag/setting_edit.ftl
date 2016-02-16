@@ -181,9 +181,11 @@ $(function () {
             <dt>地图图片</dt>
             <dd>
                 <input id="mapUri" name="wxQrCode" type="text" datatype="*0-255" value="<#if setting??>${setting.wxQrCode!""}</#if>" class="input normal upload-path">
+                <#--
                 <div class="upload-box upload-img"></div>
                 <span class="Validform_checktip"></span>
                 <div class="photo-list thumb_wxImgUrl_show"></div>
+                -->
             </dd>
         </dl>
         <#--

@@ -3,12 +3,15 @@ package com.ynyes.fayl.controller.management;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +24,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ynyes.fayl.service.TdArticleCategoryService;
 import com.ynyes.fayl.service.TdArticleService;
 import com.ynyes.fayl.util.SiteMagConstant;
+
+import net.sf.json.JSONObject;
+
+
+
+
+
 
 /**
  * 后台首页控制器
@@ -43,7 +53,7 @@ public class TdUploadController {
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> upload(String action,
-            @RequestParam MultipartFile Filedata, HttpServletRequest req) {
+            @RequestParam MultipartFile Filedata, HttpServletRequest req, HttpServletResponse response) {
         Map<String, Object> res = new HashMap<String, Object>();
         res.put("status", 0);
         String username = (String) req.getSession().getAttribute("manager");
@@ -91,8 +101,30 @@ public class TdUploadController {
             res.put("status", 0);
             res.put("msg", "上传文件失败！");
         }
+        response.reset();
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html");
+        PrintWriter writer = null;
+        try {
+            writer = response.getWriter();
+            JSONObject jsonObject = JSONObject.fromObject(res);
+            writer.println(jsonObject);  //想办法把map转成json
+            writer.flush();
+        } catch (IOException e) {
+            System.err.println(e);
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
 
-        return res;
+        return null;
+
+//        return res;
 
     }
     @RequestMapping(value = "/upload/client", method = RequestMethod.POST)
@@ -154,7 +186,7 @@ public class TdUploadController {
     @RequestMapping(value = "/editor/upload", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> editorUpload(String action,
-            @RequestParam MultipartFile imgFile, HttpServletRequest req) {
+            @RequestParam MultipartFile imgFile, HttpServletRequest req , HttpServletResponse response) {
         Map<String, Object> res = new HashMap<String, Object>();
 
         res.put("error", 1);
@@ -197,7 +229,30 @@ public class TdUploadController {
             res.put("msg", "上传文件失败！");
         }
 
-        return res;
+        response.reset();
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html");
+        PrintWriter writer = null;
+        try {
+            writer = response.getWriter();
+            JSONObject jsonObject = JSONObject.fromObject(res);
+            writer.println(jsonObject);  //想办法把map转成json
+            writer.flush();
+        } catch (IOException e) {
+            System.err.println(e);
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
+
+        return null;
+        
+//        return res;
 
     }
 
