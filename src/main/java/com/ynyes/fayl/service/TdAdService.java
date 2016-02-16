@@ -43,6 +43,11 @@ public class TdAdService {
 	public List<TdAd> findAll() {
 		return (List<TdAd>) repository.findAll();
 	}
+	
+	public Page<TdAd> findAll(int page,int size){
+		PageRequest pageRequest = new PageRequest(page, size);
+		return repository.findAll(pageRequest);
+	}
 
 	/**
 	 * 根据分类编号查找所有的启用的未过期的广告，并按照排序号正序排序（不分页）
@@ -72,4 +77,5 @@ public class TdAdService {
 		return repository.findByCategoryNumberAndIsEnableTrueAndStartTimeBeforeAndEndTimeAfterOrderBySortIdAsc(
 				categoryNumber, new Date(), new Date(), pageRequest);
 	}
+
 }
