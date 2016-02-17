@@ -316,12 +316,7 @@ function del_goods_comb(obj) {
             <div class="content-tab-ul-wrap" >
                 <ul>
                     <li><a href="javascript:;" onclick="tabs(this);" class="selected">基本信息</a></li>
-                    <li><a href="javascript:;" onclick="tabs(this);" class="">扩展选项</a></li>
                     <li><a href="javascript:;" onclick="tabs(this);" class="">详细描述</a></li>
-                    <li><a href="javascript:;" onclick="tabs(this);" class="">价格与库存</a></li>
-                    <li><a href="javascript:;" onclick="tabs(this);" class="">促销</a></li>
-                    <li><a href="javascript:;" onclick="tabs(this);" class="">赠品</a></li>
-                    <li><a href="javascript:;" onclick="tabs(this);" class="">组合商品</a></li>
                     <li><a href="javascript:;" onclick="tabs(this);" class="">SEO选项</a></li>
                 </ul>
             </div>
@@ -332,13 +327,13 @@ function del_goods_comb(obj) {
             <dt>所属类别</dt>
             <dd>
                 <div class="rule-single-select">
-                    <select name="categoryId" id="categoryId" datatype="*" sucmsg=" ">
+                    <select name="categoryNumber" id="categoryId" datatype="*" sucmsg=" ">
                         <#if !goods??>
                         <option value="">请选择类别...</option>
                         </#if>
                         <#if category_list??>
                             <#list category_list as c>
-                                <option value="${c.id?c}" <#if goods?? && goods.categoryId==c.id>selected="selected"</#if>><#if c.layerCount?? && c.layerCount gt 1><#list 1..(c.layerCount-1) as a>　</#list>├ </#if>${c.title!""}</option>
+                                <option value="${c.number!'0'}" <#if goods?? && goods.number==c.number>selected="selected"</#if>><#if c.layerCount?? && c.layerCount?? &&c.layerCount gt 1><#list 1..(c.layerCount-1) as a>　</#list>├ </#if>${c.title!""}</option>
                             </#list>
                         </#if>
                     </select>
@@ -346,48 +341,28 @@ function del_goods_comb(obj) {
             </dd>
         </dl>
         <dl>
-            <dt>显示状态</dt>
+            <dt>案例标题</dt>
             <dd>
-                <div class="rule-multi-radio multi-radio">
-                    <span>
-                        <input type="radio" name="isOnSale" value="1" <#if goods??==false || goods.isOnSale==true>checked="checked"</#if>>
-                        <label>上架</label>
-                        <input type="radio" name="isOnSale" value="0" <#if goods?? && goods.isOnSale?? && goods.isOnSale==false>checked="checked"</#if>>
-                        <label>下架</label>
-                    </span>
-                </div>
+                <input name="title" type="text" value="<#if goods??>${goods.title!""}</#if>" id="txtSortId" class="input txt100" datatype="*" sucmsg=" ">
+                <span class="Validform_checktip">*案例标题</span>
             </dd>
         </dl>
-        <#if site_list??>
         <dl>
-            <dt>所属站点</dt>
+            <dt>案例作者</dt>
             <dd>
-                <div class="rule-single-select">
-                    <select name="siteId" datatype="*0-100" sucmsg=" ">
-                        <option value="" <#if !site_list??>selected="selected"</#if>>请选择...</option>
-                        <#list site_list as w>
-                            <option value="${w.id?c!""}" <#if goods?? && goods.siteId?? && goods.siteId==w.id>selected="selected"</#if>>${w.title!""}</option>
-                        </#list>
-                    </select>
-                </div>
+                <input name="designer" type="text" value="<#if goods??>${goods.designer!""}</#if>" id="txtSortId" class="input txt100" datatype="*" sucmsg=" ">
+                <span class="Validform_checktip">*案例作者</span>
             </dd>
         </dl>
-        </#if>
         <dl>
-            <dt>推荐类型</dt>
+            <dt>首页推荐</dt>
             <dd>
-                <div class="rule-multi-checkbox multi-checkbox">
+                <div class="rule-multi-radio">
                     <span>
-                        <input id="cblItem_0" type="checkbox" name="isRecommendIndex" <#if goods?? && goods.isRecommendIndex?? && goods.isRecommendIndex==true>checked="checked"</#if>>
-                        <label for="cblItem_0">首页推荐</label>
-                        <input id="cblItem_1" type="checkbox" name="isRecommendType" <#if goods?? && goods.isRecommendType?? && goods.isRecommendType==true>checked="checked"</#if>>
-                        <label for="cblItem_1">分类推荐</label>
-                        <input id="cblItem_2" type="checkbox" name="isHot" <#if goods?? && goods.isHot?? && goods.isHot==true>checked="checked"</#if>>
-                        <label for="cblItem_2">热销</label>
-                        <input id="cblItem_3" type="checkbox" name="isNew" <#if goods?? && goods.isNew?? && goods.isNew==true>checked="checked"</#if>>
-                        <label for="cblItem_3">新品</label>
-                        <input id="cblItem_4" type="checkbox" name="isSpecialPrice" <#if goods?? && goods.isSpecialPrice?? && goods.isSpecialPrice==true>checked="checked"</#if>>
-                        <label for="cblItem_4">特价</label>
+                        <input type="radio" name="isIndexRecommend" value="1" <#if goods?? && goods.isIndexRecommend?? && goods.isIndexRecommend==true>checked="checked"</#if>>
+                        <label>是</label>
+                        <input type="radio" name="isIndexRecommend" value="0" <#if goods??==false || goods.isIndexRecommend??==false || goods.isIndexRecommend==false>checked="checked"</#if>>
+                        <label>否</label>
                     </span>
                 </div>
             </dd>
@@ -404,83 +379,24 @@ function del_goods_comb(obj) {
         <dl>
             <dt>封面图片</dt>
             <dd>
-                <input id="txtImgUrl" name="coverImageUri" type="text" value="<#if goods??>${goods.coverImageUri!""}</#if>" class="input normal upload-path">
+                <input id="txtImgUrl" name="coverImgUri" type="text" value="<#if goods??>${goods.coverImgUri!""}</#if>" class="input normal upload-path">
                 <div class="upload-box upload-img"></div>
                 <div id="thumb_ImgUrl_show1" class="photo-list thumb_ImgUrl_show">
                 </div>
             </dd>
         </dl>
         
-        <div id="id-param-sec">
-            <#if goods??>
-                <#include "/site_mag/goods_category_param_list.ftl" />
-            </#if>
-        </div>
-    </div>
-    <div class="tab-content" style="display: none;">
-        <#--
         <dl>
-            <dt>商品名称</dt>
-            <dd>
-                <input name="name" type="text" value="<#if goods??>${goods.name!""}</#if>" class="input normal" datatype="*2-100" sucmsg=" ">
-                <span class="Validform_checktip">*标题最多100个字符</span>
-            </dd>
-        </dl>
-        -->
-        <dl>
-            <dt>商品标题</dt>
-            <dd>
-                <input name="title" type="text" value="<#if goods??>${goods.title!""}</#if>" class="input normal" datatype="*2-100" sucmsg=" ">
-                <span class="Validform_checktip">*标题最多100个字符</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>商品副标题</dt>
-            <dd>
-                <input name="subTitle" type="text" value="<#if goods??>${goods.subTitle!""}</#if>" class="input normal" datatype="*1-255" sucmsg=" ">
-                <span class="Validform_checktip">*标题最多255个字符</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>商品编码</dt>
-            <dd>
-                <input name="code" type="text" value="<#if goods??>${goods.code!""}</#if>" class="input normal" datatype="*0-255" sucmsg=" ">
-                <span class="Validform_checktip">*编码最多255个字符</span>
-            </dd>
-        </dl>
-        <#--
-        <dl>
-            <dt>服务</dt>
-            <dd>
-                <textarea name="service" rows="2" cols="20" class="input" datatype="*0-255" sucmsg=" "><#if goods??>${goods.service!""}</#if></textarea>
-                <span class="Validform_checktip">255个字符以内</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>促销</dt>
-            <dd>
-                <textarea name="promotion" rows="2" cols="20" class="input" datatype="*0-255" sucmsg=" "><#if goods??>${goods.promotion!""}</#if></textarea>
-                <span class="Validform_checktip">255个字符以内</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>配置</dt>
-            <dd>
-                <textarea name="configuration" rows="2" cols="20" class="input" datatype="*0-255" sucmsg=" "><#if goods??>${goods.configuration!""}</#if></textarea>
-                <span class="Validform_checktip">255个字符以内</span>
-            </dd>
-        </dl>
-        -->
-        <dl>
-            <dt>上架时间</dt>
+            <dt>设计时间</dt>
             <dd>
                 <div class="input-date">
-                    <input name="onSaleTime" type="text" value="<#if goods??>${goods.onSaleTime!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="请选择正确的日期" sucmsg=" ">
+                    <input name="designDate" type="text" value="<#if goods??>${goods.designDate!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="请选择正确的日期" sucmsg=" ">
                     <i>日期</i>
                 </div>
                 <span class="Validform_checktip">不选择默认为当前时间</span>
             </dd>
         </dl>
+        
     </div>
     
     <div class="tab-content" style="display: none;">
@@ -490,8 +406,8 @@ function del_goods_comb(obj) {
                 <div class="upload-box upload-show360"></div>
                 <div class="photo-list_show360">
                     <ul>
-                        <#if goods?? && goods.showPictures??>
-                            <#list goods.showPictures?split(",") as uri>
+                        <#if goods?? && goods.imgUriList??>
+                            <#list goods.imgUriList?split(",") as uri>
                                 <#if uri != "">
                                 <li>
                                     <input type="hidden" name="hid_photo_name_show360" value="0|${uri!""}|${uri!""}">
@@ -508,486 +424,16 @@ function del_goods_comb(obj) {
             </dd>
         </dl>
         <dl>
-            <dt>详细描述</dt>
+            <dt>案例简介</dt>
             <dd>
-                <textarea name="detail" class="editor"><#if goods??>${goods.detail!""}</#if></textarea>
-            </dd>
-        </dl>
-        <dl>
-            <dt>售后服务</dt>
-            <dd>
-                <textarea name="afterMarketService" class="editor"><#if goods??>${goods.afterMarketService!""}</#if></textarea>
-            </dd>
-        </dl>
-    </div>
-    
-    <div class="tab-content" style="display: none;">
-        <#if provider_list??>
-        <dl>
-            <dt>供应商</dt>
-            <dd>
-                <div class="rule-single-select">
-                    <select name="providerId" datatype="*0-100" sucmsg=" ">
-                        <option value="" <#if !provider_list??>selected="selected"</#if>>请选择类别...</option>
-                        <#list provider_list as w>
-                            <option value="${w.id?c!""}" <#if goods?? && goods.providerId?? && goods.providerId==w.id>selected="selected"</#if>>${w.title!""}</option>
-                        </#list>
-                    </select>
-                </div>
-            </dd>
-        </dl>
-        </#if>
-        <dl>
-            <dt>成本价</dt>
-            <dd>
-                <input name="costPrice" type="text" value="<#if goods?? && goods.costPrice??>${goods.costPrice?string("#.##")}<#else>0</#if>" class="input normal" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" sucmsg=" ">
-                <span class="Validform_checktip">成本价，不在前台显示</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>市场价</dt>
-            <dd>
-                <input name="marketPrice" type="text" value="<#if goods?? && goods.marketPrice??>${goods.marketPrice?string("0.00")}<#else>0</#if>" class="input normal" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" sucmsg=" ">
-                <span class="Validform_checktip">市场价格</span>
-            </dd>
-        </dl>
-        <#--
-        <dl>
-            <dt>包含费用</dt>
-            <dd>
-                <input name="includePrice" type="text" value="<#if goods?? && goods.includePrice??>${goods.includePrice?string("#.##")}<#else>0</#if>" class="input normal" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" sucmsg=" ">
-                <span class="Validform_checktip">电话卡销售时包含的话费</span>
-            </dd>
-        </dl>
-        -->
-        <dl>
-            <dt>供货价</dt>
-            <dd>
-                <input id="outFactoryPrice" name="outFactoryPrice" type="text" value="<#if goods?? && goods.outFactoryPrice??>${goods.outFactoryPrice?string("0.##")}<#else>0</#if>" class="input normal" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" sucmsg=" ">
-                <span class="Validform_checktip">*商品供货价</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>销售价</dt>
-            <dd>
-                <input id="idComputeSalePrice" name="salePrice" type="text" value="<#if goods?? && goods.salePrice??>${goods.salePrice?string("0.00")}<#else>0</#if>" class="input normal" sucmsg="" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/">
-                <span class="Validform_checktip">*销售价</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>赠送粮草</dt>
-            <dd>
-                <input name="returnPoints" type="text" value="<#if goods?? && goods.returnPoints??>${goods.returnPoints?c!"0"}<#else>0</#if>" class="input normal" datatype="n" sucmsg=" ">
-                <span class="Validform_checktip">购买该商品赠送的粮草</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>同盟店返利比例</dt>
-            <dd>
-                <input name="shopReturnRation" type="text" value="<#if goods?? && goods.shopReturnRation??>${goods.shopReturnRation?string("0.00")}<#else>0</#if>" class="input normal" sucmsg="">
-                <span class="Validform_checktip">同盟店返利 = 销售价 * 同盟店返利比例</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>平台服务费比例</dt>
-            <dd>
-                <input name="platformServiceReturnRation" type="text" value="<#if goods?? && goods.platformServiceReturnRation??>${goods.platformServiceReturnRation?string("0.00")}<#else>0.06</#if>" class="input normal" sucmsg="">
-                <span class="Validform_checktip">平台服务费 = 销售价 * 平台服务费比例</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>培训服务费比例</dt>
-            <dd>
-                <input name="trainServiceReturnRation" type="text" value="<#if goods?? && goods.trainServiceReturnRation??>${goods.trainServiceReturnRation?string("0.00")}<#else>0.02</#if>" class="input normal" sucmsg="">
-                <span class="Validform_checktip">培训服务费 = 成本价 * 培训服务费比例</span>
-            </dd>
-        </dl>
-        <#--
-        <dl>
-            <dt>返现额</dt>
-            <dd>
-                <input id="returnPrice" name="returnPrice" type="text" value="<#if goods?? && goods.returnPrice??>${goods.returnPrice?string("0.##")}<#else>0</#if>" class="input normal" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" sucmsg=" ">
-                <span class="Validform_checktip">*返还同盟店的金额，不填时为0</span>
-            </dd>
-        </dl>
-        -->
-        <dl>
-            <dt>粮草购买限额</dt>
-            <dd>
-                <input id="pointLimited" name="pointLimited" type="text" value="<#if goods?? && goods.pointLimited??>${goods.pointLimited?c!"0"}<#else>0</#if>" class="input normal" datatype="n" sucmsg=" ">
-                <span class="Validform_checktip">购买时可使用的粮草限额</span>
-            </dd>
-        </dl>
-        <#if warehouse_list??>
-        <dl>
-            <dt>所在仓库</dt>
-            <dd>
-                <div class="rule-single-select">
-                    <select name="warehouseId" datatype="*0-100" sucmsg=" ">
-                        <option value="" <#if !warehouse_list??>selected="selected"</#if>>请选择类别...</option>
-                        <#list warehouse_list as w>
-                            <option value="${w.id?c!""}" <#if goods?? && goods.warehouseId?? && goods.warehouseId==w.id>selected="selected"</#if>>${w.title!""}</option>
-                        </#list>
-                    </select>
-                </div>
-            </dd>
-        </dl>
-        </#if>
-        <dl>
-            <dt>库存余量</dt>
-            <dd>
-                <input name="leftNumber" type="text" value="<#if goods?? && goods.leftNumber??>${goods.leftNumber?c!"99"}<#else>99</#if>" class="input normal" datatype="n" sucmsg=" ">
-                <span class="Validform_checktip">库存为0时显示为缺货</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>销量</dt>
-            <dd>
-                <input name="soldNumber" type="text" value="<#if goods?? && goods.soldNumber??>${goods.soldNumber?c!"0"}<#else>0</#if>" class="input normal" datatype="n" sucmsg=" ">
-                <span class="Validform_checktip">商品已销售数量</span>
-            </dd>
-        </dl>
-    </div>
-    
-    <div class="tab-content" style="display: none;">
-        <dl>
-            <dt>支持一元抢拍</dt>
-            <dd>
-                <div class="rule-multi-radio multi-radio">
-                    <span>
-                        <input type="radio" name="isFlashSale" value="1" <#if goods?? && goods.isFlashSale?? && goods.isFlashSale==true>checked="checked"</#if> >
-                        <label>是</label>
-                        <input type="radio" name="isFlashSale" value="0" <#if !goods?? || goods.isFlashSale??==false || goods.isFlashSale==false>checked="checked"</#if>>
-                        <label>否</label>
-                    </span>
-                </div>
-            </dd>
-        </dl>
-        <dl>
-            <dt>开始时间</dt>
-            <dd>
-                <div class="input-date">
-                    <input name="flashSaleStartTime" type="text" value="<#if goods??>${goods.flashSaleStartTime!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="请选择正确的日期" sucmsg=" ">
-                    <i>日期</i>
-                </div>
-                <span class="Validform_checktip">不选择默认为当前时间</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>结束时间</dt>
-            <dd>
-                <div class="input-date">
-                    <input name="flashSaleStopTime" type="text" value="<#if goods??>${goods.flashSaleStopTime!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="请选择正确的日期" sucmsg=" ">
-                    <i>日期</i>
-                </div>
-                <span class="Validform_checktip">不选择默认为当前时间</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>一元抢拍展示图片</dt>
-            <dd>
-                <input id="flashSaleImage" name="flashSaleImage" type="text" value="<#if goods??>${goods.flashSaleImage!""}</#if>" class="input normal upload-path">
-                <div class="upload-box upload-img"></div>
-                <div id="thumb_ImgUrl_show3" class="photo-list thumb_ImgUrl_show">
-                </div>
+                <textarea name="introduction" class="editor"><#if goods??>${goods.introduction!""}</#if></textarea>
             </dd>
         </dl>
         
         <dl>
-            <dt>一元抢拍价</dt>
+            <dt>案例详情</dt>
             <dd>
-                <input name="flashSalePrice" type="text" value="<#if goods?? && goods.flashSalePrice??>${goods.flashSalePrice?string("#.##")}<#else>0</#if>" class="input normal" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" sucmsg=" ">
-                <span class="Validform_checktip">商品限时抢购价格</span>
-            </dd>
-        </dl>
-        
-        <dl>
-            <dt>一元抢拍剩余数量</dt>
-            <dd>
-                <input name="flashSaleLeftNumber" type="text" value="<#if goods??>${goods.flashSaleLeftNumber!''}<#else>0</#if>" class="input normal" datatype="n0-10" sucmsg=" ">
-                <span class="Validform_checktip">为0时抢购结束</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>一元抢拍销量</dt>
-            <dd>
-                <input name="flashSaleSoldNumber" type="text" value="<#if goods??>${goods.flashSaleSoldNumber!''}<#else>0</#if>" class="input normal" datatype="n0-10" sucmsg=" ">
-                <span class="Validform_checktip">已销售商品数量</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>团购展示图片</dt>
-            <dd>
-                <input id="groupSaleImage" name="groupSaleImage" type="text" value="<#if goods??>${goods.groupSaleImage!""}</#if>" class="input normal upload-path">
-                <div class="upload-box upload-img"></div>
-                <div id="thumb_ImgUrl_show2" class="photo-list thumb_ImgUrl_show">
-                </div>
-            </dd>
-        </dl>
-        <dl>
-            <dt>开启十人团</dt>
-            <dd>
-                <div class="rule-multi-radio">
-                    <span>
-                        <input type="radio" name="isGroupSale" value="1" <#if goods?? && goods.isGroupSale?? && goods.isGroupSale==true>checked="checked"</#if>>
-                        <label>是</label>
-                        <input type="radio" name="isGroupSale" value="0" <#if goods??==false || goods.isGroupSale??==false || goods.isGroupSale==false>checked="checked"</#if>>
-                        <label>否</label>
-                    </span>
-                </div>
-            </dd>
-        </dl>
-        <dl>
-            <dt>十人团开始时间</dt>
-            <dd>
-                <div class="input-date">
-                    <input name="groupSaleStartTime" type="text" value="<#if goods??>${goods.groupSaleStartTime!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="请选择正确的日期" sucmsg=" ">
-                    <i>日期</i>
-                </div>
-                <span class="Validform_checktip">不选择默认为当前时间</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>十人团结束时间</dt>
-            <dd>
-                <div class="input-date">
-                    <input name="groupSaleStopTime" type="text" value="<#if goods??>${goods.groupSaleStopTime!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="请选择正确的日期" sucmsg=" ">
-                    <i>日期</i>
-                </div>
-                <span class="Validform_checktip">不选择默认为当前时间</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>预付定金</dt>
-            <dd>
-                <input name="groupSalePrice" type="text" value="<#if goods?? && goods.groupSalePrice??>${goods.groupSalePrice?string("0.00")}<#else>0</#if>" class="input normal" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" sucmsg=" ">
-                <span class="Validform_checktip">预付定金额度</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>三人团价格</dt>
-            <dd>
-                <input name="groupSaleThreePrice" type="text" value="<#if goods?? && goods.groupSaleThreePrice??>${goods.groupSaleThreePrice?string("0.00")}<#else>0</#if>" class="input normal" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" sucmsg=" ">
-                <span class="Validform_checktip">三人团商品团购价格</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>七人团价格</dt>
-            <dd>
-                <input name="groupSaleSevenPrice" type="text" value="<#if goods?? && goods.groupSaleSevenPrice??>${goods.groupSaleSevenPrice?string("0.00")}<#else>0</#if>" class="input normal" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" sucmsg=" ">
-                <span class="Validform_checktip">七人团商品团购价格</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>十人团价格</dt>
-            <dd>
-                <input name="groupSaleTenPrice" type="text" value="<#if goods?? && goods.groupSaleTenPrice??>${goods.groupSaleTenPrice?string("0.00")}<#else>0</#if>" class="input normal" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" sucmsg=" ">
-                <span class="Validform_checktip">十人团商品团购价格</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>开启百人团</dt>
-            <dd>
-                <div class="rule-multi-radio">
-                    <span>
-                        <input type="radio" name="isGroupSaleHundred" value="1" <#if goods?? && goods.isGroupSaleHundred?? && goods.isGroupSaleHundred==true>checked="checked"</#if>>
-                        <label>是</label>
-                        <input type="radio" name="isGroupSaleHundred" value="0" <#if goods??==false || goods.isGroupSaleHundred??==false || goods.isGroupSaleHundred==false>checked="checked"</#if>>
-                        <label>否</label>
-                    </span>
-                </div>
-            </dd>
-        </dl>
-        <dl>
-            <dt>团购剩余数量</dt>
-            <dd>
-                <input name="groupSaleLeftNumber" type="text" value="<#if goods?? && goods.groupSaleLeftNumber??>${goods.groupSaleLeftNumber?c}<#else>0</#if>" class="input normal" datatype="n0-10" sucmsg=" ">
-                <span class="Validform_checktip">为0时团购结束</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>团购销量</dt>
-            <dd>
-                <input name="groupSaleSoldNumber" type="text" value="<#if goods?? && goods.groupSaleSoldNumber??>${goods.groupSaleSoldNumber?c}<#else>0</#if>" class="input normal" datatype="n0-10" sucmsg=" ">
-                <span class="Validform_checktip">团购已售商品数量</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>百人团开始时间</dt>
-            <dd>
-                <div class="input-date">
-                    <input name="groupSaleHundredStartTime" type="text" value="<#if goods??>${goods.groupSaleHundredStartTime!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="请选择正确的日期" sucmsg=" ">
-                    <i>日期</i>
-                </div>
-                <span class="Validform_checktip">不选择默认为当前时间</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>百人团结束时间</dt>
-            <dd>
-                <div class="input-date">
-                    <input name="groupSaleHundredStopTime" type="text" value="<#if goods??>${goods.groupSaleHundredStopTime!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="请选择正确的日期" sucmsg=" ">
-                    <i>日期</i>
-                </div>
-                <span class="Validform_checktip">不选择默认为当前时间</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>百人团预付定金</dt>
-            <dd>
-                <input name="groupSalePrePayPrice" type="text" value="<#if goods?? && goods.groupSalePrePayPrice??>${goods.groupSalePrePayPrice?string("0.00")}<#else>0</#if>" class="input normal" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" sucmsg=" ">
-                <span class="Validform_checktip">预付定金额度</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>百人团价格</dt>
-            <dd>
-                <input name="groupSaleHundredPrice" type="text" value="<#if goods?? && goods.groupSaleHundredPrice??>${goods.groupSaleHundredPrice?string("0.00")}<#else>0</#if>" class="input normal" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" sucmsg=" ">
-                <span class="Validform_checktip">十人团商品团购价格</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>百人团剩余数量</dt>
-            <dd>
-                <input name="groupSaleHundredLeftNumber" type="text" value="<#if goods?? && goods.groupSaleHundredLeftNumber??>${goods.groupSaleHundredLeftNumber?c}<#else>0</#if>" class="input normal" datatype="n0-10" sucmsg=" ">
-                <span class="Validform_checktip">为0时百人团结束</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>百人团销量</dt>
-            <dd>
-                <input name="groupSaleHundredSoldNumber" type="text" value="<#if goods?? && goods.groupSaleHundredSoldNumber??>${goods.groupSaleHundredSoldNumber?c}<#else>0</#if>" class="input normal" datatype="n0-10" sucmsg=" ">
-                <span class="Validform_checktip">百人团已售商品数量</span>
-            </dd>
-        </dl>
-    </div>
-    
-    <div class="tab-content" style="display: none;">
-        <dl>
-            <dt>赠品</dt>
-            <dd>
-                <a id="addGift" class="icon-btn add"><i></i><span>添加赠品</span></a>
-                <span class="Validform_checktip"></span>
-            </dd>
-        </dl>
-        <dl>
-            <dt></dt>
-            <dd>
-                <table border="0" cellspacing="0" cellpadding="0" class="border-table" width="98%">
-                    <thead>
-                        <tr>
-                            <th width="6%">
-                                排序
-                            </th>
-                            <th width="10%">
-                                商品ID
-                            </th>
-                            <th width="38%">
-                                赠品标题
-                            </th>
-                            <th width="10%">
-                                原价
-                            </th>
-                            <th width="6%">
-                                操作
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody id="var_box_gift">
-                        <input type="hidden" id="totalGift" name="totalGift" value="<#if goods??>${goods.totalGift!'0'}</#if>" />
-                        <#if goods?? && goods.giftList??>
-                            <#list goods.giftList as gift>
-                                <tr class="td_c">
-                                    <td>
-                                        <input name="giftList[${gift_index}].id?c" type="hidden" value="${gift.id?c}">
-                                        <input name="giftList[${gift_index}].coverImageUri" type="hidden" value="${gift.coverImageUri!''}">
-                                        <input type="text" name="giftList[${gift_index}].sortId" class="td-input" value="${gift.sortId!''}" style="width:90%;">
-                                    </td>
-                                    <td><input type="text" id="id" name="giftList[${gift_index}].goodsId" class="td-input" value="${gift.goodsId!''}" style="width:90%;"></td>
-                                    <td>
-                                        <input type="text" id="title" name="giftList[${gift_index}].goodsTitle" class="td-input" value="${gift.goodsTitle!''}" style="width:90%;">
-                                    </td>
-                                    <td>
-                                        <input type="text" id="price" name="giftList[${gift_index}].goodsPrice" class="td-input" value="${gift.goodsPrice?string("0.00")}" style="width:90%;">
-                                    </td>
-                                    <td>
-                                        <i class="icon"></i>
-                                        <a title="编辑" class="img-btn edit operator" onclick="show_goods_gift_dialog(this);">编辑</a>
-                                        <a title="删除" class="img-btn del operator" onclick="del_goods_gift(this);">删除</a>
-                                    </td>
-                                </tr>
-                            </#list>
-                        </#if>
-                    </tbody>
-                </table>
-            </dd>
-        </dl>
-    </div>
-    
-    <div class="tab-content" style="display: none;">
-        <dl>
-            <dt>商品组合</dt>
-            <dd>
-                <a id="addCombination" class="icon-btn add"><i></i><span>添加组合</span></a>
-                <span class="Validform_checktip"></span>
-            </dd>
-        </dl>
-        <dl>
-            <dt></dt>
-            <dd>
-                <table border="0" cellspacing="0" cellpadding="0" class="border-table" width="98%">
-                    <thead>
-                        <tr>
-                            <th width="6%">
-                                排序
-                            </th>
-                            <th width="10%">
-                                商品ID
-                            </th>
-                            <th width="38%">
-                                赠品标题
-                            </th>
-                            <th width="10%">
-                                原价
-                            </th>
-                            <th width="10%">
-                                组合价
-                            </th>
-                            <th width="6%">
-                                操作
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody id="var_box_comb">
-                        <input type="hidden" id="totalComb" name="totalComb" value="<#if goods??>${goods.totalComb!'0'}</#if>" />
-                        <#if goods?? && goods.combList??>
-                            <#list goods.combList as item>
-                                <tr class="td_c">
-                                    <td>
-                                        <input name="combList[${item_index}].id?c" type="hidden" value="${item.id?c}">
-                                        <input name="combList[${item_index}].coverImageUri" type="hidden" value="${item.coverImageUri!''}">
-                                        <input type="text" name="combList[${item_index}].sortId" class="td-input" value="${item.sortId!''}" style="width:90%;">
-                                    </td>
-                                    <td><input type="text" id="id" name="combList[${item_index}].goodsId" class="td-input" value="${item.goodsId!''}" style="width:90%;"></td>
-                                    <td>
-                                        <input type="text" id="title" name="combList[${item_index}].goodsTitle" class="td-input" value="${item.goodsTitle!''}" style="width:90%;">
-                                    </td>
-                                    <td>
-                                        <input type="text" id="price" name="combList[${item_index}].goodsPrice" class="td-input" value="${item.goodsPrice?string("0.00")}" style="width:90%;">
-                                    </td>
-                                    <td>
-                                        <input type="text" id="currentPrice" name="combList[${item_index}].currentPrice" class="td-input" value="${item.currentPrice?string("0.00")}" style="width:90%;">
-                                    </td>
-                                    <td>
-                                        <i class="icon"></i>
-                                        <a title="编辑" class="img-btn edit operator" onclick="show_goods_comb_dialog(this);">编辑</a>
-                                        <a title="删除" class="img-btn del operator" onclick="del_goods_comb(this);">删除</a>
-                                    </td>
-                                </tr>
-                            </#list>
-                        </#if>
-                    </tbody>
-                </table>
+                <textarea name="content" class="editor"><#if goods??>${goods.content!""}</#if></textarea>
             </dd>
         </dl>
     </div>

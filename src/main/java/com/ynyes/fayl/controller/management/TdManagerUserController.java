@@ -1,10 +1,10 @@
 package com.ynyes.fayl.controller.management;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,16 +21,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ynyes.fayl.entity.TdDemand;
-import com.ynyes.fayl.entity.TdRechargeLog;
+import com.ynyes.fayl.entity.TdDesigner;
 import com.ynyes.fayl.entity.TdUser;
 import com.ynyes.fayl.entity.TdUserComment;
 import com.ynyes.fayl.entity.TdUserConsult;
 import com.ynyes.fayl.entity.TdUserLevel;
-import com.ynyes.fayl.entity.TdUserPoint;
 import com.ynyes.fayl.entity.TdUserReturn;
+import com.ynyes.fayl.service.TdCompanyService;
 import com.ynyes.fayl.service.TdDemandService;
+import com.ynyes.fayl.service.TdDesignerService;
 import com.ynyes.fayl.service.TdManagerLogService;
-import com.ynyes.fayl.service.TdRechargeLogService;
 import com.ynyes.fayl.service.TdUserCashRewardService;
 import com.ynyes.fayl.service.TdUserCollectService;
 import com.ynyes.fayl.service.TdUserCommentService;
@@ -66,6 +66,9 @@ public class TdManagerUserController {
 	TdUserCommentService tdUserCommentService;
 
 	@Autowired
+	TdCompanyService tdCompanyService;
+
+	@Autowired
 	TdUserSuggestionService tdUserSuggestionService; // add by zhangji
 
 	@Autowired
@@ -90,7 +93,7 @@ public class TdManagerUserController {
 	TdManagerLogService tdManagerLogService;
 
 	@Autowired
-	private TdRechargeLogService tdRechargeLogService;
+	private TdDesignerService tdDesignerService;
 
 	@RequestMapping(value = "/check", method = RequestMethod.POST)
 	@ResponseBody
@@ -136,7 +139,7 @@ public class TdManagerUserController {
 				}
 			} else if (__EVENTTARGET.equalsIgnoreCase("btnDelete")) {
 				btnDelete("user", listId, listChkId);
-				tdManagerLogService.addLog("delete", "删除用户", req);
+				tdManagerLogService.addLog("delete", "删除设计师", req);
 			}
 		}
 
@@ -146,7 +149,6 @@ public class TdManagerUserController {
 
 		if (null == size || size <= 0) {
 			size = SiteMagConstant.pageSize;
-			;
 		}
 
 		if (null != keywords) {
@@ -161,21 +163,9 @@ public class TdManagerUserController {
 		map.addAttribute("__EVENTARGUMENT", __EVENTARGUMENT);
 		map.addAttribute("__VIEWSTATE", __VIEWSTATE);
 
-		Page<TdUser> userPage = null;
+		Page<TdDesigner> userPage = null;
 
-		if (null == roleId) {
-			if (null == keywords || "".equalsIgnoreCase(keywords)) {
-				userPage = tdUserService.findAllOrderBySortIdAsc(page, size);
-			} else {
-				userPage = tdUserService.searchAndOrderByIdDesc(keywords, page, size);
-			}
-		} else {
-			if (null == keywords || "".equalsIgnoreCase(keywords)) {
-				userPage = tdUserService.findByRoleIdOrderByIdDesc(roleId, page, size);
-			} else {
-				userPage = tdUserService.searchAndFindByRoleIdOrderByIdDesc(keywords, roleId, page, size);
-			}
-		}
+		userPage = tdDesignerService.findAll(page, size);
 
 		map.addAttribute("user_page", userPage);
 
@@ -193,168 +183,13 @@ public class TdManagerUserController {
 		map.addAttribute("__VIEWSTATE", __VIEWSTATE);
 		map.addAttribute("roleId", roleId);
 		if (null != id) {
-			map.addAttribute("user", tdUserService.findOne(id));
+			map.addAttribute("user", tdDesignerService.findOne(id));
 		}
 		return "/site_mag/user_edit";
 	}
 
-	/**
-	 * 查询用户的充值记录
-	 * 
-	 * @author dengxiao
-	 * @throws ParseException 
-	 */
-	@RequestMapping(value = "/recharge/list")
-	public String rechargeList(HttpServletRequest req, 
-												ModelMap map, 
-												Long page, 
-												String keywords, 
-												String date_1,
-												String date_2,
-												Long size,
-			Long __EVENTARGUMENT) throws ParseException {
-		String username = (String) req.getSession().getAttribute("manager");
-		if (null == username) {
-			return "redirect:/Verwalter/login";
-		}
-
-		if (null != __EVENTARGUMENT) {
-			page = __EVENTARGUMENT;
-		} else {
-			if (null == page) {
-				page = 0L;
-			}
-		}
-		if (null == size) {
-			size = Long.valueOf(SiteMagConstant.pageSize + "");
-		}
-
-		System.err.println(keywords);
-		
-		/*-----------------zhangji--------------------------*/
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date date1 = null;
-		Date date2 = null;
-		if(null !=date_1 && !date_1.equals(""))
-		{
-			date1 = sdf.parse(date_1);
-		}
-		if(null !=date_2 && !date_2.equals(""))
-		{
-			date2 = sdf.parse(date_2);
-		}
-		
-		
-		/*-----------------zhangji end--------------------------*/
-		Page<TdRechargeLog> log_page = null ;
-		
-		if (null == keywords || "".equals(keywords)) {
-			if (null == date_1 || date_1.equals(""))
-			{
-				if (null == date_2 || date_2.equals(""))
-				{
-					log_page = tdRechargeLogService
-							.findByIdNotNullOrderByRechargeDateDesc(Integer.parseInt(page + ""), Integer.parseInt(size + ""));
-				}
-				else{
-					log_page = tdRechargeLogService
-							.findByRechargeDateBeforeOrderByRechargeDateDesc(date2, Integer.parseInt(page + ""), Integer.parseInt(size + ""));
-				}
-			}
-			else
-			{
-				if (null == date_2 || date_2.equals(""))
-				{
-					log_page = tdRechargeLogService
-							.findByRechargeDateAfterOrderByRechargeDateDesc(date1, Integer.parseInt(page + ""), Integer.parseInt(size + ""));
-				}
-				else{
-					log_page = tdRechargeLogService
-							.findByRechargeDateAfterAndRechargeDateBeforeOrderByRechargeDateDesc(date1, date2, Integer.parseInt(page + ""), Integer.parseInt(size + ""));
-				}
-			}
-		} else {
-
-			if (null == date_1 || date_1.equals(""))
-			{
-				if (null == date_2 || date_2.equals(""))
-				{
-					log_page = tdRechargeLogService
-							.findBySearchOrderByRechargeDateDesc(keywords, Integer.parseInt(page + ""), Integer.parseInt(size + ""));
-				}
-				else{
-					log_page = tdRechargeLogService
-							.findByRechargeDateBeforeAndSearchOrderByRechargeDateDesc(date2,keywords, Integer.parseInt(page + ""), Integer.parseInt(size + ""));
-				}
-			}
-			else
-			{
-				if (null == date_2 || date_2.equals(""))
-				{
-					log_page = tdRechargeLogService
-							.findByRechargeDateAfterAndSearchOrderByRechargeDateDesc(date1, keywords , Integer.parseInt(page + ""), Integer.parseInt(size + ""));
-				}
-				else{
-					log_page = tdRechargeLogService
-							.findByRechargeDateAfterAndRechargeDateBeforeAndSearchOrderByRechargeDateDesc(date1, date2, keywords ,Integer.parseInt(page + ""), Integer.parseInt(size + ""));
-				}
-			}
-		}
-		map.addAttribute("log_page",log_page);
-		map.addAttribute("page", page);
-		map.addAttribute("date_1", date_1);
-		map.addAttribute("date_2", date_2);
-		map.addAttribute("size", size);
-		map.addAttribute("keywords", keywords);
-		return "/site_mag/recharge_list";
-	}
-
-	/**
-	 * @author lc
-	 * @注释：手动修改粮草
-	 */
-	@RequestMapping(value = "/param/edit", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> paramEdit(Long userId, Long totalPoints, String data, String type,
-			Boolean isBackgroundShow, ModelMap map, HttpServletRequest req) {
-
-		Map<String, Object> res = new HashMap<String, Object>();
-
-		res.put("code", 1);
-		String username = (String) req.getSession().getAttribute("manager");
-		if (null == username) {
-			res.put("message", "请重新登录");
-			return res;
-		}
-		if (null != userId && null != type && !type.isEmpty() && null != isBackgroundShow) {
-			TdUser tdUser = tdUserService.findOne(userId);
-
-			if (type.equalsIgnoreCase("editPoint")) {
-				if (null != totalPoints) {
-					tdUser.setTotalPoints(totalPoints);
-					TdUserPoint userPoint = new TdUserPoint();
-
-					userPoint.setIsBackgroundShow(isBackgroundShow);
-					userPoint.setTotalPoint(totalPoints);
-					userPoint.setUsername(tdUser.getUsername());
-					userPoint.setPoint(totalPoints);
-					if (null != data) {
-						userPoint.setDetail(data);
-					}
-					userPoint = tdUserPointService.save(userPoint);
-
-					res.put("code", 0);
-					return res;
-				}
-			}
-		}
-
-		return res;
-	}
-
 	@RequestMapping(value = "/save")
-	public String orderEdit(TdUser tdUser, Long totalPoints, String totalPointsRemarks, String __VIEWSTATE,
-			ModelMap map, HttpServletRequest req) {
+	public String orderEdit(TdDesigner designer, String __VIEWSTATE, ModelMap map, HttpServletRequest req) {
 		String username = (String) req.getSession().getAttribute("manager");
 		if (null == username) {
 			return "redirect:/Verwalter/login";
@@ -362,37 +197,22 @@ public class TdManagerUserController {
 
 		map.addAttribute("__VIEWSTATE", __VIEWSTATE);
 
-		/**
-		 * @author lc
-		 * @注释：手动修改用户积分
-		 */
-		if (null != totalPoints) {
-			tdUser.setTotalPoints(totalPoints);
-			TdUserPoint userPoint = new TdUserPoint();
-
-			userPoint.setTotalPoint(totalPoints);
-			userPoint.setUsername(tdUser.getUsername());
-			userPoint.setPoint(totalPoints);
-			if (null != totalPointsRemarks) {
-				userPoint.setDetail(totalPointsRemarks);
-			}
-			userPoint = tdUserPointService.save(userPoint);
-		}
-
-		if (null == tdUser.getId()) {
-			tdManagerLogService.addLog("add", "修改用户", req);
+		if (null == designer.getId()) {
+			tdManagerLogService.addLog("add", "添加设计师", req);
 		} else {
-			tdManagerLogService.addLog("edit", "修改用户", req);
+			tdManagerLogService.addLog("edit", "修改设计师", req);
 		}
 
-		//写入注册时间 zhangji
-		if (null == tdUserService.findByUsername(tdUser.getUsername()))
-		{
-			tdUser.setRegisterTime(new Date());
+		if (null != designer && (null == designer.getNumber() || "".equalsIgnoreCase(designer.getNumber()))) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+			String dateFormat = sdf.format(new Date());
+			Random random = new Random();
+			int randomNumber = random.nextInt(900) + 100;
+			String number = "SJS" + dateFormat + randomNumber;
+			designer.setNumber(number);
 		}
-		
-		tdUserService.save(tdUser);
 
+		tdDesignerService.save(designer);
 		return "redirect:/Verwalter/user/list/";
 	}
 
@@ -842,12 +662,12 @@ public class TdManagerUserController {
 
 			if (type.equalsIgnoreCase("user")) // 用户
 			{
-				TdUser e = tdUserService.findOne(id);
+				TdDesigner e = tdDesignerService.findOne(id);
 
 				if (null != e) {
 					if (sortIds.length > i) {
-						e.setSortId(sortIds[i]);
-						tdUserService.save(e);
+						e.setSortId(new Double(sortIds[i]));
+						tdDesignerService.save(e);
 					}
 				}
 			} else if (type.equalsIgnoreCase("level")) // 用户等级
@@ -905,7 +725,7 @@ public class TdManagerUserController {
 
 				if (type.equalsIgnoreCase("user")) // 用户
 				{
-					tdUserService.delete(id);
+					tdDesignerService.delete(id);
 				} else if (type.equalsIgnoreCase("level")) // 用户等级
 				{
 					tdUserLevelService.delete(id);

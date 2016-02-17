@@ -46,4 +46,19 @@ public interface TdArticleRepo
 	 * @author DengXiao
 	 */
 	TdArticle findByNumber(String number);
+
+	/**
+	 * 根据分类编号进行模糊查询（分页）
+	 * 
+	 * @author DengXiao
+	 */
+	Page<TdArticle> findByCategoryNumberAndTitleContainingOrderByCreateDateDesc(String categoryNumber, String keywords,
+			Pageable page);
+
+	/**
+	 * 模糊查找所有的文章（分页）
+	 * 
+	 * @author DengXiao
+	 */
+	Page<TdArticle> findByTitleContainingOrderByCreateDateDesc(String keywords, Pageable page);
 }

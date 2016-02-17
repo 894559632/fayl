@@ -10,11 +10,11 @@
       </ul>
       <div class="menu-list">
         <div class="rule-single-select single-select">
-            <select name="categoryId" onchange="javascript:setTimeout(__doPostBack('categoryId', ''), 0)" id="ddlCategoryId" style="display: none;">
-                <option <#if categoryId??><#else>selected="selected"</#if> value="">所有类别</option>
+            <select name="categoryNumber" onchange="javascript:setTimeout(__doPostBack('categoryNumber', ''), 0)" id="ddlCategoryId" style="display: none;">
+                <option <#if categoryNumber??><#else>selected="selected"</#if> value="">所有类别</option>
                 <#if category_list??>
                     <#list category_list as c>
-                        <option value="${c.id?c!""}" <#if categoryId?? && c.id==categoryId>selected="selected"</#if> ><#if c.layerCount?? && c.layerCount gt 1><#list 1..(c.layerCount-1) as a>　</#list>├ </#if>${c.title!""}</option>
+                        <option value="${c.number!""}" <#if categoryNumber?? && c.number==categoryNumber>selected="selected"</#if> ><#if c.layerCount?? && c.layerCount gt 1><#list 1..(c.layerCount-1) as a>　</#list>├ </#if>${c.title!""}</option>
                     </#list>
                 </#if>
             </select>
@@ -36,10 +36,12 @@
       </div>
     </div>
     <div class="r-list">
-      <input name="txtKeywords" type="text" id="txtKeywords" class="keyword">
+      <input name="txtKeywords" type="text" id="txtKeywords" value="${keywords!''}" class="keyword">
       <a id="lbtnSearch" class="btn-search" href="javascript:__doPostBack('lbtnSearch','')">查询</a>
+      <#--
       <a id="lbtnViewImg" title="图像列表视图" class="img-view" href="javascript:__doPostBack('lbtnViewImg','')"></a>
       <a id="lbtnViewTxt" title="文字列表视图" class="txt-view" href="javascript:__doPostBack('lbtnViewTxt','')"></a>
+      -->
     </div>
   </div>
 </div>

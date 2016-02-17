@@ -14,6 +14,7 @@ import com.ynyes.fayl.entity.TdCompanyInfo;
 import com.ynyes.fayl.entity.TdJob;
 import com.ynyes.fayl.service.TdCommonService;
 import com.ynyes.fayl.service.TdCompanyInfoService;
+import com.ynyes.fayl.service.TdDesignerService;
 import com.ynyes.fayl.service.TdJobService;
 
 /**
@@ -33,6 +34,9 @@ public class TdCompanyController {
 
 	@Autowired
 	private TdJobService tdJobService;
+
+	@Autowired
+	private TdDesignerService tdDesignerService;
 
 	@RequestMapping(value = "/info")
 	public String companyInfo(HttpServletRequest req, ModelMap map) {
@@ -54,6 +58,8 @@ public class TdCompanyController {
 			TdCompanyInfo delvelopment = tdCompanyInfoService.findByNumber(delvelopmentNumber);
 			map.addAttribute("delvelopment", delvelopment);
 		}
+		// 获取所有的设计师
+		map.addAttribute("designers", tdDesignerService.findAll());
 		tdCommonService.setHeader(req, map);
 		return "/front/company_info";
 	}
@@ -87,9 +93,9 @@ public class TdCompanyController {
 		tdCommonService.setHeader(req, map);
 		return "/front/job_detail";
 	}
-	
+
 	@RequestMapping(value = "/contact")
-	public String companyContact(HttpServletRequest req,ModelMap map){
+	public String companyContact(HttpServletRequest req, ModelMap map) {
 		tdCommonService.setHeader(req, map);
 		return "/front/company_contact";
 	}

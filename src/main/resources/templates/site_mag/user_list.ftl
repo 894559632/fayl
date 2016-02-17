@@ -63,10 +63,6 @@ var theForm = document.forms['form1'];
       </div>
       -->
     </div>
-    <div class="r-list">
-      <input name="keywords" type="text" class="keyword" value="${keywords!""}">
-      <a id="lbtnSearch" class="btn-search" href="javascript:__doPostBack('btnSearch','')">查询</a>
-    </div>
   </div>
 </div>
 <!--/工具栏-->
@@ -76,15 +72,12 @@ var theForm = document.forms['form1'];
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="ltable">
   <tbody>
   <tr class="odd_bg">
-    <th width="4%">选择</th>
-    <th align="left" colspan="2">用户名</th>
-    <#--><th align="left" width="6%">用户组</th>
-    <th align="center" width="12%">邮箱</th>-->
-    <th width="15%">手机号</th>
-    <th width="15%">车牌号</th>
-    <th width="15%">最近登录</th>
-    <th width="15%">余额</th>
-    <#--<th width="6%">状态</th>-->
+    <th width="10%">选择</th>
+    <th width="15%">头像</th>
+    <th width="15%">姓名</th>
+    <th width="15%">职务</th>
+    <th width="15%">编号</th>
+    <th width="6%">排序</th>
     <th width="12%">操作</th>
   </tr>
 
@@ -99,35 +92,15 @@ var theForm = document.forms['form1'];
                 </td>
                 <td width="64">
                   <a href="/Verwalter/user/edit?id=${user.id?c}">
-                    <img width="64" height="64" src="${user.headImageUri!"/mag/style/user_avatar.png"}">
+                    <img width="64" height="64" src="${user.photoUri!"/mag/style/user_avatar.png"}">
                   </a>
                 </td>
-                <td>
-                  <div class="user-box">
-                    <h4><b>${user.username!""}</b></h4>
-                    <i>注册时间：${user.registerTime!""}</i>
-                    <#--
-                    <span>
-                      <a class="amount" href="/Verwalter/user/point/list?userId=${user.id?c}" title="粮草">粮草</a>
-                      <a class="point" href="/Verwalter/user/collect/list?userId=${user.id?c}" title="收藏商品">收藏商品</a>
-                      <a class="msg" href="/Verwalter/user/recent/list?userId=${user.id?c}" title="浏览历史">浏览历史</a>
-                      <#if user.roleId?? && user.roleId==1>
-                          <a class="sms" href="/Verwalter/user/reward/list?userId=${user.id?c}" title="返现记录">返现记录</a>
-                      </#if>
-                    </span>-->
-                  </div>
-                </td>
-                <#--<td><#if user.roleId?? && user.roleId==0>普通会员<#elseif user.roleId?? && user.roleId==2>停车场用户</#if></td>
-                <td align="center">${user.email!""}</td>-->
-                <td align="center">${user.mobile!""}</td>
-                <td align="center">${user.carCode!""}</td>
-                <td align="center">${user.lastLoginTime!""}</td>
-                <td align="center"><span style="color:#C30000;">￥<#if user.balance??>${user.balance?string("0.00")}<#else>0.00</#if></span>           
-                </td>
-                <#--<td align="center"><#if user.statusId??><#if user.statusId==0>待审核<#elseif user.statusId==1>正常<#elseif user.statusId==2>禁用</#if></#if></td>-->
+                <td align="center">${user.name!""}</td>
+                <td align="center">${user.position!""}</td>
+                <td align="center">${user.number!""}</td>
+                <td align="center">${user.sortId!""}</td>
                 <td align="center">
-                    <a href="/Verwalter/user/edit?id=${user.id?c}&roleId=${roleId!""}">修改</a> | 
-                    <a href="/Verwalter/user/edit?id=${user.id?c}&roleId=${roleId!""}&action=view">查看</a></td>
+                    <a href="/Verwalter/user/edit?id=${user.id?c}&roleId=${roleId!""}">修改</a> 
               </tr>
         </#list>
     </#if>

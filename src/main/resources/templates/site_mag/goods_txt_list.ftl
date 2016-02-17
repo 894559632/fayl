@@ -130,20 +130,13 @@ function __doPostBack(eventTarget, eventArgument) {
       </ul>
       <div class="menu-list">
         <div class="rule-single-select">
-            <select name="categoryId" onchange="javascript:setTimeout(__doPostBack('categoryId', ''), 0)">
+            <select name="categoryNumber" onchange="javascript:setTimeout(__doPostBack('categoryId', ''), 0)">
                 <option <#if categoryId??><#else>selected="selected"</#if> value="">所有类别</option>
                 <#if category_list??>
                     <#list category_list as c>
-                        <option value="${c.id?c}" <#if categoryId?? && c.id==categoryId>selected="selected"</#if> ><#if c.layerCount?? && c.layerCount gt 1><#list 1..(c.layerCount-1) as a>　</#list>├ </#if>${c.title!""}</option>
+                        <option value="${c.number!''}" <#if categoryNumber?? && c.number==categoryNumber>selected="selected"</#if> ><#if c.layerCount?? && c.layerCount gt 1><#list 1..(c.layerCount-1) as a>　</#list>├ </#if>${c.title!""}</option>
                     </#list>
                 </#if>
-            </select>
-        </div>
-        <div class="rule-single-select">
-            <select name="property" onchange="javascript:setTimeout(__doPostBack('property',''), 0)">
-                <option value="">所有属性</option>
-                <option value="isOnSale" <#if property?? && property=="isOnSale">selected="selected"</#if>>已上架</option>
-                <option value="isNotOnSale" <#if property?? && property=="isNotOnSale">selected="selected"</#if>>已下架</option>
             </select>
         </div>
       </div>
@@ -151,8 +144,6 @@ function __doPostBack(eventTarget, eventArgument) {
     <div class="r-list">
       <input name="keywords" type="text" class="keyword" value="${keywords!''}">
       <a id="lbtnSearch" class="btn-search" href="javascript:__doPostBack('lbtnSearch','')">查询</a>
-      <a id="lbtnViewImg" title="图像列表视图" class="img-view" href="javascript:__doPostBack('lbtnViewImg','')"></a>
-      <a id="lbtnViewTxt" title="文字列表视图" class="txt-view" href="javascript:__doPostBack('lbtnViewTxt','')"></a>
     </div>
   </div>
 </div>
@@ -164,12 +155,11 @@ function __doPostBack(eventTarget, eventArgument) {
 <tbody>
     <tr class="odd_bg">
         <th width="6%">选择</th>
-        <th align="left">序号</th>
-        <th align="left">标题</th>
-        <th align="left" width="12%">所属类别</th>
-        <th align="left" width="16%">最后修改时间</th>
+        <th align="left" width="20%">序号</th>
+        <th align="left" width="20%">标题</th>
+        <th align="left" width="20%">所属类别</th>
+        <th align="left" width="20%">编号</th>
         <th align="left" width="65">排序</th>
-        <th align="left" width="110">属性</th>
         <th width="8%">操作</th>
     </tr>
     
@@ -184,35 +174,12 @@ function __doPostBack(eventTarget, eventArgument) {
             </td>
             <td>${content.id?c}</td>
             <td><a href="/Verwalter/goods/edit?id=${content.id?c}&__VIEWSTATE=${__VIEWSTATE!""}">${content.title!""}</a></td>
-            <td>
-                <#if category_list?? && content.categoryId??>
-                    <#list category_list as cat>
-                        <#if cat.id == content.categoryId>
-                            ${cat.title!""}
-                            <#break>
-                        </#if>
-                    </#list>
-                </#if>
-            </td>
-            <td><#if content.modifiedTime??>${content.modifiedTime?string("yyyy-MM-dd HH:mm:ss")}</#if></td>
+            <td>${content.categoryTitle!''}</td>
+            <td>${content.number!''}</td>
             <td>
                 <input name="listSortId" type="text" value="${content.sortId!""}" id="listSortId" class="sort" onkeydown="return checkNumber(event);">
             </td>
-            <td>
-              <div class="btn-tools">
-                <a title="上架/下架" class="hot <#if content.isOnSale?? && content.isOnSale>selected</#if>" href="javascript:__doPostBack('btnOnSale','${content.id?c}')"></a>
-                <a title="改价" class="change" href="javascript:showDialogChangePrice('${content.id?c}')"></a>
-                <a title="改价记录" class="record" href="javascript:showDialogPriceLog('${content.id?c}')"></a>
-                <#--
-                <a id="rptList1_ctl01_lbtnIsTop" title="设置置顶" class="top" href="javascript:__doPostBack('rptList1$ctl01$lbtnIsTop','')"></a>
-                <a id="rptList1_ctl01_lbtnIsRed" title="设置推荐" class="red" href="javascript:__doPostBack('rptList1$ctl01$lbtnIsRed','')"></a>
-                <a id="rptList1_ctl01_lbtnIsHot" title="设置热门" class="hot" href="javascript:__doPostBack('rptList1$ctl01$lbtnIsHot','')"></a>
-                <a id="rptList1_ctl01_lbtnIsSlide" title="设置幻灯片" class="pic" href="javascript:__doPostBack('rptList1$ctl01$lbtnIsSlide','')"></a>
-                -->
-              </div>
-            </td>
             <td align="center">
-                <a href="javascript:confirmCopy(${content.id?c});" title="复制商品" class="show">复制</a>
                 <a href="/Verwalter/goods/edit?id=${content.id?c}&__VIEWSTATE=${__VIEWSTATE!""}">修改</a>
             </td>
         </tr>

@@ -52,6 +52,8 @@ public class TdCommonService {
 	 * @author DengXiao
 	 */
 	public void setHeader(HttpServletRequest req, ModelMap map) {
+		this.initCompany();
+		this.initSetting();
 		// 获取所有的案例分类
 		List<TdSampleCategory> sample_category_list = tdSampleCategoryService.findAll();
 		map.addAttribute("sample_category_list", sample_category_list);

@@ -64,6 +64,7 @@ if (!theForm) {
 }
 function __doPostBack(eventTarget, eventArgument) {
     if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+		console.debug(theForm);
         theForm.__EVENTTARGET.value = eventTarget;
         theForm.__EVENTARGUMENT.value = eventArgument;
         theForm.submit();

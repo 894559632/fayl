@@ -5,6 +5,10 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.ynyes.fayl.entity.TdArticleCategory;
@@ -39,6 +43,15 @@ public class TdArticleCategoryService {
 
 	public List<TdArticleCategory> findAll() {
 		return (List<TdArticleCategory>) repository.findAll();
+	}
+
+	public Page<TdArticleCategory> findAll(int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.ASC, "sortId"));
+		return repository.findAll(pageRequest);
+	}
+	
+	public List<TdArticleCategory> findAllOrderBySortIdAsc(){
+		return (List<TdArticleCategory>) repository.findAll(new Sort(Direction.ASC, "sortId"));
 	}
 
 	/**

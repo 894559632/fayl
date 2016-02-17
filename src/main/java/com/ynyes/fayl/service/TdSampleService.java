@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.ynyes.fayl.entity.TdSample;
@@ -41,6 +43,11 @@ public class TdSampleService {
 
 	public List<TdSample> findAll() {
 		return (List<TdSample>) repository.findAll();
+	}
+
+	public Page<TdSample> findAll(int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.ASC, "sortId"));
+		return repository.findAll(pageRequest);
 	}
 
 	/**
@@ -102,5 +109,32 @@ public class TdSampleService {
 	public Page<TdSample> findByIsIndexRecommendTrueOrderBySortIdAsc(int page, int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 		return repository.findByIsIndexRecommendTrueOrderBySortIdAsc(pageRequest);
+	}
+
+	/**
+	 * 案例标题模糊查找（分页）
+	 * 
+	 * @author DengXiao
+	 */
+	public Page<TdSample> findByTitleContainingOrderBySortIdAsc(String keywords, int page, int size) {
+		if (null == keywords) {
+			return null;
+		}
+		PageRequest pageRequest = new PageRequest(page, size);
+		return repository.findByTitleContainingOrderBySortIdAsc(keywords, pageRequest);
+	}
+
+	/**
+	 * 按分类编号进行案例标题模糊查找（分页）
+	 * 
+	 * @author DengXiao
+	 */
+	public Page<TdSample> findByCategoryNumberAndTitleContainingOrderBySortIdAsc(String categoryNumber, String keywords,
+			int page, int size) {
+		if (null == categoryNumber || null == keywords) {
+			return null;
+		}
+		PageRequest pageRequest = new PageRequest(page, size);
+		return repository.findByCategoryNumberAndTitleContainingOrderBySortIdAsc(categoryNumber, keywords, pageRequest);
 	}
 }

@@ -15,6 +15,7 @@ import com.ynyes.fayl.entity.TdDemand;
 import com.ynyes.fayl.entity.TdServiceItem;
 import com.ynyes.fayl.entity.TdSetting;
 import com.ynyes.fayl.entity.TdUserSuggestion;
+import com.ynyes.fayl.service.TdCommonService;
 import com.ynyes.fayl.service.TdDemandService;
 import com.ynyes.fayl.service.TdManagerLogService;
 import com.ynyes.fayl.service.TdServiceItemService;
@@ -46,6 +47,9 @@ public class TdManagerSettingController {
     
     @Autowired
     TdDemandService tdDemandService;
+    
+    @Autowired
+    TdCommonService tdCommonService;
     
     @RequestMapping
     public String setting(Long status, ModelMap map,
@@ -81,6 +85,7 @@ public class TdManagerSettingController {
         }
         
         tdSettingService.save(tdSetting);
+        tdCommonService.initSetting();
         
         return "redirect:/Verwalter/setting?status=1";
     }

@@ -24,9 +24,9 @@ public class TdSample {
 		super();
 	}
 
-	public TdSample(String number, String categoryNumber, String categoryTitle,String title, String designer, String coverImgUri,
-			String imgUriList, String introduction, Boolean isIndexRecommend, String seoTitle, String seoKeywords,
-			String seoDescription) {
+	public TdSample(String number, String categoryNumber, String categoryTitle, String title, String designer,
+			String coverImgUri, String imgUriList, String introduction, String content, Boolean isIndexRecommend,
+			String seoTitle, String seoKeywords, String seoDescription) {
 		super();
 		this.number = number;
 		this.categoryNumber = categoryNumber;
@@ -36,6 +36,7 @@ public class TdSample {
 		this.coverImgUri = coverImgUri;
 		this.imgUriList = imgUriList;
 		this.introduction = introduction;
+		this.content = content;
 		this.isIndexRecommend = isIndexRecommend;
 		this.seoTitle = seoTitle;
 		this.seoKeywords = seoKeywords;
@@ -56,8 +57,8 @@ public class TdSample {
 	// 案例分类编号哦
 	@Column
 	private String categoryNumber;
-	
-	//案例分类名称
+
+	// 案例分类名称
 	@Column
 	private String categoryTitle;
 
@@ -80,6 +81,10 @@ public class TdSample {
 	// 案例简介
 	@Column
 	private String introduction;
+
+	// 案例详情
+	@Column
+	private String content;
 
 	// 是否首页推荐
 	@Column
@@ -130,6 +135,14 @@ public class TdSample {
 		this.categoryNumber = categoryNumber;
 	}
 
+	public String getCategoryTitle() {
+		return categoryTitle;
+	}
+
+	public void setCategoryTitle(String categoryTitle) {
+		this.categoryTitle = categoryTitle;
+	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -168,6 +181,14 @@ public class TdSample {
 
 	public void setIntroduction(String introduction) {
 		this.introduction = introduction;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public Boolean getIsIndexRecommend() {
@@ -220,10 +241,10 @@ public class TdSample {
 
 	@Override
 	public String toString() {
-		return "TdSample [id=" + id + ", number=" + number + ", categoryNumber=" + categoryNumber + ", title=" + title
-				+ ", designer=" + designer + ", coverImgUri=" + coverImgUri + ", imgUriList=" + imgUriList
-				+ ", introduction=" + introduction + ", isIndexRecommend=" + isIndexRecommend + ", designDate="
-				+ designDate + ", seoTitle=" + seoTitle + ", seoKeywords=" + seoKeywords + ", seoDescription="
-				+ seoDescription + ", sortId=" + sortId + "]";
+		return "TdSample [id=" + id + ", number=" + number + ", categoryNumber=" + categoryNumber + ", categoryTitle="
+				+ categoryTitle + ", title=" + title + ", designer=" + designer + ", coverImgUri=" + coverImgUri
+				+ ", imgUriList=" + imgUriList + ", introduction=" + introduction + ", content=" + content
+				+ ", isIndexRecommend=" + isIndexRecommend + ", designDate=" + designDate + ", seoTitle=" + seoTitle
+				+ ", seoKeywords=" + seoKeywords + ", seoDescription=" + seoDescription + ", sortId=" + sortId + "]";
 	}
 }

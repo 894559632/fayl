@@ -34,7 +34,7 @@ public class TdSampleController {
 
 	@Autowired
 	private TdSampleService tdSampleService;
-	
+
 	@Autowired
 	private TdCommonService tdCommonService;
 
@@ -65,7 +65,11 @@ public class TdSampleController {
 			int totalPages = sample_page.getTotalPages();
 			// 如果当前页数大于了总页数—1，则按照最大页数重新查询一次
 			if (page > totalPages - 1) {
-				page = totalPages - 1;
+				if (totalPages == 0) {
+					page = 0;
+				} else {
+					page = totalPages - 1;
+				}
 				sample_page = tdSampleService.findByCategoryNumberOrderBySortIdAsc(number, page,
 						ClientConstant.pageSize);
 			}
@@ -74,7 +78,7 @@ public class TdSampleController {
 		map.addAttribute("page", page);
 		map.addAttribute("number", number);
 		tdCommonService.setHeader(req, map);
-		return "/client/sample_list";
+		return "/front/sample_list";
 	}
 
 	/**

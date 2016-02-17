@@ -61,4 +61,17 @@ public class TdJobService {
 		}
 		return repository.findByNumber(number);
 	}
+
+	/**
+	 * 模糊查询职务标题
+	 * 
+	 * @author DengXiao
+	 */
+	public Page<TdJob> findByTitleContainingOrderBySortIdAsc(String keywords, int page, int size) {
+		if (null == keywords) {
+			return null;
+		}
+		PageRequest pageRequest = new PageRequest(page, size);
+		return repository.findByTitleContainingOrderBySortIdAsc(keywords, pageRequest);
+	}
 }

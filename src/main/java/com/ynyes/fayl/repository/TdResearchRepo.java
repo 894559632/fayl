@@ -1,5 +1,7 @@
 package com.ynyes.fayl.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -14,4 +16,11 @@ public interface TdResearchRepo
 	 * @author DengXiao
 	 */
 	TdResearch findByNumber(String number);
+
+	/**
+	 * 研究标题模糊查询
+	 * 
+	 * @author DengXiao
+	 */
+	Page<TdResearch> findByTitleContainingOrderBySortIdAsc(String keywords, Pageable page);
 }

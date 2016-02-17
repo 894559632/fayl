@@ -10,6 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ynyes.fayl.entity.TdManager;
+import com.ynyes.fayl.service.TdCommonService;
 import com.ynyes.fayl.service.TdManagerLogService;
 import com.ynyes.fayl.service.TdManagerService;
 
@@ -28,6 +29,9 @@ public class TdManagerLoginController {
     
     @Autowired
     TdManagerService tdManagerService;
+    
+    @Autowired
+    TdCommonService tdCommonService;
     
     @RequestMapping(value="/login")
     public String login(String username, String password, ModelMap map, HttpServletRequest request){
@@ -70,6 +74,9 @@ public class TdManagerLoginController {
                     manager.setLoginTime(new Date());
                     
                     tdManagerService.save(manager);
+                    
+                    tdCommonService.initCompany();
+                    tdCommonService.initSetting();
                     
                     request.getSession().setAttribute("manager", username);
                     tdManagerLogService.addLog("login", "用户登录", request);
