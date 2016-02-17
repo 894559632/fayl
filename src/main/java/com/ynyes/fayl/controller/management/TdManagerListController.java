@@ -1,8 +1,11 @@
 package com.ynyes.fayl.controller.management;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ynyes.fayl.entity.TdArticle;
 import com.ynyes.fayl.entity.TdArticleCategory;
-import com.ynyes.fayl.entity.TdGoods;
 import com.ynyes.fayl.service.TdArticleCategoryService;
 import com.ynyes.fayl.service.TdArticleService;
 import com.ynyes.fayl.service.TdGoodsService;
@@ -51,43 +53,8 @@ public class TdManagerListController {
 			return "redirect:/Verwalter/login";
 		}
 
-		if (null != __EVENTTARGET) {
-			switch (__EVENTTARGET) {
-			case "btnSave":
-				if (cid.equals(1L)) // 文章
-				{
-					articleCategoryBtnSave(listId, listSortId);
-					tdManagerLogService.addLog("edit", "用户修改文章分类", req);
-				}
-				// else if (cid.equals(2L)) // 产品分类
-				// {
-				// productCategoryBtnSave(listId, listSortId);
-				// tdManagerLogService.addLog("edit", "用户修改产品分类", req);
-				// }
-
-				break;
-
-			case "btnDelete":
-				if (cid.equals(1L)) // 文章
-				{
-					articleCategoryBtnDelete(listId, listChkId);
-					tdManagerLogService.addLog("delete", "用户删除文章分类", req);
-				}
-				// else if (cid.equals(2L)) // 产品分类
-				// {
-				// productCategoryBtnDelete(listId, listChkId);
-				// tdManagerLogService.addLog("delete", "用户删除产品分类", req);
-				// }
-
-				break;
-			}
-		}
-
-		// else if (cid.equals(2L)) // 商品
-		// {
-		// map.addAttribute("category_list",
-		// tdProductCategoryService.findAll());
-		// }
+		List<TdArticleCategory> category_list = tdArticleCategoryService.findAllOrderBySortIdAsc();
+		map.addAttribute("category_list", category_list);
 
 		// 参数注回
 		map.addAttribute("cid", cid);
@@ -115,12 +82,7 @@ public class TdManagerListController {
 					articleCategoryBtnSave(listId, listSortId);
 					tdManagerLogService.addLog("edit", "用户修改文章分类", req);
 				}
-				// else if (cid.equals(2L)) // 商品分类
-				// {
-				// productCategoryBtnSave(listId, listSortId);
-				// tdManagerLogService.addLog("edit", "用户修改产品分类", req);
-				// }
-
+				
 				break;
 
 			case "btnDelete":
@@ -129,15 +91,13 @@ public class TdManagerListController {
 					articleCategoryBtnDelete(listId, listChkId);
 					tdManagerLogService.addLog("delete", "用户删除文章分类", req);
 				}
-				// else if (cid.equals(2L)) // 商品分类
-				// {
-				// productCategoryBtnDelete(listId, listChkId);
-				// tdManagerLogService.addLog("delete", "用户删除产品分类", req);
-				// }
 
 				break;
 			}
 		}
+		
+		List<TdArticleCategory> category_list = tdArticleCategoryService.findAllOrderBySortIdAsc();
+		map.addAttribute("category_list", category_list);
 
 		// 参数注回
 		map.addAttribute("cid", cid);
@@ -150,7 +110,7 @@ public class TdManagerListController {
 	}
 
 	@RequestMapping(value = "/content/list")
-	public String contentList(Long cid, Long mid, Integer page, Integer size, Long categoryId, String property,
+	public String contentList(Long cid, Long mid, Integer page, Integer size, String categoryNumber, String property,
 			String __EVENTTARGET, String __EVENTARGUMENT, String __VIEWSTATE, String keywords, Long[] listId,
 			Integer[] listChkId, Double[] listSortId, ModelMap map, HttpServletRequest req) {
 		String username = (String) req.getSession().getAttribute("manager");
@@ -164,73 +124,21 @@ public class TdManagerListController {
 
 		if (null == size || size <= 0) {
 			size = SiteMagConstant.pageSize;
-			;
 		}
 
-		if (null != __EVENTTARGET) {
-			switch (__EVENTTARGET) {
-			case "lbtnViewTxt":
-			case "lbtnViewImg":
-				__VIEWSTATE = __EVENTTARGET;
-				break;
+		// 查询所有的文章分类
+		List<TdArticleCategory> category_list = tdArticleCategoryService.findAll();
+		map.addAttribute("category_list", category_list);
 
-			case "btnSave":
-				btnSave(cid, listId, listSortId, username);
-				tdManagerLogService.addLog("edit", "用户修改文章", req);
-				break;
-
-			case "btnDelete":
-				btnDelete(cid, listId, listChkId);
-				tdManagerLogService.addLog("delete", "用户删除文章", req);
-
-				break;
-			}
-			if (__EVENTTARGET.equalsIgnoreCase("btnPage")) {
-				if (null != __EVENTARGUMENT) {
-					page = Integer.parseInt(__EVENTARGUMENT);
-				}
-			}
+		// 查询所有的文章，按照生成时间反序排序（分页）
+		if (null == categoryNumber) {
+			Page<TdArticle> content_page = tdArticleService.findAllOrderByCreateTime(page, size);
+			map.addAttribute("content_page", content_page);
+		} else {
+			Page<TdArticle> content_page = tdArticleService.findByCategoryNumberOrderByCreateDateDesc(categoryNumber,
+					page, size);
+			map.addAttribute("content_page", content_page);
 		}
-
-		if (null != __EVENTTARGET && __EVENTTARGET.equalsIgnoreCase("lbtnViewTxt")
-				|| null != __EVENTTARGET && __EVENTTARGET.equalsIgnoreCase("lbtnViewImg")) {
-			__VIEWSTATE = __EVENTTARGET;
-		}
-
-		// else if (cid.equals(2L)) // 商品
-		// {
-		// map.addAttribute("category_list",
-		// tdProductCategoryService.findAll());
-		//
-		// if (null == categoryId)
-		// {
-		// map.addAttribute("content_page",
-		// tdGoodsService.findAllOrderBySortIdAsc(page, size));
-		// }
-		// else
-		// {
-		// map.addAttribute("content_page",
-		// tdGoodsService.findByCategoryIdTreeContainingOrderBySortIdAsc(categoryId,
-		// page, size));
-		// }
-		// }
-		// else // 品牌，产品
-		// {
-		// map.addAttribute("category_list",
-		// tdProductCategoryService.findAll());
-		//
-		// if (null == categoryId)
-		// {
-		// map.addAttribute("content_page",
-		// tdArticleService.findByChannelId(cid, page, size));
-		// }
-		// else
-		// {
-		// map.addAttribute("content_page",
-		// tdArticleService.findByChannelIdAndCategoryId(cid, categoryId, page,
-		// size));
-		// }
-		// }
 
 		// 参数注回
 		map.addAttribute("cid", cid);
@@ -240,7 +148,7 @@ public class TdManagerListController {
 		map.addAttribute("__EVENTTARGET", __EVENTTARGET);
 		map.addAttribute("__EVENTARGUMENT", __EVENTARGUMENT);
 		map.addAttribute("__VIEWSTATE", __VIEWSTATE);
-		map.addAttribute("categoryId", categoryId);
+		map.addAttribute("categoryNumber", categoryNumber);
 		map.addAttribute("property", property);
 
 		// 文字列表模式
@@ -258,17 +166,31 @@ public class TdManagerListController {
 		{
 			return "/site_mag/goods_pic_list";
 		} else {
-			return "/site_mag/content_pic_list";
+			return "/site_mag/content_txt_list";
 		}
 	}
 
 	@RequestMapping(value = "/content/list", method = RequestMethod.POST)
-	public String contentListP(Long cid, Long mid, Integer page, Integer size, Long categoryId, String property,
-			String __EVENTTARGET, String __EVENTARGUMENT, String __VIEWSTATE, String keywords, Long[] listId,
+	public String contentListP(Long cid, Long mid, Integer page, Integer size, String categoryNumber, String property,
+			String __EVENTTARGET, String __EVENTARGUMENT, String __VIEWSTATE, String txtKeywords, Long[] listId,
 			Integer[] listChkId, Double[] listSortId, ModelMap map, HttpServletRequest req) {
 		String username = (String) req.getSession().getAttribute("manager");
 		if (null == username) {
 			return "redirect:/Verwalter/login";
+		}
+
+		if (null != __EVENTTARGET) {
+			switch (__EVENTTARGET) {
+			case "btnSave":
+				tdArticleBtnSave(listId, listSortId);
+
+				break;
+
+			case "btnDelete":
+				tdArticleBtnDelete(listId, listChkId);
+
+				break;
+			}
 		}
 
 		if (null == page || page < 0) {
@@ -277,75 +199,41 @@ public class TdManagerListController {
 
 		if (null == size || size <= 0) {
 			size = SiteMagConstant.pageSize;
-			;
 		}
 
-		if (null != __EVENTTARGET) {
-			switch (__EVENTTARGET) {
-			case "lbtnViewTxt":
-			case "lbtnViewImg":
-				__VIEWSTATE = __EVENTTARGET;
-				break;
+		if ("btnPage".equals(__EVENTTARGET)) {
+			page = Integer.parseInt(__EVENTARGUMENT);
+		}
 
-			case "btnSave":
-				btnSave(cid, listId, listSortId, username);
-				tdManagerLogService.addLog("edit", "用户修改文章", req);
-				break;
+		// 查询所有的文章分类
+		List<TdArticleCategory> category_list = tdArticleCategoryService.findAll();
+		map.addAttribute("category_list", category_list);
 
-			case "btnDelete":
-				btnDelete(cid, listId, listChkId);
-				tdManagerLogService.addLog("delete", "用户删除文章", req);
-				break;
-
-			case "btnPage":
-				if (null != __EVENTARGUMENT) {
-					page = Integer.parseInt(__EVENTARGUMENT);
-				}
-				break;
+		if (!(null == categoryNumber || "".equals(categoryNumber))) {
+			if (null == txtKeywords || "".equals(txtKeywords)) {
+				Page<TdArticle> content_page = tdArticleService
+						.findByCategoryNumberOrderByCreateDateDesc(categoryNumber, page, size);
+				map.addAttribute("content_page", content_page);
+			} else {
+				Page<TdArticle> content_page = tdArticleService
+						.findByCategoryNumberAndTitleContainingOrderByCreateDateDesc(categoryNumber, txtKeywords, page,
+								size);
+				map.addAttribute("content_page", content_page);
+			}
+		} else {
+			if (null == txtKeywords || "".equals(txtKeywords)) {
+				Page<TdArticle> content_page = tdArticleService.findAll(page, size);
+				map.addAttribute("content_page", content_page);
+			} else {
+				Page<TdArticle> content_page = tdArticleService.findByTitleContainingOrderByCreateDateDesc(txtKeywords,
+						page, size);
+				map.addAttribute("content_page", content_page);
 			}
 		}
 
-		if (null != __EVENTTARGET && __EVENTTARGET.equalsIgnoreCase("lbtnViewTxt")
-				|| null != __EVENTTARGET && __EVENTTARGET.equalsIgnoreCase("lbtnViewImg")) {
-			__VIEWSTATE = __EVENTTARGET;
-		}
-
-		// else if (cid.equals(2L)) // 商品
-		// {
-		// map.addAttribute("category_list",
-		// tdProductCategoryService.findAll());
-		//
-		// if (null == categoryId)
-		// {
-		// map.addAttribute("content_page",
-		// tdGoodsService.findAllOrderBySortIdAsc(page, size));
-		// }
-		// else
-		// {
-		// map.addAttribute("content_page",
-		// tdGoodsService.findByCategoryIdTreeContainingOrderBySortIdAsc(categoryId,
-		// page, size));
-		// }
-		// }
-		// else // 品牌，产品
-		// {
-		// map.addAttribute("category_list",
-		// tdProductCategoryService.findAll());
-		//
-		// if (null == categoryId)
-		// {
-		// map.addAttribute("content_page",
-		// tdArticleService.findByChannelId(cid, page, size));
-		// }
-		// else
-		// {
-		// map.addAttribute("content_page",
-		// tdArticleService.findByChannelIdAndCategoryId(cid, categoryId, page,
-		// size));
-		// }
-		// }
 
 		// 参数注回
+		map.addAttribute("keywords", txtKeywords);
 		map.addAttribute("cid", cid);
 		map.addAttribute("mid", mid);
 		map.addAttribute("page", page);
@@ -353,7 +241,7 @@ public class TdManagerListController {
 		map.addAttribute("__EVENTTARGET", __EVENTTARGET);
 		map.addAttribute("__EVENTARGUMENT", __EVENTARGUMENT);
 		map.addAttribute("__VIEWSTATE", __VIEWSTATE);
-		map.addAttribute("categoryId", categoryId);
+		map.addAttribute("categoryNumber", categoryNumber);
 		map.addAttribute("property", property);
 
 		// 文字列表模式
@@ -371,39 +259,9 @@ public class TdManagerListController {
 		{
 			return "/site_mag/goods_pic_list";
 		} else {
-			return "/site_mag/content_pic_list";
+			return "/site_mag/content_txt_list";
 		}
 	}
-
-	/**
-	 * 保存文章排序ID
-	 * 
-	 * @param ids
-	 * @param chkIds
-	 * @param sortIds
-	 */
-	// private void articleBtnSave(Long[] ids, Integer[] chkIds, Long[] sortIds)
-	// {
-	// if (null == ids || null == chkIds || null == sortIds
-	// || ids.length < 1 || chkIds.length < 1 || sortIds.length < 1)
-	// {
-	// return;
-	// }
-	//
-	// for (int chkId : chkIds)
-	// {
-	// if (chkId >=0 && ids.length > chkId && sortIds.length > chkId)
-	// {
-	// Long id = ids[chkId];
-	//
-	// TdArticle article = tdArticleService.findOne(id);
-	//
-	// article.setSortId(sortIds[chkId]);
-	//
-	// tdArticleService.save(article);
-	// }
-	// }
-	// }
 
 	/**
 	 * 保存类型排序ID
@@ -470,59 +328,23 @@ public class TdManagerListController {
 		}
 	}
 
-	// private void productCategoryBtnDelete(Long[] ids, Integer[] chkIds)
-	// {
-	// if (null == ids || null == chkIds
-	// || ids.length < 1 || chkIds.length < 1)
-	// {
-	// return;
-	// }
-	//
-	// for (int chkId : chkIds)
-	// {
-	// if (chkId >=0 && ids.length > chkId)
-	// {
-	// Long id = ids[chkId];
-	//
-	// tdProductCategoryService.delete(id);
-	// }
-	// }
-	// }
-
-	/**
-	 * 保存文章排序ID
-	 * 
-	 * @param ids
-	 * @param chkIds
-	 * @param sortIds
-	 */
-	private void btnSave(Long cid, Long[] ids, Double[] sortIds, String username) {
+	private void tdArticleBtnSave(Long[] ids, Double[] sortIds) {
 		if (null == ids || null == sortIds || ids.length < 1 || sortIds.length < 1) {
 			return;
 		}
 
 		for (int i = 0; i < ids.length; i++) {
 			Long id = ids[i];
-			if (null != cid && cid.equals(2L)) {
-			} else {
-				TdArticle article = tdArticleService.findOne(id);
+			TdArticle category = tdArticleService.findOne(id);
 
-				if (sortIds.length > i) {
-					article.setSortId(sortIds[i]);
-					tdArticleService.save(article);
-				}
+			if (sortIds.length > i) {
+				category.setSortId(sortIds[i]);
+				tdArticleService.save(category);
 			}
 		}
 	}
 
-	/**
-	 * 删除文章
-	 * 
-	 * @param ids
-	 * @param chkIds
-	 * @param sortIds
-	 */
-	private void btnDelete(Long cid, Long[] ids, Integer[] chkIds) {
+	private void tdArticleBtnDelete(Long[] ids, Integer[] chkIds) {
 		if (null == ids || null == chkIds || ids.length < 1 || chkIds.length < 1) {
 			return;
 		}
@@ -531,11 +353,7 @@ public class TdManagerListController {
 			if (chkId >= 0 && ids.length > chkId) {
 				Long id = ids[chkId];
 
-				if (null != cid && cid.equals(2L)) {
-					tdGoodsService.delete(id);
-				} else {
-					tdArticleService.delete(id);
-				}
+				tdArticleService.delete(id);
 			}
 		}
 	}

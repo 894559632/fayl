@@ -61,9 +61,9 @@ function __doPostBack(eventTarget, eventArgument) {
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="ltable">
     <tbody><tr class="odd_bg">
         <th width="6%">选择</th>
-        <th align="left" width="6%">编号</th>
+        <th align="left" width="6%">序号</th>
         <th align="left">类别名称</th>
-        <th align="left" width="12%">调用别名</th>
+        <th align="left" width="30%">编号</th>
         <th align="left" width="12%">排序</th>
         <th width="12%">操作</th>
     </tr>
@@ -79,17 +79,19 @@ function __doPostBack(eventTarget, eventArgument) {
             </td>
             <td>${cat.id?c}</td>
             <td>
-                <#if cat?? && cat.layerCount gt 1>
+                <#if cat?? && cat.layerCount??&&cat.layerCount gt 1>
                     <span style="display:inline-block;width:${(cat.layerCount-2)*24}px;"></span>
                     <span class="folder-line"></span>
                 </#if>
                 <span class="folder-open"></span>
                 <a href="/Verwalter/product/category/edit?id=${cat.id?c!""}">${cat.title!""}</a>
             </td>
-            <td>${cat.callIndex!""}</td>
+            <td>${cat.number!""}</td>
             <td><input name="listSortId" type="text" value="${cat.sortId!""}" class="sort" onkeydown="return checkNumber(event);"></td>
             <td align="center">
+            	<#--
                 <a href="/Verwalter/product/category/edit?id=${cat.id?c!""}&sub=1">添加子类</a>
+                -->
                 <a href="/Verwalter/product/category/edit?id=${cat.id?c!""}">修改</a>
             </td>
         </tr>

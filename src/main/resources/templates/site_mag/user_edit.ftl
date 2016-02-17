@@ -110,7 +110,7 @@ $(function () {
 <form name="form_user" method="post" action="/Verwalter/user/save" id="form_user">
 <div>
 <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="${__VIEWSTATE!""}" >
-<input type="hidden" id="userId" name="userId" value="<#if user??>${user.id?c!""}</#if>" >
+<input type="hidden" id="userId" name="id" value="<#if user??>${user.id?c!""}</#if>" >
 </div>
 <!--导航栏-->
 <div class="location" style="position: static; top: 0px;">
@@ -140,84 +140,18 @@ $(function () {
 
 <!--基本资料-->
 <div class="tab-content">
-<#--
-    <dl>
-  		<dt>
-        用户类型
-        </dt>
-   		<dd>
-	      <div class="rule-single-select">
-	            <select id="roleId" name="roleId">
-	                <option value="" <#if !user?? || user??&& !user.roleId??>selected="selected"</#if>>请选择...</option>
-	                <option value="1" <#if user?? && user.roleId?? &&user.roleId==1>selected="selected"</#if>>普通用户</option>
-	                <option value="2" <#if user?? && user.roleId?? &&user.roleId==3>selected="selected"</#if>> 停车场用户</option>     
-	            </select>
-	        </div>    
-	    </dd>
-	</dl>      
-	-->
-    <dl>
-        <dt>用户名：</dt>
-        <dd>
-            <#if user??>
-                <span>${user.username!""}</span>
-            <#else>
-                <input name="username" type="text" maxlength="200" class="input normal" datatype="s6-20" ajaxurl="/Verwalter/user/check<#if user??>?id=${user.id?c}</#if>" sucmsg=" " minlength="2">
-            </#if>
-            <span class="Validform_checktip">
-        </span></dd>
-    </dl>
-    <!--lichong -->
-    
   <dl>
-    <dt>登录密码</dt>
-    <dd><input name="password" type="password" value="<#if user??>${user.password!''}</#if>" class="input normal" datatype="*6-20" nullmsg="请设置密码" errormsg="密码范围在6-20位之间" sucmsg=" " value=""> <span class="Validform_checktip">*登录的密码，至少6位</span></dd>
+    <dt>姓名</dt>
+    <dd><input name="name" type="text" value="<#if user??>${user.name!""}</#if>" id="txtEmail" class="input normal" ignore="ignore" datatype="*" sucmsg=" " > <span class="Validform_checktip">*设计师姓名</span></dd>
   </dl>
   <dl>
-    <dt>确认密码</dt>
-    <dd><input name="password1" type="password" value="<#if user??>${user.password!''}</#if>" class="input normal" datatype="*" recheck="password" nullmsg="请再输入一次密码" errormsg="两次输入的密码不一致" sucmsg=" " value=""> <span class="Validform_checktip">*再次输入密码</span></dd>
+    <dt>职务</dt>
+    <dd><input name="position" type="text" value="<#if user??>${user.position!""}</#if>" class="input normal" ignore="ignore" datatype="*" sucmsg=" " ><span class="Validform_checktip">*设计师职务</span></dd>
   </dl>
-  <dl>
-    <dt>邮箱账号</dt>
-    <dd><input name="email" type="text" value="<#if user??>${user.email!""}</#if>" id="txtEmail" class="input normal" ignore="ignore" datatype="e" sucmsg=" " > <span class="Validform_checktip">*取回密码时用到</span></dd>
-  </dl>
-  <dl>
-    <dt>手机号码</dt>
-    <dd><input name="mobile" type="text" value="<#if user??>${user.mobile!""}</#if>" class="input normal" ignore="ignore" datatype="m" sucmsg=" " ></dd>
-  </dl>
-  <dl>
-    <dt>车牌号</dt>
-    <dd>
-    	<input name="carCode" type="text" value="<#if user?? && user.carCode??>${user.carCode!''}</#if>" maxlength="200" class="input normal" datatype="s6-20"  sucmsg=" " minlength="2">
-    </dd>
-  </dl>
-   <dl>
-    <dt>累计消费额</dt>
-    <dd><span><#if user??>${user.totalSpendCash!"0.00"}</#if></span></dd>
-  </dl>
-  <#--
-  <dl>
-    <dt>修改用户粮草</dt>
-    <dd>
-        <input name="totalPoints" id="totalPoints" type="text" class="input" value="<#if user??>${user.totalPoints?c!"0"}</#if>">
-        <input name="btnEditRemark" type="button" id="btnEditRemark" class="ibtn" value="确认修改" style="margin-top: -3px;">
-    </dd>
-  </dl> -->
-  <!--  <dl>
-    <dt>修改备注</dt>
-    <dd>       
-        <textarea name="totalPointsRemarks" rows="2" cols="20" class="input normal"></textarea>
-        <span class="Validform_checktip">*用户粮草修改备注</span>
-    </dd>
-  </dl>  
-  <dl>
-    <dt>真实姓名</dt>
-    <dd><input name="realName" type="text" value="<#if user??>${user.realName!""}</#if>" class="input normal"></dd>
-  </dl>-->
   <dl>
     <dt>上传头像</dt>
     <dd>
-        <input id="txtImgUrl" name="headImageUri" type="text" value="<#if user??>${user.headImageUri!""}</#if>" class="input normal upload-path">
+        <input id="txtImgUrl" name="photoUri" type="text" value="<#if user??>${user.photoUri!""}</#if>" class="input normal upload-path">
         <div class="upload-box upload-img"></div>
         <div class="photo-list thumb_ImgUrl_show">
             <ul>
@@ -228,34 +162,13 @@ $(function () {
         </div>
     </dd>
   </dl>
-
   <dl>
-    <dt>用户性别</dt>
+    <dt>排序数字</dt>
     <dd>
-      <div class="rule-multi-radio multi-radio">
-        <span style="display: none;">
-        <input type="radio" name="sex" value="保密" <#if !user?? || !user.sex?? || user.sex=="保密">checked="checked"</#if>>
-        <label>保密</label>
-        <input type="radio" name="sex" value="男" <#if user?? && user.sex?? && user.sex=="男">checked="checked"</#if>>
-        <label>男</label>
-        <input type="radio" name="rblSex" value="女" <#if user?? && user.sex?? && user.sex=="女">checked="checked"</#if>>
-        <label>女</label>
-        </span>
-      </div>
+        <input name="sortId" type="text" value="<#if user??>${user.sortId!""}<#else>99</#if>" id="txtSortId" class="input txt100" datatype="n" sucmsg=" ">
+        <span class="Validform_checktip">*数字，越小越向前</span>
     </dd>
-  </dl>
-  
-    <#--
-  <dl>
-    <dt>出生日期</dt>
-    <dd>
-      <div class="input-date">
-        <input name="birthday" type="text" value="<#if user??>${user.birthday!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:&#39;yyyy-MM-dd&#39;})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}$/" errormsg="请选择正确的日期" sucmsg=" ">
-        <i>日期</i>
-      </div>
-    </dd>
-  </dl>  
-  -->
+</dl>
 </div>
 <!--/基本资料-->
 

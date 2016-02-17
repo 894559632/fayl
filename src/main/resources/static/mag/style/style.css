@@ -35,7 +35,7 @@ a:active{ color:#EA5D0E; text-decoration:none; }
  position: relative;
  padding: 0;
  box-shadow: 0 0 5px #333;}
-.logo{ display:block; float:left; width:180px; height:49px; background:url(logo.png) no-repeat center; text-indent:-9999px; overflow:hidden; }
+.logo{ display:block; float:left; width:180px; height:49px; background:url(/images/logo.png) no-repeat center; text-indent:-9999px; overflow:hidden; }
 /*顶部菜单*/
 .nav{ display:block; float:left; height:100%; border-right:2px solid #2A2B2D; }
 	.nav li{ display:block; float:left; margin:0; padding:0px 15px; border-left:2px solid #2A2B2D; color:#fff; cursor:pointer; font-size:16px; height:49px; line-height:42px; vertical-align:middle; }
@@ -170,7 +170,7 @@ textarea.inputw400_h100{ width:445px; height:100px; }
 	.input.normal{ width:300px; }
 	.input.normal230{ width:230px; }
 	.input.txt{ width:200px; }
-	.input.txt100{ width:100px; }
+	.input.txt100{ width:150px; }
 	.input.small{ width:50px; }
 	.input.small30{ width:30px; }
 	.input:focus{ background:#FFFBDE; outline:1px solid #F5450A; }

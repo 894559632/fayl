@@ -109,14 +109,14 @@
             <dt>所属类别</dt>
             <dd>
                 <div class="rule-single-select">
-                    <select name="categoryId" id="ddlCategoryId" datatype="*" sucmsg=" " nullmsg="请选择！" class="Validform_error" style="display: none;">
+                    <select name="categoryNumber" id="ddlCategoryId" datatype="*" sucmsg=" " nullmsg="请选择！" class="Validform_error" style="display: none;">
                     	<#if article??>
                     	<#else>
                     	<option value="">请选择类别...</option>
                     	</#if>
                         <#if category_list??>
                             <#list category_list as c>
-                                <option value="${c.id?c!""}" <#if article?? && article.categoryId==c.id>selected="selected"</#if>><#if c.layerCount?? && c.layerCount gt 1><#list 1..(c.layerCount-1) as a>　</#list>├ </#if>${c.title!""}</option>
+                                <option value="${c.number!""}" <#if article?? && article.categoryNumber==c.number>selected="selected"</#if>><#if c.layerCount?? && c.layerCount gt 1><#list 1..(c.layerCount-1) as a>　</#list>├ </#if>${c.title!""}</option>
                             </#list>
                         </#if>
                     </select>
@@ -126,18 +126,6 @@
                 <#else>
                     <span class="Validform_checktip Validform_wrong">请选择！</span>
                 </#if>
-            </dd>
-        </dl>
-        <dl>
-            <dt>显示状态</dt>
-            <dd>
-                <div class="rule-multi-radio multi-radio">
-                    <span id="rblStatus" style="display: none;">
-                        <input type="radio" name="statusId" value="0" <#if !article?? || article?? && article.statusId?? && article.statusId==0>checked="checked"</#if> ><label>正常</label>
-                        <input type="radio" name="statusId" value="1" <#if article?? && article.statusId?? && article.statusId==1>checked="checked"</#if>><label>待审核</label>
-                        <input type="radio" name="statusId" value="2" <#if article?? && article.statusId?? && article.statusId==2>checked="checked"</#if>><label>不显示</label>
-                    </span>
-                </div>
             </dd>
         </dl>
         <#--
@@ -167,7 +155,7 @@
         <dl>
             <dt>封面图片</dt>
             <dd>
-                <input name="imgUrl" type="text" id="txtImgUrl" value="<#if article??>${article.imgUrl!""}</#if>" class="input normal upload-path">
+                <input name="imgUri" type="text" id="txtImgUrl" value="<#if article??>${article.imgUri!""}</#if>" class="input normal upload-path">
                 <div class="upload-box upload-img"></div>
                 <div class="photo-list thumb_ImgUrl_show" style="display: none;">
                     <ul>
@@ -185,53 +173,20 @@
                 <span class="Validform_checktip">*数字，越小越向前</span>
             </dd>
         </dl>
-        <dl>
-            <dt>浏览次数</dt>
-            <dd>
-                <input name="viewCount" type="text" value="0" value="<#if article??>${article.viewCount!""}</#if>" id="txtClick" class="input txt100" datatype="n" sucmsg=" ">
-                <span class="Validform_checktip">点击浏览该信息自动+1</span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>发布时间</dt>
-            <dd>
-                <div class="input-date">
-                    <input name="createTime" type="text" id="txtAddTime" value="<#if article??>${article.createTime!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="请选择正确的日期" sucmsg=" ">
-                    <i>日期</i>
-                </div>
-                <span class="Validform_checktip">不选择默认当前发布时间</span>
-            </dd>
-        </dl>
     </div>
     
     <div class="tab-content" style="display: none;">
         <dl>
-            <dt>调用别名</dt>
+            <dt>文章作者</dt>
             <dd>
-                <input name="callIndex" type="text" id="txtCallIndex" value="<#if article??>${article.callIndex!""}</#if>" class="input normal" datatype="/^\s*$|^[a-zA-Z0-9\-\_]{2,50}$/" sucmsg=" ">
-                <span class="Validform_checktip">*别名访问，非必填，不可重复</span>
+                <input name="author" type="text" value="${article.author!''}" id="txtSortId" class="input txt100" datatype="*" sucmsg=" ">
+                <span class="Validform_checktip">文章的作者</span>
             </dd>
         </dl>
-        <dl>
-            <dt>URL链接</dt>
-            <dd>
-                <input name="linkUrl" type="text" value="<#if article??>${article.linkUrl!""}</#if>" maxlength="255" id="txtLinkUrl" class="input normal">
-                <span class="Validform_checktip">填写后直接跳转到该网址</span>
-            </dd>
-        </dl>
-        <dl id="div_source">
-            <dt>
-                <span id="div_source_title">信息来源</span></dt>
-            <dd>
-                <input name="source" type="text" value="<#if article??>${article.source!""}<#else>本站</#if>" id="field_control_source" class="input normal">
-                <span id="div_source_tip" class="Validform_checktip">非必填，最多50个字符</span>
-            </dd>
-        </dl>
-        
         <dl>
             <dt>内容摘要</dt>
             <dd>
-                <textarea name="brief" rows="2" cols="20" id="txtZhaiyao" class="input" datatype="*0-255" sucmsg=" "><#if article??>${article.brief!""}</#if></textarea>
+                <textarea name="summary" rows="2" cols="20" id="txtZhaiyao" class="input" datatype="*0-255" sucmsg=" "><#if article??>${article.summary!""}</#if></textarea>
                 <span class="Validform_checktip">不填写则自动截取内容前255字符</span>
             </dd>
         </dl>

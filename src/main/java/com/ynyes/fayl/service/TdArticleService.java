@@ -45,6 +45,11 @@ public class TdArticleService {
 		return (List<TdArticle>) repository.findAll();
 	}
 
+	public Page<TdArticle> findAllOrderByCreateTime(int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "createDate"));
+		return repository.findAll(pageRequest);
+	}
+
 	/**
 	 * 根据分类编号查找文章，按照排序号正序排序（不分页）
 	 * 
@@ -110,10 +115,38 @@ public class TdArticleService {
 	 * 
 	 * @author DengXiao
 	 */
-	public TdArticle findByNumber(String number){
-		if(null == number){
+	public TdArticle findByNumber(String number) {
+		if (null == number) {
 			return null;
 		}
 		return repository.findByNumber(number);
+	}
+
+	/**
+	 * 根据分类编号进行模糊查询（分页）
+	 * 
+	 * @author DengXiao
+	 */
+	public Page<TdArticle> findByCategoryNumberAndTitleContainingOrderByCreateDateDesc(String categoryNumber,
+			String keywords, int page, int size) {
+		if (null == categoryNumber || null == keywords) {
+			return null;
+		}
+		PageRequest pageRequest = new PageRequest(page, size);
+		return repository.findByCategoryNumberAndTitleContainingOrderByCreateDateDesc(categoryNumber, keywords,
+				pageRequest);
+	}
+
+	/**
+	 * 模糊查找所有的文章（分页）
+	 * 
+	 * @author DengXiao
+	 */
+	public Page<TdArticle> findByTitleContainingOrderByCreateDateDesc(String keywords, int page, int size) {
+		if (null == keywords) {
+			return null;
+		}
+		PageRequest pageRequest = new PageRequest(page, size);
+		return repository.findByTitleContainingOrderByCreateDateDesc(keywords, pageRequest);
 	}
 }

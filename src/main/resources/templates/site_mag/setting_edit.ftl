@@ -143,8 +143,8 @@ $(function () {
             <div class="content-tab-ul-wrap" >
                 <ul>
                     <li><a href="javascript:;" onclick="tabs(this);" class="selected">网站基本信息</a></li>
-                    <li><a href="javascript:;" onclick="tabs(this);">功能权限设置</a></li>
                     <#--
+                    <li><a href="javascript:;" onclick="tabs(this);">功能权限设置</a></li>
                     <li><a href="javascript:;" onclick="tabs(this);">网站奖励设置</a></li>
                     <li><a href="javascript:;" onclick="tabs(this);">注册用户协议</a></li>
                     -->
@@ -181,11 +181,9 @@ $(function () {
             <dt>地图图片</dt>
             <dd>
                 <input id="mapUri" name="wxQrCode" type="text" datatype="*0-255" value="<#if setting??>${setting.wxQrCode!""}</#if>" class="input normal upload-path">
-                <#--
                 <div class="upload-box upload-img"></div>
                 <span class="Validform_checktip"></span>
                 <div class="photo-list thumb_wxImgUrl_show"></div>
-                -->
             </dd>
         </dl>
         <#--
@@ -256,7 +254,7 @@ $(function () {
         <dl>
             <dt>管理员邮箱</dt>
             <dd>
-                <input name="adminEmail" type="text" value="<#if setting??>${setting.adminEmail!""}</#if>" class="input normal" datatype="n0-100" sucmsg=" ">
+                <input name="adminEmail" type="text" value="<#if setting??>${setting.adminEmail!""}</#if>" class="input normal" datatype="e" sucmsg=" ">
                 <span class="Validform_checktip"></span>
             </dd>
         </dl>

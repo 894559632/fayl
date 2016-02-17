@@ -61,4 +61,17 @@ public class TdResearchService {
 		}
 		return repository.findByNumber(number);
 	}
+
+	/**
+	 * 研究标题模糊查询
+	 * 
+	 * @author DengXiao
+	 */
+	public Page<TdResearch> findByTitleContainingOrderBySortIdAsc(String keywords, int page, int size) {
+		if (null == keywords) {
+			return null;
+		}
+		PageRequest pageRequest = new PageRequest(page, size);
+		return repository.findByTitleContainingOrderBySortIdAsc(keywords, pageRequest);
+	}
 }

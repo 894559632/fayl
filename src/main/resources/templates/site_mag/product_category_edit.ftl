@@ -75,28 +75,15 @@
       <ul>
         <li><a href="javascript:;" onclick="tabs(this);" class="selected">基本信息</a></li>
         <li><a href="javascript:;" onclick="tabs(this);">SEO选项</a></li>
+        <#--
         <li><a href="javascript:;" onclick="tabs(this);">扩展选项</a></li>
+        -->
       </ul>
     </div>
   </div>
 </div>
 
 <div class="tab-content">
-  <dl>
-    <dt>所属父类别</dt>
-    <dd>
-      <div class="rule-single-select single-select">
-        <select name="parentId">
-            <option value="" <#if cat?? && cat.parentId?? && cat.parentId==0>selected="selected"</#if>>无父级分类</option>
-        	<#if category_list??>
-        	   <#list category_list as c>
-        	       <option value="${c.id?c!""}" <#if cat?? && cat.parentId?? && cat.parentId==c.id || fatherCat?? && fatherCat.id==c.id>selected="selected"</#if>><#if c.layerCount?? && c.layerCount gt 1><#list 1..(c.layerCount-1) as a>　</#list>├ </#if>${c.title!""}</option>
-        	   </#list>
-        	</#if>
-        </select>
-      </div>
-    </dd>
-  </dl>
   <dl>
     <dt>排序数字</dt>
     <dd>
@@ -105,19 +92,20 @@
     </dd>
   </dl>
   <dl>
-    <dt>类别名称</dt>
+    <dt>分类名称</dt>
     <dd>
         <input name="title" type="text" value="<#if cat??>${cat.title!""}</#if>" class="input normal" datatype="*1-100" sucmsg=" ">
         <span class="Validform_checktip">*类别中文名称，100字符内</span>
     </dd>
   </dl>
   <dl>
-    <dt>调用别名</dt>
+    <dt>分类编号</dt>
     <dd>
-      <input name="callIndex" type="text" id="txtCallIndex" value="<#if cat??>${cat.callIndex!""}</#if>" class="input normal" datatype="/^\s*$|^[a-zA-Z0-9\-\_]{2,50}$/" errormsg="请填写正确的别名" sucmsg=" ">
-      <span class="Validform_checktip">类别的调用别名，只允许字母、数字、下划线</span>
+      <input name="number" type="text" id="txtCallIndex" value="<#if cat??>${cat.number!""}</#if>" class="input normal" errormsg="请填写正确的别名" sucmsg=" ">
+      <span class="Validform_checktip">类别的编号，可以不用手动填写</span>
     </dd>
   </dl>
+  <#--
   <dl>
     <dt>关联参数</dt>
     <dd>
@@ -131,6 +119,13 @@
             </#if>
         </select>
       </div>
+    </dd>
+  </dl>
+  -->
+  <dl>
+    <dt>类别介绍</dt>
+    <dd>
+        <textarea name="description" class="editor-mini" style="visibility:hidden;" ><#if cat??>${cat.description!""}</#if></textarea>
     </dd>
   </dl>
 </div>
@@ -172,12 +167,6 @@
     <dd>
       <input name="imgUrl" type="text" value="<#if cat??>${cat.imgUrl!""}</#if>" id="txtImgUrl" class="input normal upload-path">
       <div class="upload-box upload-img"></div>
-    </dd>
-  </dl>
-  <dl>
-    <dt>类别介绍</dt>
-    <dd>
-        <textarea name="content" class="editor-mini" style="visibility:hidden;" ><#if cat??>${cat.content!""}</#if></textarea>
     </dd>
   </dl>
 </div>

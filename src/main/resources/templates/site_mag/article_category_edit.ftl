@@ -85,21 +85,6 @@
 
 <div class="tab-content">
   <dl>
-    <dt>所属父类别</dt>
-    <dd>
-      <div class="rule-single-select single-select">
-        <select name="parentId" id="ddlParentId" style="display: none;">
-            <option value="0" <#if cat?? && cat.parentId==0>selected="selected"</#if>>无父级分类</option>
-        	<#if category_list??>
-        	   <#list category_list as c>
-        	       <option value="${c.id?c!""}" <#if cat?? && cat.parentId==c.id || fatherCat?? && fatherCat.id==c.id>selected="selected"</#if>><#if c.layerCount?? && c.layerCount gt 1><#list 1..(c.layerCount-1) as a>　</#list>├ </#if>${c.title!""}</option>
-        	   </#list>
-        	</#if>
-        </select>
-      </div>
-    </dd>
-  </dl>
-  <dl>
     <dt>排序数字</dt>
     <dd>
       <input name="sortId" type="text" value="<#if cat??>${cat.sortId!"99"}<#else>99</#if>" id="txtSortId" class="input small" datatype="n" sucmsg=" ">
@@ -109,13 +94,6 @@
   <dl>
     <dt>类别名称</dt>
     <dd><input name="title" type="text" id="txtTitle" value="<#if cat??>${cat.title!""}</#if>" class="input normal" onblur="change2cn(this.value, this.form.txtCallIndex)" datatype="*1-100" sucmsg=" "> <span class="Validform_checktip">*类别中文名称，100字符内</span></dd>
-  </dl>
-  <dl>
-    <dt>调用别名</dt>
-    <dd>
-      <input name="callIndex" type="text" id="txtCallIndex" value="<#if cat??>${cat.callIndex!""}</#if>" class="input normal" datatype="/^\s*$|^[a-zA-Z0-9\-\_]{2,50}$/" errormsg="请填写正确的别名" sucmsg=" ">
-      <span class="Validform_checktip">类别的调用别名，只允许字母、数字、下划线</span>
-    </dd>
   </dl>
   <dl>
     <dt>SEO标题</dt>

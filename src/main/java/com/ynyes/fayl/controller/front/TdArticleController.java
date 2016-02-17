@@ -66,10 +66,10 @@ public class TdArticleController {
 			}
 
 			// 根据文章分类查找其下是所有的文章
-			Page<TdArticle> article_page = tdArticleService.findByCategoryNumberOrderByCreateDateDesc(number, page,
-					ClientConstant.pageSize);
+			Page<TdArticle> article_page = tdArticleService.findByCategoryNumberOrderByCreateDateDesc(
+					article_category.getNumber(), page, ClientConstant.pageSize);
 			// 判断当前页数是否大于了最大页数-1，如果是则按照最大页数-1为page重新查询
-			if (null != article_page && page > article_page.getTotalPages() - 1) {
+			if (null != article_page && article_page.getTotalPages() > 0 && page > article_page.getTotalPages() - 1) {
 				article_page = tdArticleService.findByCategoryNumberOrderByCreateDateDesc(number,
 						article_page.getTotalPages() - 1, ClientConstant.pageSize);
 			}

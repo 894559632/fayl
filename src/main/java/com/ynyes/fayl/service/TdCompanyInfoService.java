@@ -5,6 +5,10 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.ynyes.fayl.entity.TdCompanyInfo;
@@ -41,6 +45,11 @@ public class TdCompanyInfoService {
 		return (List<TdCompanyInfo>) repository.findAll();
 	}
 
+	public Page<TdCompanyInfo> findAll(int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.ASC, "sortId"));
+		return repository.findAll(pageRequest);
+	}
+
 	/**
 	 * 根据指定的编号查找公司信息实体
 	 * 
@@ -51,5 +60,18 @@ public class TdCompanyInfoService {
 			return null;
 		}
 		return repository.findByNumber(number);
+	}
+
+	/**
+	 * 信息标题模糊查询（分页）
+	 * 
+	 * @author DengXiao
+	 */
+	public Page<TdCompanyInfo> findByTitleContainingOrderBySortIdAsc(String keywords, int page, int size) {
+		if (null == keywords) {
+			return null;
+		}
+		PageRequest pageRequest = new PageRequest(page, size);
+		return repository.findByTitleContainingOrderBySortIdAsc(keywords, pageRequest);
 	}
 }
