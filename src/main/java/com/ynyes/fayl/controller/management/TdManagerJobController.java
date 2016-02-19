@@ -210,13 +210,16 @@ public class TdManagerJobController {
 			String number = "ZPXX" + dateFormat + randomNumber;
 			info.setNumber(number);
 		}
+		if (null != info && null == info.getCreateTime()) {
+			info.setCreateTime(new Date());
+		}
 		info = tdJobService.save(info);
 		tdManagerLogService.addLog(type, "用户修改公司招聘信息", req);
 
 		map.addAttribute("goods", info);
 
-		return "redirect:/Verwalter/job/list?__EVENTTARGET=" + __EVENTTARGET + "&__EVENTARGUMENT="
-				+ __EVENTARGUMENT + "&__VIEWSTATE=" + __VIEWSTATE;
+		return "redirect:/Verwalter/job/list?__EVENTTARGET=" + __EVENTTARGET + "&__EVENTARGUMENT=" + __EVENTARGUMENT
+				+ "&__VIEWSTATE=" + __VIEWSTATE;
 	}
 
 	@ModelAttribute

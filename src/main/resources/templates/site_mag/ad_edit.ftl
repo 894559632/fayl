@@ -70,11 +70,11 @@ $(function () {
         <dt>所属广告位</dt>
         <dd>
             <div class="rule-single-select single-select">
-            <select name="typeId" datatype="*" sucmsg=" ">
+            <select name="categoryNumber" datatype="*" sucmsg=" ">
                 <option value="" <#if !ad??>selected="selected"</#if>>请选择</option>
                 <#if ad_type_list??>
                     <#list ad_type_list as type>
-                        <option value="${type.id?c}" <#if ad?? && ad.typeId == type.id>selected="selected"</#if>>${type.title}</option>
+                        <option value="${type.number!''}" <#if ad?? && ad.categoryNumber??&&ad.categoryNumber == type.number>selected="selected"</#if>>${type.title!''}</option>
                     </#list>
                 </#if>
             </select>
@@ -104,7 +104,7 @@ $(function () {
     <dl>
         <dt>广告图片</dt>
         <dd>
-            <input id="txtImgUrl" name="fileUri" type="text" datatype="*" value="<#if ad??>${ad.fileUri!""}</#if>" class="input normal upload-path">
+            <input id="txtImgUrl" name="imgUri" type="text" datatype="*" value="<#if ad??>${ad.imgUri!""}</#if>" class="input normal upload-path">
             <div class="upload-box upload-img"></div>
             <div class="photo-list thumb_ImgUrl_show">
                 <ul>
@@ -113,13 +113,6 @@ $(function () {
                     </li>
                 </ul>
             </div>
-            <span class="Validform_checktip"></span>
-        </dd>
-    </dl>
-    <dl>
-        <dt>链接地址</dt>
-        <dd>
-            <input name="linkUri" type="text" value="<#if ad??>${ad.linkUri!""}</#if>" class="input normal" datatype="*1-100" sucmsg=" ">
             <span class="Validform_checktip"></span>
         </dd>
     </dl>
@@ -153,7 +146,7 @@ $(function () {
     <dl>
         <dt>备注</dt>
         <dd>
-            <textarea name="mark" rows="2" cols="20" class="input" datatype="*0-255" sucmsg=" "><#if ad??>${ad.mark!""}</#if></textarea>
+            <textarea name="introduce" rows="2" cols="20" class="input" datatype="*0-255" sucmsg=" "><#if ad??>${ad.introduce!""}</#if></textarea>
             <span class="Validform_checktip">255个字符以内</span>
         </dd>
     </dl>

@@ -93,6 +93,10 @@ sizes, pagination, etc.
 	/*width: 100%;
 	height: 180px;*/
 }
+.swiper-slide img {
+	width:100%;
+	height:100%
+}
 .swiper-slide-active {
 	/* Specific active slide styling: */
 	

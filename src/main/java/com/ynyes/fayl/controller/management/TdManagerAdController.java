@@ -1,5 +1,8 @@
 package com.ynyes.fayl.controller.management;
 
+import java.util.Date;
+import java.util.Random;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ibm.icu.text.SimpleDateFormat;
 import com.ynyes.fayl.entity.TdAd;
 import com.ynyes.fayl.service.TdAdService;
 import com.ynyes.fayl.service.TdAdTypeService;
@@ -109,6 +113,15 @@ public class TdManagerAdController {
 			type = "add";
 		} else {
 			type = "edit";
+		}
+
+		if (null != tdAd && (null == tdAd.getNumber() || "".equals(tdAd.getNumber()))) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+			String dateFormat = sdf.format(new Date());
+			Random random = new Random();
+			int randomNumber = random.nextInt(900) + 100;
+			String number = "GGNR" + dateFormat + randomNumber;
+			tdAd.setNumber(number);
 		}
 
 		tdAdService.save(tdAd);

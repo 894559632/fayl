@@ -178,7 +178,7 @@ public class TdManagerCompanyInfoController {
 		map.addAttribute("__VIEWSTATE", __VIEWSTATE);
 
 		if (null != id) {
-			TdSample tdGoods = tdSampleService.findOne(id);
+			TdCompanyInfo tdGoods = tdCompanyInfoService.findOne(id);
 			map.addAttribute("goods", tdGoods);
 		}
 
