@@ -8,4 +8,5 @@ import com.ynyes.fayl.entity.TdDesigner;
 public interface TdDesignerRepo
 		extends PagingAndSortingRepository<TdDesigner, Long>, JpaSpecificationExecutor<TdDesigner> {
 
+	TdDesigner findByNumber(String number);
 }

@@ -11,6 +11,7 @@
 <script type="text/javascript" src="/mag/js/swfupload.js"></script>
 <script type="text/javascript" src="/mag/js/swfupload.queue.js"></script>
 <script type="text/javascript" src="/mag/js/swfupload.handlers.js"></script>
+<script type="text/javascript" charset="utf-8" src="/mag/js/kindeditor-min.js"></script>
 <script type="text/javascript" src="/mag/js/layout.js"></script>
 <link href="/mag/style/style.css" rel="stylesheet" type="text/css">
 <link href="/mag/style/WdatePicker.css" rel="stylesheet" type="text/css">
@@ -25,6 +26,16 @@ $(function () {
             sendurl: "/Verwalter/upload", 
             flashurl: "/mag/js/swfupload.swf"
         });
+    });
+    
+     //初始化编辑器
+    var editor = KindEditor.create('.editor', {
+        width: '98%',
+        height: '350px',
+        resizeType: 1,
+        uploadJson: '/Verwalter/editor/upload?action=EditorFile',
+        fileManagerJson: '/Verwalter/editor/upload?action=EditorFile',
+        allowFileManager: true
     });
 
         //（缩略图）
@@ -131,8 +142,8 @@ $(function () {
       <ul>
         <li><a href="javascript:;" onclick="tabs(this);" class="selected">基本资料</a></li>
         <#--<li><a href="javascript:;" onclick="tabs(this);">安全设置</a></li>
-        <li><a href="javascript:;" onclick="tabs(this);">账户信息</a></li>
-        -->
+		-->
+        <li><a href="javascript:;" onclick="tabs(this);">SEO设置</a></li>
       </ul>
     </div>
   </div>
@@ -169,61 +180,39 @@ $(function () {
         <span class="Validform_checktip">*数字，越小越向前</span>
     </dd>
 </dl>
+<dl>
+    <dt>事迹简介</dt>
+    <dd>
+        <textarea name="description" class="editor" style="visibility:hidden;"><#if user??>${user.description!""}</#if></textarea>
+    </dd>
+</dl>
 </div>
 <!--/基本资料-->
 
 <!--安全设置-->
 <div class="tab-content" style="display:none;">  
-
-  <#--
-  <dl>
-    <dt>用户等级</dt>
-    <dd><input name="userLevelId" type="text" value="<#if user??>${user.userLevelId!""}</#if>" class="input normal" datatype="n0-2" errormsg="请输入正确的等级" sucmsg=" " > <span class="Validform_checktip"></span></dd>
-  </dl>
-  <dl>
-    <dt>用户等级名称</dt>
-    <dd><span><#if user??>${user.userLevelTitle!""}</#if></span></dd>
-  </dl>
- 
-  <dl>
-    <dt>咨询总数</dt>
-    <dd><span><#if user??>${user.totalConsults!""}</#if></span></dd>
-  </dl>
-  <dl>
-    <dt>评论总数</dt>
-    <dd><span><#if user??>${user.totalComments!""}</#if></span></dd>
-  </dl>
-  <dl>
-    <dt>退换货总数</dt>
-    <dd><span><#if user??>${user.totalReturns!""}</#if></span></dd>
-  </dl>-->
+<dl>
+    <dt>SEO标题</dt>
+    <dd>
+        <input name="seoTitle" type="text" maxlength="255" id="txtSeoTitle" value="<#if user??>${user.seoTitle!""}</#if>" class="input normal" datatype="*0-100" sucmsg=" ">
+        <span class="Validform_checktip">255个字符以内</span>
+    </dd>
+</dl>
+<dl>
+    <dt>SEO关健字</dt>
+    <dd>
+        <textarea name="seoKeywords" rows="2" cols="20" id="txtSeoKeywords" class="input" datatype="*0-255" sucmsg=" "><#if user??>${user.seoKeywords!""}</#if></textarea>
+        <span class="Validform_checktip">以“,”逗号区分开，255个字符以内</span>
+    </dd>
+</dl>
+<dl>
+    <dt>SEO描述</dt>
+    <dd>
+        <textarea name="seoDescription" rows="2" cols="20" id="txtSeoDescription" class="input" datatype="*0-255" sucmsg=" "><#if user??>${user.seoDescription!""}</#if></textarea>
+        <span class="Validform_checktip">255个字符以内</span>
+    </dd>
+</dl>
 </div>
-<!--/安全设置-->
-<#--
-<div class="tab-content" style="display:none;">
-  <dl>
-    <dt>下级用户总数</dt>
-    <dd><input name="totalLowerUsers" type="text" id="txtPay_Password" class="input normal" nullmsg="请设置支付密码" errormsg="支付密码范围在6-20位之间" sucmsg=" " value=""> <span class="Validform_checktip">*平台内支付的密码，至少6位</span></dd>
-  </dl>
-  <dl>
-    <dt>用户返现总数</dt>
-    <dd><input name="totalCashRewards" type="text" id="txtPay_Password" class="input normal" nullmsg="请设置支付密码" errormsg="支付密码范围在6-20位之间" sucmsg=" " value=""> <span class="Validform_checktip">*平台内支付的密码，至少6位</span></dd>
-  </dl>
-  <dl>
-    <dt>银行卡号</dt>
-    <dd><input name="bankCardCode" type="text" id="txtPay_Password" class="input normal" nullmsg="请设置支付密码" errormsg="支付密码范围在6-20位之间" sucmsg=" " value=""> <span class="Validform_checktip">*平台内支付的密码，至少6位</span></dd>
-  </dl>
-  <dl>
-    <dt>银行名称</dt>
-    <dd><input name="bankTitle" type="text" id="txtPay_Password" class="input normal" nullmsg="请设置支付密码" errormsg="支付密码范围在6-20位之间" sucmsg=" " value=""> <span class="Validform_checktip">*平台内支付的密码，至少6位</span></dd>
-  </dl>
-  <dl>
-    <dt>银行卡已验证</dt>
-    <dd><input name="txtPay_Password" type="text" id="txtPay_Password" class="input normal" nullmsg="请设置支付密码" errormsg="支付密码范围在6-20位之间" sucmsg=" " value=""> <span class="Validform_checktip">*平台内支付的密码，至少6位</span></dd>
-  </dl>
-</div>
--->
-<!--/账户信息-->
 
 
 <!--借款标的-->

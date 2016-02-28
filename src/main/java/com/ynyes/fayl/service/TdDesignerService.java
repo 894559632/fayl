@@ -49,4 +49,11 @@ public class TdDesignerService {
 		PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.ASC, "sortId"));
 		return repository.findAll(pageRequest);
 	}
+
+	public TdDesigner findByNumber(String number) {
+		if (null == number) {
+			return null;
+		}
+		return repository.findByNumber(number);
+	}
 }

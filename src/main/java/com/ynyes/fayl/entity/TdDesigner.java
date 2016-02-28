@@ -18,12 +18,17 @@ public class TdDesigner {
 		super();
 	}
 
-	public TdDesigner(String number, String position, String name, String photoUri) {
+	public TdDesigner(String number, String position, String name, String photoUri, String description, String seoTitle,
+			String seoKeywords, String seoDescription) {
 		super();
 		this.number = number;
 		this.position = position;
 		this.name = name;
 		this.photoUri = photoUri;
+		this.description = description;
+		this.seoTitle = seoTitle;
+		this.seoKeywords = seoKeywords;
+		this.seoDescription = description;
 	}
 
 	// 自增主键
@@ -46,6 +51,22 @@ public class TdDesigner {
 	// 照片
 	@Column
 	private String photoUri;
+
+	// 设计师简介
+	@Column
+	private String description;
+
+	// SEO标题
+	@Column
+	private String seoTitle;
+
+	// SEO关键词
+	@Column
+	private String seoKeywords;
+
+	// SEO描述
+	@Column
+	private String seoDescription;
 
 	// 排序号
 	@Column
@@ -91,6 +112,14 @@ public class TdDesigner {
 		this.photoUri = photoUri;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public Double getSortId() {
 		return sortId;
 	}
@@ -99,9 +128,34 @@ public class TdDesigner {
 		this.sortId = sortId;
 	}
 
+	public String getSeoTitle() {
+		return seoTitle;
+	}
+
+	public void setSeoTitle(String seoTitle) {
+		this.seoTitle = seoTitle;
+	}
+
+	public String getSeoKeywords() {
+		return seoKeywords;
+	}
+
+	public void setSeoKeywords(String seoKeywords) {
+		this.seoKeywords = seoKeywords;
+	}
+
+	public String getSeoDescription() {
+		return seoDescription;
+	}
+
+	public void setSeoDescription(String seoDescription) {
+		this.seoDescription = seoDescription;
+	}
+
 	@Override
 	public String toString() {
 		return "TdDesigner [id=" + id + ", number=" + number + ", position=" + position + ", name=" + name
-				+ ", photoUri=" + photoUri + ", sortId=" + sortId + "]";
+				+ ", photoUri=" + photoUri + ", description=" + description + ", seoTitle=" + seoTitle
+				+ ", seoKeywords=" + seoKeywords + ", seoDescription=" + seoDescription + ", sortId=" + sortId + "]";
 	}
 }

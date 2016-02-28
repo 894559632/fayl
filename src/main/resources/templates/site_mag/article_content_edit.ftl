@@ -179,7 +179,7 @@
         <dl>
             <dt>文章作者</dt>
             <dd>
-                <input name="author" type="text" value="${article.author!''}" id="txtSortId" class="input txt100" datatype="*" sucmsg=" ">
+                <input name="author" type="text" value="<#if article??>${article.author!''}</#if>" id="txtSortId" class="input txt100" datatype="*" sucmsg=" ">
                 <span class="Validform_checktip">文章的作者</span>
             </dd>
         </dl>
