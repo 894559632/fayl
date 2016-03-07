@@ -19,6 +19,7 @@ import com.ynyes.fayl.entity.TdCompanyInfo;
 import com.ynyes.fayl.entity.TdSample;
 import com.ynyes.fayl.entity.TdSampleCategory;
 import com.ynyes.fayl.entity.TdSetting;
+import com.ynyes.fayl.entity.TdSiteLink;
 import com.ynyes.fayl.service.TdAdService;
 import com.ynyes.fayl.service.TdAdTypeService;
 import com.ynyes.fayl.service.TdArticleService;
@@ -26,6 +27,7 @@ import com.ynyes.fayl.service.TdCommonService;
 import com.ynyes.fayl.service.TdCompanyInfoService;
 import com.ynyes.fayl.service.TdSampleCategoryService;
 import com.ynyes.fayl.service.TdSampleService;
+import com.ynyes.fayl.service.TdSiteLinkService;
 
 /**
  * 进入首页的控制器
@@ -58,6 +60,9 @@ public class TdIndexController {
 
 	@Autowired
 	private TdSampleCategoryService tdSampleCategoryService;
+	
+	@Autowired
+	private TdSiteLinkService tdSiteLinkService;
 
 	@RequestMapping
 	public String index(HttpServletRequest req, ModelMap map, Device device) {
@@ -132,6 +137,9 @@ public class TdIndexController {
 		// 查找所有的文章，按照生成时间反序排序（分页）
 		Page<TdArticle> article_page = tdArticleService.findAll(0, 5);
 		map.addAttribute("article_page", article_page);
+		// 获取所有的友情链接
+		List<TdSiteLink> link_list = tdSiteLinkService.findAll();
+		map.addAttribute("link_list", link_list);
 		return "/front/index";
 	}
 }

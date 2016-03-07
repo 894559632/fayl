@@ -2,6 +2,9 @@ package com.ynyes.fayl.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * 友情链接实体类
@@ -25,7 +28,8 @@ public class TdLink {
 	}
 
 	// 自增主键
-	@Column
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	// 链接编号（唯一标识）

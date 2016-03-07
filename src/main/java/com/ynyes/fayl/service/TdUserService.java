@@ -11,10 +11,8 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ynyes.fayl.entity.TdSetting;
 import com.ynyes.fayl.entity.TdUser;
 import com.ynyes.fayl.entity.TdUserLevel;
-import com.ynyes.fayl.entity.TdUserPoint;
 import com.ynyes.fayl.repository.TdUserRepo;
 
 /**

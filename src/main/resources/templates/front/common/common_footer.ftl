@@ -32,6 +32,18 @@
 		                </div>
 		            </dd>
 	            </form>
+	            <dd class="friendship-link">
+		            <#if link_list??&&link_list?size gt 0>
+		                <div class="linkitem">
+		                	<#list link_list as item>
+			                	<#if item??>
+			                    	<a target="_Blank" href="${item.linkUri!''}" title="<#if setting??>${setting.title!''}-</#if>${item.title!''}">${item.title!''}</a>
+			                    </#if>
+		                    </#list>
+		                </div>
+	                </#if>
+	                <div class="copyright"><#if setting??>${setting.icpNumber!''}</#if></div>
+    			</dd>
 	        </dl>
 	    </div>
 	</#if>

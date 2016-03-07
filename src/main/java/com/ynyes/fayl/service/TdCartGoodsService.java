@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ynyes.fayl.entity.TdCartGoods;
-import com.ynyes.fayl.entity.TdGoods;
 import com.ynyes.fayl.repository.TdCartGoodsRepo;
 
 /**

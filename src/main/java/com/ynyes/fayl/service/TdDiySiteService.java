@@ -1,7 +1,6 @@
 package com.ynyes.fayl.service;
 
 import java.util.List;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ynyes.fayl.entity.TdDiySite;
-import com.ynyes.fayl.entity.TdUserComment;
 import com.ynyes.fayl.repository.TdDiySiteRepo;
 
 /**

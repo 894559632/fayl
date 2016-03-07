@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ibm.icu.text.SimpleDateFormat;
 import com.ynyes.fayl.entity.TdCompanyInfo;
 import com.ynyes.fayl.entity.TdGoods;
-import com.ynyes.fayl.entity.TdSample;
 import com.ynyes.fayl.service.TdArticleService;
 import com.ynyes.fayl.service.TdBrandService;
 import com.ynyes.fayl.service.TdCompanyInfoService;

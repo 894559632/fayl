@@ -1,6 +1,5 @@
 package com.ynyes.fayl.service;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -13,16 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ynyes.fayl.entity.TdBrand;
 import com.ynyes.fayl.entity.TdGoods;
-import com.ynyes.fayl.entity.TdGoodsCombination;
-import com.ynyes.fayl.entity.TdGoodsGift;
-import com.ynyes.fayl.entity.TdGoodsParameter;
-import com.ynyes.fayl.entity.TdPriceChangeLog;
-import com.ynyes.fayl.entity.TdProductCategory;
-import com.ynyes.fayl.entity.TdProvider;
-import com.ynyes.fayl.entity.TdSite;
-import com.ynyes.fayl.entity.TdWarehouse;
 import com.ynyes.fayl.repository.TdGoodsRepo;
 
 /**

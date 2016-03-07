@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ynyes.fayl.entity.TdCoupon;
-import com.ynyes.fayl.entity.TdCouponType;
-import com.ynyes.fayl.entity.TdDiySite;
 import com.ynyes.fayl.repository.TdCouponRepo;
 
 /**

@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import com.ynyes.fayl.entity.TdCompany;
 import com.ynyes.fayl.entity.TdSampleCategory;
 import com.ynyes.fayl.entity.TdSetting;
+import com.ynyes.fayl.entity.TdSiteLink;
 
 @Service
 @Transactional
@@ -25,6 +26,9 @@ public class TdCommonService {
 
 	@Autowired
 	private TdSampleCategoryService tdSampleCategoryService;
+
+	@Autowired
+	private TdSiteLinkService tdSiteLinkService;
 
 	/**
 	 * 初始化公司实体对象的方法
@@ -59,5 +63,8 @@ public class TdCommonService {
 		map.addAttribute("sample_category_list", sample_category_list);
 		// 获取网站设置
 		map.addAttribute("setting", TdSetting.getInstance());
+		// 获取所有的友情链接
+		List<TdSiteLink> link_list = tdSiteLinkService.findAll();
+		map.addAttribute("link_list", link_list);
 	}
 }
