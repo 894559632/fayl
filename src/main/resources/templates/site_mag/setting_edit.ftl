@@ -180,7 +180,16 @@ $(function () {
         <dl>
             <dt>地图图片</dt>
             <dd>
-                <input id="mapUri" name="mapUri" type="text" datatype="*0-255" value="<#if setting??>${setting.wxQrCode!""}</#if>" class="input normal upload-path">
+                <input id="mapUri" name="mapUri" type="text" datatype="*0-255" value="<#if setting??>${setting.mapUri!""}</#if>" class="input normal upload-path">
+                <div class="upload-box upload-img"></div>
+                <span class="Validform_checktip"></span>
+                <div class="photo-list thumb_wxImgUrl_show"></div>
+            </dd>
+        </dl>
+        <dl>
+            <dt>微信二维码</dt>
+            <dd>
+                <input id="qrCode" name="qrCode" type="text" datatype="*0-255" value="<#if setting??>${setting.qrCode!""}</#if>" class="input normal upload-path">
                 <div class="upload-box upload-img"></div>
                 <span class="Validform_checktip"></span>
                 <div class="photo-list thumb_wxImgUrl_show"></div>

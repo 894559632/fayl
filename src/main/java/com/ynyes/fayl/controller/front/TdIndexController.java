@@ -100,46 +100,55 @@ public class TdIndexController {
 		}
 
 		// 查找首页推荐滨水景观案例
-		Page<TdSample> bsjg_sample_page = tdSampleService
-				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("BSJG0001", 0, 4);
-		map.addAttribute("bsjg_sample_page", bsjg_sample_page);
+		List<TdSample> bsjg_sample_list = tdSampleService
+				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("BSJG0001");
+		map.addAttribute("bsjg_sample_page", bsjg_sample_list);
 
 		// 查找首页推荐旅游区案例
-		Page<TdSample> lyq_sample_page = tdSampleService
-				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("LYQ0001", 0, 4);
-		map.addAttribute("lyq_sample_page", lyq_sample_page);
+		List<TdSample> lyq_sample_list = tdSampleService
+				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("LYQ0001");
+		map.addAttribute("lyq_sample_page", lyq_sample_list);
 
 		// 查找首页推荐公园景观案例
-		Page<TdSample> gyjg_sample_page = tdSampleService
-				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("GYJG0001", 0, 4);
-		map.addAttribute("gyjg_sample_page", gyjg_sample_page);
+		List<TdSample> gyjg_sample_list = tdSampleService
+				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("GYJG0001");
+		map.addAttribute("gyjg_sample_page", gyjg_sample_list);
 
 		// 查找首页推荐居住区景观案例
-		Page<TdSample> jzqjg_sample_page = tdSampleService
-				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("JZQJG0001", 0, 4);
-		map.addAttribute("jzqjg_sample_page", jzqjg_sample_page);
+		List<TdSample> jzqjg_sample_list = tdSampleService
+				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("JZQJG0001");
+		map.addAttribute("jzqjg_sample_page", jzqjg_sample_list);
 
 		// 查找首页推荐道路景观案例
-		Page<TdSample> dljg_sample_page = tdSampleService
-				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("DLJG0001", 0, 4);
-		map.addAttribute("dljg_sample_page", dljg_sample_page);
+		List<TdSample> dljg_sample_list = tdSampleService
+				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("DLJG0001");
+		map.addAttribute("dljg_sample_page", dljg_sample_list);
 
 		// 查找首页推荐公共商业案例
-		Page<TdSample> ggsy_sample_page = tdSampleService
-				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("GGSY0001", 0, 4);
-		map.addAttribute("ggsy_sample_page", ggsy_sample_page);
+		List<TdSample> ggsy_sample_list = tdSampleService
+				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("GGSY0001");
+		map.addAttribute("ggsy_sample_page", ggsy_sample_list);
 
 		// 查找首页推荐农业景观案例
-		Page<TdSample> nyjg_sample_page = tdSampleService
-				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("NYJG0001", 0, 4);
-		map.addAttribute("nyjg_sample_page", nyjg_sample_page);
+		List<TdSample> nyjg_sample_list = tdSampleService
+				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("NYJG0001");
+		map.addAttribute("nyjg_sample_page", nyjg_sample_list);
 
-		// 查找所有的文章，按照生成时间反序排序（分页）
-		Page<TdArticle> article_page = tdArticleService.findAll(0, 5);
-		map.addAttribute("article_page", article_page);
+		//查找公司新闻（分页）
+		Page<TdArticle> ssxw_page = tdArticleService.findByCategoryNumberOrderByCreateDateDesc("SSXW0001", 0, 5);
+		map.addAttribute("ssxw_page", ssxw_page);
+		
+		//查找行业动态（分页）
+		Page<TdArticle> hydt_page = tdArticleService.findByCategoryNumberOrderByCreateDateDesc("HYDT0001", 0, 5);
+		map.addAttribute("hydt_page", hydt_page);
+		
+		//查找媒体报道（分页）
+		Page<TdArticle> mtbd_page = tdArticleService.findByCategoryNumberOrderByCreateDateDesc("MTBD0001", 0, 5);
+		map.addAttribute("mtbd_page", mtbd_page);
+		
 		// 获取所有的友情链接
 		List<TdSiteLink> link_list = tdSiteLinkService.findAll();
 		map.addAttribute("link_list", link_list);
-		return "/front/index";
+		return "/front/index_temp";
 	}
 }

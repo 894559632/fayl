@@ -103,6 +103,10 @@ public class TdSetting {
 	// 触屏版地址
 	@Column
 	private String touchUri;
+	
+	//微信二维码
+	@Column
+	private String qrCode;
 
 	public Long getId() {
 		return id;
@@ -248,12 +252,21 @@ public class TdSetting {
 		this.touchUri = touchUri;
 	}
 
+	public String getQrCode() {
+		return qrCode;
+	}
+
+	public void setQrCode(String qrCode) {
+		this.qrCode = qrCode;
+	}
+
 	@Override
 	public String toString() {
 		return "TdSetting [id=" + id + ", title=" + title + ", domainName=" + domainName + ", logoUri=" + logoUri
 				+ ", company=" + company + ", address=" + address + ", mapUri=" + mapUri + ", telephone=" + telephone
 				+ ", fax=" + fax + ", qq=" + qq + ", adminEmail=" + adminEmail + ", icpNumber=" + icpNumber
 				+ ", seoTitle=" + seoTitle + ", seoKeywords=" + seoKeywords + ", seoDescription=" + seoDescription
-				+ ", copyright=" + copyright + ", isTouchEnable=" + isTouchEnable + ", touchUri=" + touchUri + "]";
+				+ ", copyright=" + copyright + ", isTouchEnable=" + isTouchEnable + ", touchUri=" + touchUri
+				+ ", qrCode=" + qrCode + "]";
 	}
 }

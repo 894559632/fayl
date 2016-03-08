@@ -65,6 +65,18 @@ public class TdSampleService {
 	}
 
 	/**
+	 * 查找首页推荐的案例，按照排序号正序排序
+	 * 
+	 * @author dengxiao
+	 */
+	public List<TdSample> findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc(String categoryNumber) {
+		if (null == categoryNumber) {
+			return null;
+		}
+		return repository.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc(categoryNumber);
+	}
+
+	/**
 	 * 根据分类编号查找案例，按照排序号正序排序（分页）
 	 * 
 	 * @author dengxiao

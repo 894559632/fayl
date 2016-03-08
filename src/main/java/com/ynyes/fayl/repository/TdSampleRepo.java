@@ -19,6 +19,14 @@ public interface TdSampleRepo extends PagingAndSortingRepository<TdSample, Long>
 	Page<TdSample> findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc(String categoryNumber, Pageable page);
 
 	/**
+	 * 查找指定分类下首页推荐的案例，按照排序号正序排序
+	 * 
+	 * @author dengxiao
+	 */
+	List<TdSample> findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc(String categoryNumber);
+
+	
+	/**
 	 * 根据分类编号查找案例，按照排序号正序排序（分页）
 	 * 
 	 * @author dengxiao

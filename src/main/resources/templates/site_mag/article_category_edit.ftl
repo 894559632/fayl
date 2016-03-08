@@ -96,6 +96,10 @@
     <dd><input name="title" type="text" id="txtTitle" value="<#if cat??>${cat.title!""}</#if>" class="input normal" onblur="change2cn(this.value, this.form.txtCallIndex)" datatype="*1-100" sucmsg=" "> <span class="Validform_checktip">*类别中文名称，100字符内</span></dd>
   </dl>
   <dl>
+    <dt>类别编号</dt>
+    <dd><input name="number" type="text" id="txtTitle" value="<#if cat??>${cat.number!""}</#if>" class="input normal" onblur="change2cn(this.value, this.form.txtCallIndex)" datatype="*1-100" sucmsg=" "> <span class="Validform_checktip">*类别编号</span></dd>
+  </dl>
+  <dl>
     <dt>SEO标题</dt>
     <dd>
       <input name="seoTitle" type="text" maxlength="255" value="<#if cat??>${cat.seoTitle!""}</#if>" id="txtSeoTitle" class="input normal" datatype="s0-100" sucmsg=" ">
