@@ -135,8 +135,8 @@ public class TdIndexController {
 		map.addAttribute("nyjg_sample_page", nyjg_sample_list);
 
 		//查找公司新闻（分页）
-		Page<TdArticle> ssxw_page = tdArticleService.findByCategoryNumberOrderByCreateDateDesc("SSXW0001", 0, 5);
-		map.addAttribute("ssxw_page", ssxw_page);
+		Page<TdArticle> gsxw_page = tdArticleService.findByCategoryNumberOrderByCreateDateDesc("GSXW0001", 0, 5);
+		map.addAttribute("gsxw_page", gsxw_page);
 		
 		//查找行业动态（分页）
 		Page<TdArticle> hydt_page = tdArticleService.findByCategoryNumberOrderByCreateDateDesc("HYDT0001", 0, 5);

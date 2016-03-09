@@ -82,6 +82,21 @@ $(function () {
         </dd>
     </dl>
     <dl>
+        <dt>关联的泛奥研究</dt>
+        <dd>
+            <div class="rule-single-select single-select">
+            <select name="linkUri" datatype="*" sucmsg=" ">
+                <option value="" <#if !ad??>selected="selected"</#if>>请选择</option>
+                <#if research_list??>
+                    <#list research_list as type>
+                        <option value="${type.number!''}" <#if ad?? && ad.linkUri??&&ad.linkUri == type.number>selected="selected"</#if>>${type.title!''}</option>
+                    </#list>
+                </#if>
+            </select>
+            </div>
+        </dd>
+    </dl>
+    <dl>
         <dt>状态</dt>
         <dd>
             <div class="rule-multi-radio multi-radio">

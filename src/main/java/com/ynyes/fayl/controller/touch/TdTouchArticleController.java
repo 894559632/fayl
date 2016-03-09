@@ -38,7 +38,7 @@ public class TdTouchArticleController {
 		List<TdArticle> article_list = tdArticleService.findByCategoryNumberOrderByCreateDateDesc(number);
 		map.addAttribute("article_list", article_list);
 		tdCommonService.setHeader(req, map);
-		return "/touh/article_list";
+		return "/touch/article_list";
 	}
 
 	@RequestMapping(value = "/detail/{number}")

@@ -45,17 +45,16 @@ public class TdTouchSampleController {
 			List<TdSample> sample_list = tdSampleService
 					.findByCategoryNumberOrderBySortIdAsc(sample_category.getNumber());
 			map.addAttribute("category", sample_category);
-			map.addAttribute("sample_page", sample_list);
+			map.addAttribute("sample_list", sample_list);
 		} else {
 			// 遍历所有的案例分类，使用第一个作为默认分类
 			if (null != sample_category_list && sample_category_list.size() > 0) {
-				for (TdSampleCategory category : sample_category_list) {
-					if (null != category && null != category.getNumber()) {
-						List<TdSample> sample_list = tdSampleService
-								.findByCategoryNumberOrderBySortIdAsc(category.getNumber());
-						map.addAttribute("category", sample_category);
-						map.addAttribute("sample_page", sample_list);
-					}
+				TdSampleCategory category = sample_category_list.get(0);
+				if (null != category && null != category.getNumber()) {
+					List<TdSample> sample_list = tdSampleService
+							.findByCategoryNumberOrderBySortIdAsc(category.getNumber());
+					map.addAttribute("category", category);
+					map.addAttribute("sample_list", sample_list);
 				}
 			}
 		}

@@ -18,6 +18,7 @@ import com.ynyes.fayl.entity.TdAd;
 import com.ynyes.fayl.service.TdAdService;
 import com.ynyes.fayl.service.TdAdTypeService;
 import com.ynyes.fayl.service.TdManagerLogService;
+import com.ynyes.fayl.service.TdResearchService;
 import com.ynyes.fayl.util.SiteMagConstant;
 
 /**
@@ -38,6 +39,9 @@ public class TdManagerAdController {
 
 	@Autowired
 	TdManagerLogService tdManagerLogService;
+	
+	@Autowired
+	TdResearchService tdResearchService;
 
 	@RequestMapping(value = "/list")
 	public String setting(Integer page, Integer size, String __EVENTTARGET, String __EVENTARGUMENT, String __VIEWSTATE,
@@ -91,6 +95,8 @@ public class TdManagerAdController {
 		map.addAttribute("__VIEWSTATE", __VIEWSTATE);
 
 		map.addAttribute("ad_type_list", tdAdTypeService.findAll());
+		//提供所有的泛奥研究
+		map.addAttribute("research_list", tdResearchService.findAll());
 
 		if (null != id) {
 			map.addAttribute("ad", tdAdService.findOne(id));
