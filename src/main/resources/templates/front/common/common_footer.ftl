@@ -32,12 +32,12 @@
 		                </div>
 		            </dd>
 	            </form>
-	            <dd class="friendship-link">
+	            <dd class="friendship-link">友情链接：
 		            <#if link_list??&&link_list?size gt 0>
 		                <div class="linkitem">
 		                	<#list link_list as item>
 			                	<#if item??>
-			                    	<a target="_Blank" href="${item.linkUri!''}" title="<#if setting??>${setting.title!''}-</#if>${item.title!''}">${item.title!''}</a>
+			                    	<a target="_Blank" href="${item.linkUri!''}" title="<#if setting??>${setting.title!''}-</#if>${item.title!''}">	${item.title!''}</a>
 			                    </#if>
 		                    </#list>
 		                </div>

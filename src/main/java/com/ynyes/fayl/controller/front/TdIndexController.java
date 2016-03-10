@@ -102,37 +102,37 @@ public class TdIndexController {
 		// 查找首页推荐滨水景观案例
 		List<TdSample> bsjg_sample_list = tdSampleService
 				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("BSJG0001");
-		map.addAttribute("bsjg_sample_page", bsjg_sample_list);
+		map.addAttribute("bsjg_sample_list", bsjg_sample_list);
 
 		// 查找首页推荐旅游区案例
 		List<TdSample> lyq_sample_list = tdSampleService
 				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("LYQ0001");
-		map.addAttribute("lyq_sample_page", lyq_sample_list);
+		map.addAttribute("lyq_sample_list", lyq_sample_list);
 
 		// 查找首页推荐公园景观案例
 		List<TdSample> gyjg_sample_list = tdSampleService
 				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("GYJG0001");
-		map.addAttribute("gyjg_sample_page", gyjg_sample_list);
+		map.addAttribute("gyjg_sample_list", gyjg_sample_list);
 
 		// 查找首页推荐居住区景观案例
 		List<TdSample> jzqjg_sample_list = tdSampleService
 				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("JZQJG0001");
-		map.addAttribute("jzqjg_sample_page", jzqjg_sample_list);
+		map.addAttribute("jzqjg_sample_list", jzqjg_sample_list);
 
 		// 查找首页推荐道路景观案例
 		List<TdSample> dljg_sample_list = tdSampleService
 				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("DLJG0001");
-		map.addAttribute("dljg_sample_page", dljg_sample_list);
+		map.addAttribute("dljg_sample_list", dljg_sample_list);
 
 		// 查找首页推荐公共商业案例
 		List<TdSample> ggsy_sample_list = tdSampleService
 				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("GGSY0001");
-		map.addAttribute("ggsy_sample_page", ggsy_sample_list);
+		map.addAttribute("ggsy_sample_list", ggsy_sample_list);
 
 		// 查找首页推荐农业景观案例
 		List<TdSample> nyjg_sample_list = tdSampleService
 				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("NYJG0001");
-		map.addAttribute("nyjg_sample_page", nyjg_sample_list);
+		map.addAttribute("nyjg_sample_list", nyjg_sample_list);
 
 		//查找公司新闻（分页）
 		Page<TdArticle> gsxw_page = tdArticleService.findByCategoryNumberOrderByCreateDateDesc("GSXW0001", 0, 5);
