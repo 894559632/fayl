@@ -17,6 +17,7 @@ import com.ynyes.fayl.entity.TdArticle;
 import com.ynyes.fayl.entity.TdArticleCategory;
 import com.ynyes.fayl.entity.TdCompany;
 import com.ynyes.fayl.entity.TdCompanyInfo;
+import com.ynyes.fayl.entity.TdResearch;
 import com.ynyes.fayl.entity.TdSample;
 import com.ynyes.fayl.service.TdAdService;
 import com.ynyes.fayl.service.TdAdTypeService;
@@ -24,6 +25,7 @@ import com.ynyes.fayl.service.TdArticleCategoryService;
 import com.ynyes.fayl.service.TdArticleService;
 import com.ynyes.fayl.service.TdCommonService;
 import com.ynyes.fayl.service.TdCompanyInfoService;
+import com.ynyes.fayl.service.TdResearchService;
 import com.ynyes.fayl.service.TdSampleService;
 import com.ynyes.fayl.util.ClientConstant;
 
@@ -56,6 +58,9 @@ public class TdTouchIndexController {
 
 	@Autowired
 	private TdArticleService tdArticleService;
+
+	@Autowired
+	private TdResearchService tdReasearchService;
 
 	@RequestMapping
 	public String index(HttpServletRequest req, ModelMap map, Device device) {
@@ -104,6 +109,10 @@ public class TdTouchIndexController {
 				}
 			}
 		}
+
+		// 获取泛奥研究
+		Page<TdResearch> research_page = tdReasearchService.findAll(0, ClientConstant.pageSize);
+		map.addAttribute("research_page", research_page);
 
 		tdCommonService.setHeader(req, map);
 		return "/touch/index";
