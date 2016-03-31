@@ -60,15 +60,15 @@ public class TdIndexController {
 
 	@Autowired
 	private TdSampleCategoryService tdSampleCategoryService;
-	
+
 	@Autowired
 	private TdSiteLinkService tdSiteLinkService;
 
 	@RequestMapping
 	public String index(HttpServletRequest req, ModelMap map, Device device) {
-		if (device.isMobile() || device.isTablet()) {
-			return "redirect:/touch";
-		}
+//		if (device.isMobile() || device.isTablet()) {
+//			return "redirect:/touch";
+//		}
 		// 初始化公司对象
 		tdCommonService.initCompany();
 		// 获取公司介绍的信息编号
@@ -134,18 +134,18 @@ public class TdIndexController {
 				.findByCategoryNumberAndIsIndexRecommendTrueOrderBySortIdAsc("NYJG0001");
 		map.addAttribute("nyjg_sample_list", nyjg_sample_list);
 
-		//查找公司新闻（分页）
+		// 查找公司新闻（分页）
 		Page<TdArticle> gsxw_page = tdArticleService.findByCategoryNumberOrderByCreateDateDesc("GSXW0001", 0, 5);
 		map.addAttribute("gsxw_page", gsxw_page);
-		
-		//查找行业动态（分页）
+
+		// 查找行业动态（分页）
 		Page<TdArticle> hydt_page = tdArticleService.findByCategoryNumberOrderByCreateDateDesc("HYDT0001", 0, 5);
 		map.addAttribute("hydt_page", hydt_page);
-		
-		//查找媒体报道（分页）
+
+		// 查找媒体报道（分页）
 		Page<TdArticle> mtbd_page = tdArticleService.findByCategoryNumberOrderByCreateDateDesc("MTBD0001", 0, 5);
 		map.addAttribute("mtbd_page", mtbd_page);
-		
+
 		// 获取所有的友情链接
 		List<TdSiteLink> link_list = tdSiteLinkService.findAll();
 		map.addAttribute("link_list", link_list);

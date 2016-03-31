@@ -200,6 +200,8 @@ public class TdManagerResearchController {
 		if (null == username) {
 			return "redirect:/Verwalter/login";
 		}
+		
+		String uris = parsePicUris(hid_photo_name_show360);
 
 		String type = null;
 		if (null == info.getId()) {
@@ -215,6 +217,7 @@ public class TdManagerResearchController {
 			String number = "FAYJ" + dateFormat + randomNumber;
 			info.setNumber(number);
 		}
+		info.setImgUriList(uris);
 		info = tdResearchService.save(info);
 		tdManagerLogService.addLog(type, "用户修改公司研究案例信息", req);
 
@@ -275,6 +278,31 @@ public class TdManagerResearchController {
 				tdJobService.delete(id);
 			}
 		}
+	}
+	
+	/**
+	 * 图片地址字符串整理，多张图片用,隔开
+	 * 
+	 * @param params
+	 * @return
+	 */
+	private String parsePicUris(String[] uris) {
+		if (null == uris || 0 == uris.length) {
+			return null;
+		}
+
+		String res = "";
+
+		for (String item : uris) {
+			String uri = item.substring(item.indexOf("|") + 1, item.indexOf("|", 2));
+
+			if (null != uri) {
+				res += uri;
+				res += ",";
+			}
+		}
+
+		return res;
 	}
 
 }

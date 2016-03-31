@@ -376,14 +376,14 @@ function del_goods_comb(obj) {
             </dd>
         </dl>
         <dl>
-            <dt>案例简介</dt>
+            <dt>研究简介</dt>
             <dd>
                 <textarea name="introduction" class="editor"><#if goods??>${goods.introduction!""}</#if></textarea>
             </dd>
         </dl>
         
         <dl>
-            <dt>案例详情</dt>
+            <dt>研究详情</dt>
             <dd>
                 <textarea name="content" class="editor"><#if goods??>${goods.content!""}</#if></textarea>
             </dd>
