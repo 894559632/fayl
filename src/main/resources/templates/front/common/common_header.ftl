@@ -1,3 +1,12 @@
+<script>
+var _hmt = _hmt || [];
+(function() {
+	var hm = document.createElement("script");
+	hm.src = "//hm.baidu.com/hm.js?7ea26fe7445c62441e7e69aa182304b7";
+	var s = document.getElementsByTagName("script")[0]; 
+	s.parentNode.insertBefore(hm, s);
+})();
+</script>
 <div class="headerclear"></div>
 <div class="header">
     <div class="wrapper">
